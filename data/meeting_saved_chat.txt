@@ -1,0 +1,25 @@
+09:59:25 From Kieran Healy to Everyone:	Hello everyone, we’ll start shortly ...
+11:17:55 From Lauren Myers (she/her) to Everyone:	Which R script are we using here? This doesn’t seem to be the 04-tidy-data.R one
+11:18:15 From Lauren Myers (she/her) to Everyone:	thanks!
+11:34:19 From Lauren Myers (she/her) to Everyone:	Why get it consistent before importing into R, as opposed to writing R scripts for cleaning it up?
+11:43:30 From Towhid to Everyone:	What happens for unbalanced panel data?
+12:00:45 From Lauren Myers (she/her) to Everyone:	I am going to quit and sign in on another device FYI! (Please let me back in) :-)
+12:09:32 From Leticia Serrano to Everyone:	I'm here
+12:09:33 From Leticia Serrano to Everyone:	thanks
+12:12:12 From Jonelle Villar to Everyone:	Forgot the pipe after select(race, degree) :)
+12:17:06 From Leticia Serrano to Everyone:	thank you
+12:17:12 From Lauren Myers to Everyone:	When can we add a space or not? Because sometimes it is good, and it makes code more readable
+12:22:41 From Leticia Serrano to Everyone:	great, thank you
+12:38:34 From Lauren Myers to Everyone:	What if we want to search for an actual “  ?? (I ran into this recently, and ended up going backward a step to prevent the “ from appearing in the first place.
+12:42:32 From Catlin (he/him) to Everyone:	how about if you want the "a" in the middle of banana?
+12:43:09 From Diane Holmberg to Everyone:	Odd question, but would it match aappleee -- like is int matching only first letters or whole strong?
+12:44:29 From Raab, Marcel to Everyone:	Lauren, maybe this is what you are Looking for: str_view('Test " string', '\\"')
+12:45:30 From Raab, Marcel to Everyone:	or: str_view('Test " string', '["]')
+12:54:44 From Lauren Myers to Everyone:	Thanks!
+12:55:08 From Lauren Myers to Everyone:	FYI, here is the app Patterns (it took me a few google tries to find it): https://apps.apple.com/us/app/patterns-the-regex-app/id429449079?mt=12
+13:01:37 From Lauren Myers to Everyone:	That would be helpful. I have a lot of string data in my research.
+13:17:20 From Towhid to Everyone:	Is 'here' better than 'setting working directory'?
+13:36:41 From Wonsuk Yoo to Everyone:	my library(here) show wrong pathway. How can I fix that?
+13:39:47 From Raab, Marcel to Everyone:	@Towhid: When you set the working directory with `setwd` your code only works for your current setup. If you ever move your project to a different folder or want to share it with someone else it won't work without manual adjustment; also see: https://www.tidyverse.org/blog/2017/12/workflow-vs-script/
+13:41:35 From Jonelle Villar to Everyone:	@Wonsuk Try calling here() first.  A small file will be added to your data wrangling project.
+14:02:44 From Rachel Gong to Everyone:	Thank you!
