@@ -1,0 +1,1905 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.css" rel="stylesheet"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.5.54">
+
+  <meta name="author" content="Kieran Healy">
+  <meta name="dcterms.date" content="2024-10-02">
+  <title>Data Wrangling with R and the Tidyverse – Regular Expressions</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #f5bde6; background-color: #24273a; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #cad3f5; } /* Normal */
+    code span.al { color: #ed8796; font-weight: bold; } /* Alert */
+    code span.an { color: #eed49f; } /* Annotation */
+    code span.at { color: #b7bdf8; } /* Attribute */
+    code span.bn { color: #ed8796; } /* BaseN */
+    code span.bu { color: #ed8796; } /* BuiltIn */
+    code span.cf { color: #c6a0f6; } /* ControlFlow */
+    code span.ch { color: #f5bde6; } /* Char */
+    code span.cn { color: #8aadf4; } /* Constant */
+    code span.co { color: #6e738d; font-style: italic; } /* Comment */
+    code span.cv { color: #6e738d; font-style: italic; } /* CommentVar */
+    code span.do { color: #ed8796; } /* Documentation */
+    code span.dt { color: #c6a0f6; } /* DataType */
+    code span.dv { color: #f5a97f; } /* DecVal */
+    code span.er { color: #ed8796; text-decoration: underline; } /* Error */
+    code span.ex { color: #8aadf4; } /* Extension */
+    code span.fl { color: #f5a97f; } /* Float */
+    code span.fu { color: #8aadf4; } /* Function */
+    code span.im { color: #a6da95; } /* Import */
+    code span.in { color: #f5a97f; } /* Information */
+    code span.kw { color: #c6a0f6; } /* Keyword */
+    code span.op { color: #91d7e3; } /* Operator */
+    code span.ot { color: #f5a97f; } /* Other */
+    code span.pp { color: #f5bde6; } /* Preprocessor */
+    code span.re { color: #6e738d; font-style: italic; } /* RegionMarker */
+    code span.sc { color: #f5bde6; } /* SpecialChar */
+    code span.ss { color: #ed8796; } /* SpecialString */
+    code span.st { color: #a6da95; } /* String */
+    code span.va { color: #f5bde6; } /* Variable */
+    code span.vs { color: #ed8796; } /* VerbatimString */
+    code span.wa { color: #f5a97f; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+
+  .callout {
+    margin-top: 1em;
+    margin-bottom: 1em;  
+    border-radius: .25rem;
+  }
+
+  .callout.callout-style-simple { 
+    padding: 0em 0.5em;
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+    display: flex;
+  }
+
+  .callout.callout-style-default {
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+  }
+
+  .callout .callout-body-container {
+    flex-grow: 1;
+  }
+
+  .callout.callout-style-simple .callout-body {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-style-default .callout-body {
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-titled.callout-style-simple .callout-body {
+    margin-top: 0.2em;
+  }
+
+  .callout:not(.callout-titled) .callout-body {
+      display: flex;
+  }
+
+  .callout:not(.no-icon).callout-titled.callout-style-simple .callout-content {
+    padding-left: 1.6em;
+  }
+
+  .callout.callout-titled .callout-header {
+    padding-top: 0.2em;
+    margin-bottom: -0.2em;
+  }
+
+  .callout.callout-titled .callout-title  p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+    
+  .callout.callout-titled.callout-style-simple .callout-content  p {
+    margin-top: 0;
+  }
+
+  .callout.callout-titled.callout-style-default .callout-content  p {
+    margin-top: 0.7em;
+  }
+
+  .callout.callout-style-simple div.callout-title {
+    border-bottom: none;
+    font-size: .9rem;
+    font-weight: 600;
+    opacity: 75%;
+  }
+
+  .callout.callout-style-default  div.callout-title {
+    border-bottom: none;
+    font-weight: 600;
+    opacity: 85%;
+    font-size: 0.9rem;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-default div.callout-content {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-simple .callout-icon::before {
+    height: 1rem;
+    width: 1rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 1rem 1rem;
+  }
+
+  .callout.callout-style-default .callout-icon::before {
+    height: 0.9rem;
+    width: 0.9rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 0.9rem 0.9rem;
+  }
+
+  .callout-title {
+    display: flex
+  }
+    
+  .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  .callout.no-icon::before {
+    display: none !important;
+  }
+
+  .callout.callout-titled .callout-body > .callout-content > :last-child {
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
+  }
+
+  .callout.callout-titled .callout-icon::before {
+    margin-top: .5rem;
+    padding-right: .5rem;
+  }
+
+  .callout:not(.callout-titled) .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  /* Callout Types */
+
+  div.callout-note {
+    border-left-color: #4582ec !important;
+  }
+
+  div.callout-note .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
+  }
+
+  div.callout-note.callout-style-default .callout-title {
+    background-color: #dae6fb
+  }
+
+  div.callout-important {
+    border-left-color: #d9534f !important;
+  }
+
+  div.callout-important .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-important.callout-style-default .callout-title {
+    background-color: #f7dddc
+  }
+
+  div.callout-warning {
+    border-left-color: #f0ad4e !important;
+  }
+
+  div.callout-warning .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-warning.callout-style-default .callout-title {
+    background-color: #fcefdc
+  }
+
+  div.callout-tip {
+    border-left-color: #02b875 !important;
+  }
+
+  div.callout-tip .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-tip.callout-style-default .callout-title {
+    background-color: #ccf1e3
+  }
+
+  div.callout-caution {
+    border-left-color: #fd7e14 !important;
+  }
+
+  div.callout-caution .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
+  }
+
+  div.callout-caution.callout-style-default .callout-title {
+    background-color: #ffe5d0
+  }
+
+  </style>
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" data-background-color="#252F3E" class="quarto-title-block center">
+  <h1 class="title">Regular Expressions</h1>
+  <p class="subtitle">Data Wrangling, Session 5</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Kieran Healy 
+</div>
+        <p class="quarto-title-affiliation">
+            Code Horizons
+          </p>
+    </div>
+</div>
+
+  <p class="date">October 2, 2024</p>
+</section>
+<section>
+<section id="a-brief-introduction-to-regular-expressions" class="title-slide slide level1 inv-title center" data-background-color="#252F3E">
+<h1>A brief introduction to <span class="fg-yellow">regular expressions</span></h1>
+
+</section>
+<section id="load-the-packages-as-always" class="slide level2">
+<h2>Load the packages, as always</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)      <span class="co"># manage file paths</span></span>
+<span id="cb1-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(socviz)    <span class="co"># data and some useful functions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co"># your friend and mine</span></span>
+<span id="cb2-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gapminder) <span class="co"># gapminder data</span></span>
+<span id="cb2-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section class="slide level2">
+
+<div class="huge">
+<p><span class="fg-blue">Regular</span><br><span class="fg-blue">Expressions</span></p>
+</div>
+<ul>
+<li><em>Or</em>, waiter, there appears to be a language inside my language</li>
+</ul>
+</section>
+<section id="stringr-is-your-gateway-to-regexps" class="slide level2">
+<h2><span class="fg-yellow">stringr</span> is your gateway to regexps</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr) <span class="co"># It's loaded by default with library(tidyverse)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="regexps-are-their-own-whole-world" class="slide level2">
+<h2><span class="fg-orange">regexps</span> are their own whole world</h2>
+<div class="columns">
+<div class="column" style="width:40%;">
+<p><img data-src="img/regular_expressions_cover.png"></p>
+</div><div class="column right" style="width:50%;">
+<p>This book is a thing of beauty.</p>
+</div></div>
+</section>
+<section id="searching-for-patterns" class="slide level2">
+<h2>Searching for patterns</h2>
+<p>A regular expression is a way of searching for a piece of text, or <em>pattern</em>, inside some larger body of text, called a <em>string</em>.</p>
+<div class="fragment" data-fragment-index="1">
+<p>The simplest sort of search is like the “Find” functionality in a Word Processor. The pattern is a literal letter, number, punctuation mark, word or series of words; the text is a document searched one line at a time. The next step up is “Find and Replace”.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p>Every pattern-searching function in <code>stringr</code> has the same basic form:</p>
+<div class="sourceCode" id="cb4" data-code-line-numbers=""><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">str_view</span>(<span class="sc">&lt;</span>STRING<span class="sc">&gt;</span>, <span class="sc">&lt;</span>PATTERN<span class="sc">&gt;</span>, [...]) <span class="co"># where [...] means "maybe some options"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p>Functions that <em>replace</em> as well as <em>detect</em> strings all have this form:</p>
+<div class="sourceCode" id="cb5" data-code-line-numbers=""><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">str_replace</span>(<span class="sc">&lt;</span>STRING<span class="sc">&gt;</span>, <span class="sc">&lt;</span>PATTERN<span class="sc">&gt;</span>, <span class="sc">&lt;</span>REPLACEMENT<span class="sc">&gt;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment" data-fragment-index="4">
+<p>(If you think about it, <span class="fg-orange"><code>&lt;STRING&gt;</code></span>, <span class="fg-orange"><code>&lt;PATTERN&gt;</code></span> and <span class="fg-orange"><code>&lt;REPLACEMENT&gt;</code></span> above are all kinds of pattern: they are meant to “stand for” all kinds of text, not be taken literally.)</p>
+</div>
+</section>
+<section id="searching-for-patterns-1" class="slide level2">
+<h2>Searching for patterns</h2>
+<ul>
+<li>Here I’ll follow the exposition in Wickham &amp; Grolemund (2017).</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb6" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"apple"</span>, <span class="st">"banana"</span>, <span class="st">"pear"</span>)</span>
+<span id="cb6-2"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">str_view</span>(x, <span class="st">"an"</span>, <span class="at">html=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code>[2] │ b&lt;an&gt;&lt;an&gt;a</code></pre>
+</div>
+</div>
+</section>
+<section id="searching-for-patterns-2" class="slide level2">
+<h2>Searching for patterns</h2>
+<div>
+<ul>
+<li class="fragment">Regular expressions get their real power from <em>wildcards</em>, i.e.&nbsp;tokens that match more than just literal strings, but also more general and more complex patterns.</li>
+<li class="fragment">The most general pattern-matching token is, “Match everything!” This is represented by the period, or <span class="fg-pink">.</span></li>
+<li class="fragment">But … if <span class="fg-pink">.</span> matches any character, how do you specifically match the literal character <span class="fg-green">.</span>?</li>
+</ul>
+</div>
+</section>
+<section id="escaping" class="slide level2">
+<h2>Escaping</h2>
+<div>
+<ul>
+<li class="fragment">You have to “escape” the period to tell the regex you want to match it exactly, rather than interpret it as meaning “match anything”.</li>
+<li class="fragment">regexs use the backslash, <span class="fg-pink">\</span>, to signal “escape the next character”.</li>
+<li class="fragment">To match a <span class="fg-green">.</span>, you need the regex <span class="fg-pink">\.</span></li>
+</ul>
+</div>
+<aside class="notes">
+<p>You need to use an “escape” to tell the regular expression you want to match it exactly, not use its special behaviour. Like strings, regexs use the backslash, <span class="fg-pink">\</span>, to escape special behaviour. So to match an <span class="fg-pink">.</span>, you need the regex [\.]{.fg-pink]. Unfortunately this creates a problem. We use strings to represent regular expressions, and &nbsp;is also used as an escape symbol in strings. So to create the regular expression . we need the string “\.”.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="hang-on-i-see-a-further-problem" class="slide level2">
+<h2>Hang on, I see a further problem</h2>
+<ul>
+<li>We use strings to represent regular expressions. <span class="fg-pink">\</span> is also used as an escape symbol in strings. So to create the regular expression <span class="fg-pink">\.</span> we need the string <span class="fg-pink">\\.</span></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb8" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># To create the regular expression, we need \\</span></span>
+<span id="cb8-2"><a aria-hidden="true" tabindex="-1"></a>dot <span class="ot">&lt;-</span> <span class="st">"</span><span class="sc">\\</span><span class="st">."</span></span>
+<span id="cb8-3"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a aria-hidden="true" tabindex="-1"></a><span class="co"># But the expression itself only contains one:</span></span>
+<span id="cb8-5"><a aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(dot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code>\.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># And this tells R to look for an explicit .</span></span>
+<span id="cb10-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">str_view</span>(<span class="fu">c</span>(<span class="st">"abc"</span>, <span class="st">"a.c"</span>, <span class="st">"bef"</span>), <span class="st">"a</span><span class="sc">\\</span><span class="st">.c"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code>[2] │ &lt;a.c&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="but-how-do-you-match-a-literal" class="slide level2">
+<h2>But … how do you match a <span class="fg-yellow">literal</span> <span class="fg-green">\</span>?</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb12" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="st">"a</span><span class="sc">\\</span><span class="st">b"</span></span>
+<span id="cb12-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code>a\b</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; a\b</span></span>
+<span id="cb14-2"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">str_view</span>(x, <span class="st">"</span><span class="sc">\\\\</span><span class="st">"</span>) <span class="co"># you need four!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code>[1] │ a&lt;\&gt;b</code></pre>
+</div>
+</div>
+</section>
+<section id="but-how-do-you-match-a-literal-1" class="slide level2">
+<h2>But … how do you match a <span class="fg-yellow">literal</span> <span class="fg-green">\</span>?</h2>
+<p>This is the price we pay for having to express searches for patterns using a language containing these same characters, which we may also want to search for.</p>
+</section>
+<section class="slide level2">
+
+<div class="huge">
+<p>I <em>promise</em> this will pay off</p>
+</div>
+</section>
+<section id="matching-start-and-end" class="slide level2">
+<h2>Matching start and end</h2>
+<ul>
+<li>Use <span class="fg-pink">^</span> to match the start of a string.</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb16" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"apple"</span>, <span class="st">"banana"</span>, <span class="st">"pear"</span>)</span>
+<span id="cb16-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">str_view</span>(x, <span class="st">"^a"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code>[1] │ &lt;a&gt;pple</code></pre>
+</div>
+</div>
+</section>
+<section id="matching-start-and-end-1" class="slide level2">
+<h2>Matching start and end</h2>
+<ul>
+<li>Use <span class="fg-pink">^</span> to match the start of a string.</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb18" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"apple"</span>, <span class="st">"banana"</span>, <span class="st">"pear"</span>)</span>
+<span id="cb18-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">str_view</span>(x, <span class="st">"^a"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code>[1] │ &lt;a&gt;pple</code></pre>
+</div>
+</div>
+<ul>
+<li>Use <span class="fg-pink">$</span> to match the end of a string.</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb20" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">str_view</span>(x, <span class="st">"a$"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code>[2] │ banan&lt;a&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="matching-start-and-end-2" class="slide level2">
+<h2>Matching start and end</h2>
+<ul>
+<li>To force a regular expression to only match a complete string, anchor it with both <span class="fg-pink">^</span> and <span class="fg-pink">$</span></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb22" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"apple pie"</span>, <span class="st">"apple"</span>, <span class="st">"apple cake"</span>)</span>
+<span id="cb22-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">str_view</span>(x, <span class="st">"apple"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code>[1] │ &lt;apple&gt; pie
+[2] │ &lt;apple&gt;
+[3] │ &lt;apple&gt; cake</code></pre>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb24" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">str_view</span>(x, <span class="st">"^apple$"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code>[2] │ &lt;apple&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="matching-character-classes" class="slide level2">
+<h2>Matching character classes</h2>
+<p><span class="fg-pink">\d</span> matches any digit.</p>
+<p><span class="fg-pink">\s</span> matches any whitespace (e.g.&nbsp;space, tab, newline).</p>
+<p><span class="fg-pink">abc</span> matches a, b, or c.</p>
+<p><span class="fg-pink">^abc</span> matches anything except a, b, or c.</p>
+<aside class="notes">
+<p>Remember, to create a regular expression containing r , you’ll need to escape the &nbsp;for the string, so you’ll type “\d” or “\s”.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="matching-the-special-characters" class="slide level2">
+<h2>Matching the <span class="fg-yellow"><em>special</em></span> characters</h2>
+<p>Look for a literal character that normally has special meaning in a regex:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb26" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">str_view</span>(<span class="fu">c</span>(<span class="st">"abc"</span>, <span class="st">"a.c"</span>, <span class="st">"a*c"</span>, <span class="st">"a c"</span>), <span class="st">"a[.]c"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code>[2] │ &lt;a.c&gt;</code></pre>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb28" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">str_view</span>(<span class="fu">c</span>(<span class="st">"abc"</span>, <span class="st">"a.c"</span>, <span class="st">"a*c"</span>, <span class="st">"a c"</span>), <span class="st">".[*]c"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code>[3] │ &lt;a*c&gt;</code></pre>
+</div>
+</div>
+<p>This works for most (but not all) regex metacharacters: <span class="fg-pink">$ . | ? * + ( ) [ {</span>. Unfortunately, a few characters have special meaning even inside a character class and must be handled with backslash escapes. These are <span class="fg-pink">] \ ^</span> and <span class="fg-pink">-</span></p>
+</section>
+<section id="alternation" class="slide level2">
+<h2>Alternation</h2>
+<p>Use parentheses to make the precedence of the ‘or’ operator <span class="fg-pink"><strong>|</strong></span> clear:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb30" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">str_view</span>(<span class="fu">c</span>(<span class="st">"groy"</span>, <span class="st">"grey"</span>, <span class="st">"griy"</span>, <span class="st">"gray"</span>), <span class="st">"gr(e|a)y"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code>[2] │ &lt;grey&gt;
+[4] │ &lt;gray&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="repeated-patterns" class="slide level2">
+<h2>Repeated patterns</h2>
+<ul>
+<li><span class="fg-pink">?</span> is 0 or 1</li>
+<li><span class="fg-pink">+</span> is 1 or more</li>
+<li><span class="fg-pink">*</span> is 0 or more</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb32" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="st">"1888 is the longest year in Roman numerals: MDCCCLXXXVIII"</span></span>
+<span id="cb32-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">str_view</span>(x, <span class="st">"CC?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code>[1] │ 1888 is the longest year in Roman numerals: MD&lt;CC&gt;&lt;C&gt;LXXXVIII</code></pre>
+</div>
+</div>
+</section>
+<section id="repeated-patterns-1" class="slide level2">
+<h2>Repeated patterns</h2>
+<ul>
+<li><span class="fg-pink">?</span> is 0 or 1</li>
+<li><span class="fg-pink">+</span> is 1 or more</li>
+<li><span class="fg-pink">*</span> is 0 or more</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb34" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">str_view</span>(x, <span class="st">"CC+"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code>[1] │ 1888 is the longest year in Roman numerals: MD&lt;CCC&gt;LXXXVIII</code></pre>
+</div>
+</div>
+</section>
+<section id="repeated-patterns-2" class="slide level2">
+<h2>Repeated patterns</h2>
+<ul>
+<li><span class="fg-pink">?</span> is 0 or 1</li>
+<li><span class="fg-pink">+</span> is 1 or more</li>
+<li><span class="fg-pink">*</span> is 0 or more</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb36" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="st">"1888 is the longest year in Roman numerals: MDCCCLXXXVIII"</span></span>
+<span id="cb36-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">str_view</span>(x, <span class="st">'C[LX]+'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code>[1] │ 1888 is the longest year in Roman numerals: MDCC&lt;CLXXX&gt;VIII</code></pre>
+</div>
+</div>
+</section>
+<section id="exact-numbers-of-repetitions" class="slide level2">
+<h2>Exact numbers of repetitions</h2>
+<ul>
+<li><span class="fg-pink">{n}</span> is exactly n</li>
+<li><span class="fg-pink">{n,}</span> is n or more</li>
+<li><span class="fg-pink">{,m}</span> is at most m</li>
+<li><span class="fg-pink">{n,m}</span> is between n and m</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb38" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">str_view</span>(x, <span class="st">"C{2}"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code>[1] │ 1888 is the longest year in Roman numerals: MD&lt;CC&gt;CLXXXVIII</code></pre>
+</div>
+</div>
+</section>
+<section id="exact-numbers-of-repetitions-1" class="slide level2">
+<h2>Exact numbers of repetitions</h2>
+<ul>
+<li><span class="fg-pink">{n}</span> is exactly n</li>
+<li><span class="fg-pink">{n,}</span> is n or more</li>
+<li><span class="fg-pink">{,m}</span> is at most m</li>
+<li><span class="fg-pink">{n,m}</span> is between n and m</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb40" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">str_view</span>(x, <span class="st">"C{2,}"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code>[1] │ 1888 is the longest year in Roman numerals: MD&lt;CCC&gt;LXXXVIII</code></pre>
+</div>
+</div>
+</section>
+<section id="exact-numbers-of-repetitions-2" class="slide level2">
+<h2>Exact numbers of repetitions</h2>
+<ul>
+<li><span class="fg-pink">{n}</span> is exactly n</li>
+<li><span class="fg-pink">{n,}</span> is n or more</li>
+<li><span class="fg-pink">{,m}</span> is at most m</li>
+<li><span class="fg-pink">{n,m}</span> is between n and m</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb42" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">str_view</span>(x, <span class="st">"C{2,3}"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code>[1] │ 1888 is the longest year in Roman numerals: MD&lt;CCC&gt;LXXXVIII</code></pre>
+</div>
+</div>
+</section>
+<section id="exact-numbers-of-repetitions-3" class="slide level2">
+<h2>Exact numbers of repetitions</h2>
+<ul>
+<li><span class="fg-pink">{n}</span> is exactly n</li>
+<li><span class="fg-pink">{n,}</span> is n or more</li>
+<li><span class="fg-pink">{,m}</span> is at most m</li>
+<li><span class="fg-pink">{n,m}</span> is between n and m</li>
+</ul>
+<p>By default regexps use <em>greedy</em> matches. You can make them match the <em>shortest</em> string possible by putting a <span class="fg-pink">?</span> after them. <strong>This is often very useful!</strong></p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb44" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">str_view</span>(x, <span class="st">'C{2,3}?'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code>[1] │ 1888 is the longest year in Roman numerals: MD&lt;CC&gt;CLXXXVIII</code></pre>
+</div>
+</div>
+</section>
+<section id="exact-numbers-of-repetitions-4" class="slide level2">
+<h2>Exact numbers of repetitions</h2>
+<ul>
+<li><span class="fg-pink">{n}</span> is exactly n</li>
+<li><span class="fg-pink">{n,}</span> is n or more</li>
+<li><span class="fg-pink">{,m}</span> is at most m</li>
+<li><span class="fg-pink">{n,m}</span> is between n and m</li>
+</ul>
+<p>By default these are <em>greedy</em> matches. You can make them “lazy”, matching the shortest string possible by putting a <span class="fg-pink">?</span> after them. <strong>This is often very useful!</strong></p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb46" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">str_view</span>(x, <span class="st">'C[LX]+?'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code>[1] │ 1888 is the longest year in Roman numerals: MDCC&lt;CL&gt;XXXVIII</code></pre>
+</div>
+</div>
+</section>
+<section id="and-finally-backreferences" class="slide level2">
+<h2>And <span class="fg-yellow">finally</span> … backreferences</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb48" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a aria-hidden="true" tabindex="-1"></a>fruit <span class="co"># built into stringr</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code> [1] "apple"             "apricot"           "avocado"          
+ [4] "banana"            "bell pepper"       "bilberry"         
+ [7] "blackberry"        "blackcurrant"      "blood orange"     
+[10] "blueberry"         "boysenberry"       "breadfruit"       
+[13] "canary melon"      "cantaloupe"        "cherimoya"        
+[16] "cherry"            "chili pepper"      "clementine"       
+[19] "cloudberry"        "coconut"           "cranberry"        
+[22] "cucumber"          "currant"           "damson"           
+[25] "date"              "dragonfruit"       "durian"           
+[28] "eggplant"          "elderberry"        "feijoa"           
+[31] "fig"               "goji berry"        "gooseberry"       
+[34] "grape"             "grapefruit"        "guava"            
+[37] "honeydew"          "huckleberry"       "jackfruit"        
+[40] "jambul"            "jujube"            "kiwi fruit"       
+[43] "kumquat"           "lemon"             "lime"             
+[46] "loquat"            "lychee"            "mandarine"        
+[49] "mango"             "mulberry"          "nectarine"        
+[52] "nut"               "olive"             "orange"           
+[55] "pamelo"            "papaya"            "passionfruit"     
+[58] "peach"             "pear"              "persimmon"        
+[61] "physalis"          "pineapple"         "plum"             
+[64] "pomegranate"       "pomelo"            "purple mangosteen"
+[67] "quince"            "raisin"            "rambutan"         
+[70] "raspberry"         "redcurrant"        "rock melon"       
+[73] "salal berry"       "satsuma"           "star fruit"       
+[76] "strawberry"        "tamarillo"         "tangerine"        
+[79] "ugli fruit"        "watermelon"       </code></pre>
+</div>
+</div>
+</section>
+<section id="grouping-and-backreferences" class="slide level2">
+<h2>Grouping and backreferences</h2>
+<ul>
+<li>Find all fruits that have a repeated pair of letters:</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb50" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">str_view</span>(fruit, <span class="st">"(..)</span><span class="sc">\\</span><span class="st">1"</span>, <span class="at">match =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code> [4] │ b&lt;anan&gt;a
+[20] │ &lt;coco&gt;nut
+[22] │ &lt;cucu&gt;mber
+[41] │ &lt;juju&gt;be
+[56] │ &lt;papa&gt;ya
+[73] │ s&lt;alal&gt; berry</code></pre>
+</div>
+</div>
+</section>
+<section id="grouping-and-backreferences-1" class="slide level2">
+<h2>Grouping and backreferences</h2>
+<ul>
+<li>Backreferences and grouping will be very useful for string <em>replacements</em>.</li>
+</ul>
+</section>
+<section id="ok-that-was-a-lot" class="slide level2">
+<h2>OK that was a <span class="fg-red">lot</span></h2>
+
+<img data-src="img/grover_bluehead.jpg" class="r-stretch"></section>
+<section id="learning-and-testing-regexps" class="slide level2">
+<h2>Learning <span class="fg-yellow">and testing</span> regexps</h2>
+<ul>
+<li>Practice with a tester like <a href="https://regexr.com">https://regexr.com</a> or <a href="https://regex101.com">https://regex101.com</a></li>
+<li>Or an app like <a href="https://krillapps.com/patterns/">Patterns</a></li>
+<li>The regex engine or “flavor” used by <code>stringr</code> is Perl- or PCRE2-like.</li>
+</ul>
+</section></section>
+<section>
+<section id="regexps-in-practice" class="title-slide slide level1 inv-title center" data-background-color="#252F3E">
+<h1>Regexps in practice</h1>
+
+</section>
+<section id="example-politics-and-placenames" class="slide level2">
+<h2>Example: Politics and Placenames</h2>
+<div class="columns smallcode">
+<div class="column" style="width:60%;">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb52" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ukelection2019)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:40%;">
+
+</div></div>
+</section>
+<section id="example-politics-and-placenames-1" class="slide level2">
+<h2>Example: Politics and Placenames</h2>
+<div class="columns smallcode">
+<div class="column" style="width:60%;">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb53" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ukelection2019)</span>
+<span id="cb53-2"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-3"><a aria-hidden="true" tabindex="-1"></a>ukvote2019</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:40%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code># A tibble: 3,320 × 13
+   cid     constituency electorate party_name candidate votes vote_share_percent
+   &lt;chr&gt;   &lt;chr&gt;             &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;     &lt;int&gt;              &lt;dbl&gt;
+ 1 W07000… Aberavon          50747 Labour     Stephen … 17008               53.8
+ 2 W07000… Aberavon          50747 Conservat… Charlott…  6518               20.6
+ 3 W07000… Aberavon          50747 The Brexi… Glenda D…  3108                9.8
+ 4 W07000… Aberavon          50747 Plaid Cym… Nigel Hu…  2711                8.6
+ 5 W07000… Aberavon          50747 Liberal D… Sheila K…  1072                3.4
+ 6 W07000… Aberavon          50747 Independe… Captain …   731                2.3
+ 7 W07000… Aberavon          50747 Green      Giorgia …   450                1.4
+ 8 W07000… Aberconwy         44699 Conservat… Robin Mi… 14687               46.1
+ 9 W07000… Aberconwy         44699 Labour     Emily Ow… 12653               39.7
+10 W07000… Aberconwy         44699 Plaid Cym… Lisa Goo…  2704                8.5
+# ℹ 3,310 more rows
+# ℹ 6 more variables: vote_share_change &lt;dbl&gt;, total_votes_cast &lt;int&gt;,
+#   vrank &lt;int&gt;, turnout &lt;dbl&gt;, fname &lt;chr&gt;, lname &lt;chr&gt;</code></pre>
+</div>
+</div>
+</div></div>
+</section>
+<section id="example-politics-and-placenames-2" class="slide level2">
+<h2>Example: Politics and Placenames</h2>
+<div class="columns smallcode">
+<div class="column" style="width:60%;">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb55" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ukelection2019)</span>
+<span id="cb55-2"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-3"><a aria-hidden="true" tabindex="-1"></a>ukvote2019 <span class="sc">|&gt;</span></span>
+<span id="cb55-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(constituency)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:40%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code># A tibble: 3,320 × 13
+# Groups:   constituency [650]
+   cid     constituency electorate party_name candidate votes vote_share_percent
+   &lt;chr&gt;   &lt;chr&gt;             &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;     &lt;int&gt;              &lt;dbl&gt;
+ 1 W07000… Aberavon          50747 Labour     Stephen … 17008               53.8
+ 2 W07000… Aberavon          50747 Conservat… Charlott…  6518               20.6
+ 3 W07000… Aberavon          50747 The Brexi… Glenda D…  3108                9.8
+ 4 W07000… Aberavon          50747 Plaid Cym… Nigel Hu…  2711                8.6
+ 5 W07000… Aberavon          50747 Liberal D… Sheila K…  1072                3.4
+ 6 W07000… Aberavon          50747 Independe… Captain …   731                2.3
+ 7 W07000… Aberavon          50747 Green      Giorgia …   450                1.4
+ 8 W07000… Aberconwy         44699 Conservat… Robin Mi… 14687               46.1
+ 9 W07000… Aberconwy         44699 Labour     Emily Ow… 12653               39.7
+10 W07000… Aberconwy         44699 Plaid Cym… Lisa Goo…  2704                8.5
+# ℹ 3,310 more rows
+# ℹ 6 more variables: vote_share_change &lt;dbl&gt;, total_votes_cast &lt;int&gt;,
+#   vrank &lt;int&gt;, turnout &lt;dbl&gt;, fname &lt;chr&gt;, lname &lt;chr&gt;</code></pre>
+</div>
+</div>
+</div></div>
+</section>
+<section id="example-politics-and-placenames-3" class="slide level2">
+<h2>Example: Politics and Placenames</h2>
+<div class="columns smallcode">
+<div class="column" style="width:60%;">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb57" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ukelection2019)</span>
+<span id="cb57-2"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-3"><a aria-hidden="true" tabindex="-1"></a>ukvote2019 <span class="sc">|&gt;</span></span>
+<span id="cb57-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(constituency) <span class="sc">|&gt;</span></span>
+<span id="cb57-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(votes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:40%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code># A tibble: 650 × 13
+# Groups:   constituency [650]
+   cid     constituency electorate party_name candidate votes vote_share_percent
+   &lt;chr&gt;   &lt;chr&gt;             &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;     &lt;int&gt;              &lt;dbl&gt;
+ 1 W07000… Aberavon          50747 Labour     Stephen … 17008               53.8
+ 2 W07000… Aberconwy         44699 Conservat… Robin Mi… 14687               46.1
+ 3 S14000… Aberdeen No…      62489 Scottish … Kirsty B… 20205               54  
+ 4 S14000… Aberdeen So…      65719 Scottish … Stephen … 20388               44.7
+ 5 S14000… Aberdeenshi…      72640 Conservat… Andrew B… 22752               42.7
+ 6 S14000… Airdrie &amp; S…      64008 Scottish … Neil Gray 17929               45.1
+ 7 E14000… Aldershot         72617 Conservat… Leo Doch… 27980               58.4
+ 8 E14000… Aldridge-Br…      60138 Conservat… Wendy Mo… 27850               70.8
+ 9 E14000… Altrincham …      73096 Conservat… Graham B… 26311               48  
+10 W07000… Alyn &amp; Dees…      62783 Labour     Mark Tami 18271               42.5
+# ℹ 640 more rows
+# ℹ 6 more variables: vote_share_change &lt;dbl&gt;, total_votes_cast &lt;int&gt;,
+#   vrank &lt;int&gt;, turnout &lt;dbl&gt;, fname &lt;chr&gt;, lname &lt;chr&gt;</code></pre>
+</div>
+</div>
+</div></div>
+</section>
+<section id="example-politics-and-placenames-4" class="slide level2">
+<h2>Example: Politics and Placenames</h2>
+<div class="columns smallcode">
+<div class="column" style="width:60%;">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb59" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ukelection2019)</span>
+<span id="cb59-2"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-3"><a aria-hidden="true" tabindex="-1"></a>ukvote2019 <span class="sc">|&gt;</span></span>
+<span id="cb59-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(constituency) <span class="sc">|&gt;</span></span>
+<span id="cb59-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(votes) <span class="sc">|&gt;</span></span>
+<span id="cb59-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:40%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code># A tibble: 650 × 13
+   cid     constituency electorate party_name candidate votes vote_share_percent
+   &lt;chr&gt;   &lt;chr&gt;             &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;     &lt;int&gt;              &lt;dbl&gt;
+ 1 W07000… Aberavon          50747 Labour     Stephen … 17008               53.8
+ 2 W07000… Aberconwy         44699 Conservat… Robin Mi… 14687               46.1
+ 3 S14000… Aberdeen No…      62489 Scottish … Kirsty B… 20205               54  
+ 4 S14000… Aberdeen So…      65719 Scottish … Stephen … 20388               44.7
+ 5 S14000… Aberdeenshi…      72640 Conservat… Andrew B… 22752               42.7
+ 6 S14000… Airdrie &amp; S…      64008 Scottish … Neil Gray 17929               45.1
+ 7 E14000… Aldershot         72617 Conservat… Leo Doch… 27980               58.4
+ 8 E14000… Aldridge-Br…      60138 Conservat… Wendy Mo… 27850               70.8
+ 9 E14000… Altrincham …      73096 Conservat… Graham B… 26311               48  
+10 W07000… Alyn &amp; Dees…      62783 Labour     Mark Tami 18271               42.5
+# ℹ 640 more rows
+# ℹ 6 more variables: vote_share_change &lt;dbl&gt;, total_votes_cast &lt;int&gt;,
+#   vrank &lt;int&gt;, turnout &lt;dbl&gt;, fname &lt;chr&gt;, lname &lt;chr&gt;</code></pre>
+</div>
+</div>
+</div></div>
+</section>
+<section id="example-politics-and-placenames-5" class="slide level2">
+<h2>Example: Politics and Placenames</h2>
+<div class="columns smallcode">
+<div class="column" style="width:60%;">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb61" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ukelection2019)</span>
+<span id="cb61-2"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-3"><a aria-hidden="true" tabindex="-1"></a>ukvote2019 <span class="sc">|&gt;</span></span>
+<span id="cb61-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(constituency) <span class="sc">|&gt;</span></span>
+<span id="cb61-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(votes) <span class="sc">|&gt;</span></span>
+<span id="cb61-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
+<span id="cb61-7"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(constituency, party_name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:40%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code># A tibble: 650 × 2
+   constituency                    party_name             
+   &lt;chr&gt;                           &lt;chr&gt;                  
+ 1 Aberavon                        Labour                 
+ 2 Aberconwy                       Conservative           
+ 3 Aberdeen North                  Scottish National Party
+ 4 Aberdeen South                  Scottish National Party
+ 5 Aberdeenshire West &amp; Kincardine Conservative           
+ 6 Airdrie &amp; Shotts                Scottish National Party
+ 7 Aldershot                       Conservative           
+ 8 Aldridge-Brownhills             Conservative           
+ 9 Altrincham &amp; Sale West          Conservative           
+10 Alyn &amp; Deeside                  Labour                 
+# ℹ 640 more rows</code></pre>
+</div>
+</div>
+</div></div>
+</section>
+<section id="example-politics-and-placenames-6" class="slide level2">
+<h2>Example: Politics and Placenames</h2>
+<div class="columns smallcode">
+<div class="column" style="width:60%;">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb63" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ukelection2019)</span>
+<span id="cb63-2"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-3"><a aria-hidden="true" tabindex="-1"></a>ukvote2019 <span class="sc">|&gt;</span></span>
+<span id="cb63-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(constituency) <span class="sc">|&gt;</span></span>
+<span id="cb63-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(votes) <span class="sc">|&gt;</span></span>
+<span id="cb63-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
+<span id="cb63-7"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(constituency, party_name) <span class="sc">|&gt;</span></span>
+<span id="cb63-8"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">shire =</span> <span class="fu">str_detect</span>(constituency, <span class="st">"shire"</span>),</span>
+<span id="cb63-9"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">field =</span> <span class="fu">str_detect</span>(constituency, <span class="st">"field"</span>),</span>
+<span id="cb63-10"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">dale =</span> <span class="fu">str_detect</span>(constituency, <span class="st">"dale"</span>),</span>
+<span id="cb63-11"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">pool =</span> <span class="fu">str_detect</span>(constituency, <span class="st">"pool"</span>),</span>
+<span id="cb63-12"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">ton =</span> <span class="fu">str_detect</span>(constituency, <span class="st">"(ton$)|(ton )"</span>),</span>
+<span id="cb63-13"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">wood =</span> <span class="fu">str_detect</span>(constituency, <span class="st">"(wood$)|(wood )"</span>),</span>
+<span id="cb63-14"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">saint =</span> <span class="fu">str_detect</span>(constituency, <span class="st">"(St )|(Saint)"</span>),</span>
+<span id="cb63-15"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">port =</span> <span class="fu">str_detect</span>(constituency, <span class="st">"(Port)|(port)"</span>),</span>
+<span id="cb63-16"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">ford =</span> <span class="fu">str_detect</span>(constituency, <span class="st">"(ford$)|(ford )"</span>),</span>
+<span id="cb63-17"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">by =</span> <span class="fu">str_detect</span>(constituency, <span class="st">"(by$)|(by )"</span>),</span>
+<span id="cb63-18"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">boro =</span> <span class="fu">str_detect</span>(constituency, <span class="st">"(boro$)|(boro )|(borough$)|(borough )"</span>),</span>
+<span id="cb63-19"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">ley =</span> <span class="fu">str_detect</span>(constituency, <span class="st">"(ley$)|(ley )|(leigh$)|(leigh )"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:40%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code># A tibble: 650 × 14
+   constituency party_name shire field dale  pool  ton   wood  saint port  ford 
+   &lt;chr&gt;        &lt;chr&gt;      &lt;lgl&gt; &lt;lgl&gt; &lt;lgl&gt; &lt;lgl&gt; &lt;lgl&gt; &lt;lgl&gt; &lt;lgl&gt; &lt;lgl&gt; &lt;lgl&gt;
+ 1 Aberavon     Labour     FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ 2 Aberconwy    Conservat… FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ 3 Aberdeen No… Scottish … FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ 4 Aberdeen So… Scottish … FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ 5 Aberdeenshi… Conservat… TRUE  FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ 6 Airdrie &amp; S… Scottish … FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ 7 Aldershot    Conservat… FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ 8 Aldridge-Br… Conservat… FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ 9 Altrincham … Conservat… FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+10 Alyn &amp; Dees… Labour     FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+# ℹ 640 more rows
+# ℹ 3 more variables: by &lt;lgl&gt;, boro &lt;lgl&gt;, ley &lt;lgl&gt;</code></pre>
+</div>
+</div>
+</div></div>
+</section>
+<section id="example-politics-and-placenames-7" class="slide level2">
+<h2>Example: Politics and Placenames</h2>
+<div class="columns smallcode">
+<div class="column" style="width:60%;">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb65" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ukelection2019)</span>
+<span id="cb65-2"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-3"><a aria-hidden="true" tabindex="-1"></a>ukvote2019 <span class="sc">|&gt;</span></span>
+<span id="cb65-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(constituency) <span class="sc">|&gt;</span></span>
+<span id="cb65-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(votes) <span class="sc">|&gt;</span></span>
+<span id="cb65-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
+<span id="cb65-7"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(constituency, party_name) <span class="sc">|&gt;</span></span>
+<span id="cb65-8"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">shire =</span> <span class="fu">str_detect</span>(constituency, <span class="st">"shire"</span>),</span>
+<span id="cb65-9"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">field =</span> <span class="fu">str_detect</span>(constituency, <span class="st">"field"</span>),</span>
+<span id="cb65-10"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">dale =</span> <span class="fu">str_detect</span>(constituency, <span class="st">"dale"</span>),</span>
+<span id="cb65-11"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">pool =</span> <span class="fu">str_detect</span>(constituency, <span class="st">"pool"</span>),</span>
+<span id="cb65-12"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">ton =</span> <span class="fu">str_detect</span>(constituency, <span class="st">"(ton$)|(ton )"</span>),</span>
+<span id="cb65-13"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">wood =</span> <span class="fu">str_detect</span>(constituency, <span class="st">"(wood$)|(wood )"</span>),</span>
+<span id="cb65-14"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">saint =</span> <span class="fu">str_detect</span>(constituency, <span class="st">"(St )|(Saint)"</span>),</span>
+<span id="cb65-15"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">port =</span> <span class="fu">str_detect</span>(constituency, <span class="st">"(Port)|(port)"</span>),</span>
+<span id="cb65-16"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">ford =</span> <span class="fu">str_detect</span>(constituency, <span class="st">"(ford$)|(ford )"</span>),</span>
+<span id="cb65-17"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">by =</span> <span class="fu">str_detect</span>(constituency, <span class="st">"(by$)|(by )"</span>),</span>
+<span id="cb65-18"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">boro =</span> <span class="fu">str_detect</span>(constituency, <span class="st">"(boro$)|(boro )|(borough$)|(borough )"</span>),</span>
+<span id="cb65-19"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">ley =</span> <span class="fu">str_detect</span>(constituency, <span class="st">"(ley$)|(ley )|(leigh$)|(leigh )"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb65-20"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(shire<span class="sc">:</span>ley, <span class="at">names_to =</span> <span class="st">"toponym"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:40%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code># A tibble: 7,800 × 4
+   constituency party_name toponym value
+   &lt;chr&gt;        &lt;chr&gt;      &lt;chr&gt;   &lt;lgl&gt;
+ 1 Aberavon     Labour     shire   FALSE
+ 2 Aberavon     Labour     field   FALSE
+ 3 Aberavon     Labour     dale    FALSE
+ 4 Aberavon     Labour     pool    FALSE
+ 5 Aberavon     Labour     ton     FALSE
+ 6 Aberavon     Labour     wood    FALSE
+ 7 Aberavon     Labour     saint   FALSE
+ 8 Aberavon     Labour     port    FALSE
+ 9 Aberavon     Labour     ford    FALSE
+10 Aberavon     Labour     by      FALSE
+# ℹ 7,790 more rows</code></pre>
+</div>
+</div>
+</div></div>
+</section>
+<section id="example-politics-and-placenames-8" class="slide level2">
+<h2>Example: Politics and Placenames</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb67" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a aria-hidden="true" tabindex="-1"></a>place_tab <span class="ot">&lt;-</span> ukvote2019 <span class="sc">|&gt;</span> </span>
+<span id="cb67-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(constituency) <span class="sc">|&gt;</span> </span>
+<span id="cb67-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(votes) <span class="sc">|&gt;</span> </span>
+<span id="cb67-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb67-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(constituency, party_name) <span class="sc">|&gt;</span> </span>
+<span id="cb67-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">shire =</span> <span class="fu">str_detect</span>(constituency, <span class="st">"shire"</span>),</span>
+<span id="cb67-7"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">field =</span> <span class="fu">str_detect</span>(constituency, <span class="st">"field"</span>),</span>
+<span id="cb67-8"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">dale =</span> <span class="fu">str_detect</span>(constituency, <span class="st">"dale"</span>),</span>
+<span id="cb67-9"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">pool =</span> <span class="fu">str_detect</span>(constituency, <span class="st">"pool"</span>),</span>
+<span id="cb67-10"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">ton =</span> <span class="fu">str_detect</span>(constituency, <span class="st">"(ton$)|(ton )"</span>),</span>
+<span id="cb67-11"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">wood =</span> <span class="fu">str_detect</span>(constituency, <span class="st">"(wood$)|(wood )"</span>),</span>
+<span id="cb67-12"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">saint =</span> <span class="fu">str_detect</span>(constituency, <span class="st">"(St )|(Saint)"</span>),</span>
+<span id="cb67-13"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">port =</span> <span class="fu">str_detect</span>(constituency, <span class="st">"(Port)|(port)"</span>),</span>
+<span id="cb67-14"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">ford =</span> <span class="fu">str_detect</span>(constituency, <span class="st">"(ford$)|(ford )"</span>),</span>
+<span id="cb67-15"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">by =</span> <span class="fu">str_detect</span>(constituency, <span class="st">"(by$)|(by )"</span>),</span>
+<span id="cb67-16"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">boro =</span> <span class="fu">str_detect</span>(constituency, <span class="st">"(boro$)|(boro )|(borough$)|(borough )"</span>),</span>
+<span id="cb67-17"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">ley =</span> <span class="fu">str_detect</span>(constituency, <span class="st">"(ley$)|(ley )|(leigh$)|(leigh )"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb67-18"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(shire<span class="sc">:</span>ley, <span class="at">names_to =</span> <span class="st">"toponym"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="example-politics-and-placenames-9" class="slide level2">
+<h2>Example: Politics and Placenames</h2>
+<div class="columns smallcode">
+<div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb68" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a aria-hidden="true" tabindex="-1"></a>place_tab</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code># A tibble: 7,800 × 4
+   constituency party_name toponym value
+   &lt;chr&gt;        &lt;chr&gt;      &lt;chr&gt;   &lt;lgl&gt;
+ 1 Aberavon     Labour     shire   FALSE
+ 2 Aberavon     Labour     field   FALSE
+ 3 Aberavon     Labour     dale    FALSE
+ 4 Aberavon     Labour     pool    FALSE
+ 5 Aberavon     Labour     ton     FALSE
+ 6 Aberavon     Labour     wood    FALSE
+ 7 Aberavon     Labour     saint   FALSE
+ 8 Aberavon     Labour     port    FALSE
+ 9 Aberavon     Labour     ford    FALSE
+10 Aberavon     Labour     by      FALSE
+# ℹ 7,790 more rows</code></pre>
+</div>
+</div>
+</div></div>
+</section>
+<section id="example-politics-and-placenames-10" class="slide level2">
+<h2>Example: Politics and Placenames</h2>
+<div class="columns smallcode">
+<div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb70" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a aria-hidden="true" tabindex="-1"></a>place_tab <span class="sc">|&gt;</span></span>
+<span id="cb70-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(party_name, toponym)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code># A tibble: 7,800 × 4
+# Groups:   party_name, toponym [120]
+   constituency party_name toponym value
+   &lt;chr&gt;        &lt;chr&gt;      &lt;chr&gt;   &lt;lgl&gt;
+ 1 Aberavon     Labour     shire   FALSE
+ 2 Aberavon     Labour     field   FALSE
+ 3 Aberavon     Labour     dale    FALSE
+ 4 Aberavon     Labour     pool    FALSE
+ 5 Aberavon     Labour     ton     FALSE
+ 6 Aberavon     Labour     wood    FALSE
+ 7 Aberavon     Labour     saint   FALSE
+ 8 Aberavon     Labour     port    FALSE
+ 9 Aberavon     Labour     ford    FALSE
+10 Aberavon     Labour     by      FALSE
+# ℹ 7,790 more rows</code></pre>
+</div>
+</div>
+</div></div>
+</section>
+<section id="example-politics-and-placenames-11" class="slide level2">
+<h2>Example: Politics and Placenames</h2>
+<div class="columns smallcode">
+<div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb72" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a aria-hidden="true" tabindex="-1"></a>place_tab <span class="sc">|&gt;</span></span>
+<span id="cb72-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(party_name, toponym) <span class="sc">|&gt;</span></span>
+<span id="cb72-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(party_name <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Conservative"</span>, <span class="st">"Labour"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code># A tibble: 6,816 × 4
+# Groups:   party_name, toponym [24]
+   constituency party_name toponym value
+   &lt;chr&gt;        &lt;chr&gt;      &lt;chr&gt;   &lt;lgl&gt;
+ 1 Aberavon     Labour     shire   FALSE
+ 2 Aberavon     Labour     field   FALSE
+ 3 Aberavon     Labour     dale    FALSE
+ 4 Aberavon     Labour     pool    FALSE
+ 5 Aberavon     Labour     ton     FALSE
+ 6 Aberavon     Labour     wood    FALSE
+ 7 Aberavon     Labour     saint   FALSE
+ 8 Aberavon     Labour     port    FALSE
+ 9 Aberavon     Labour     ford    FALSE
+10 Aberavon     Labour     by      FALSE
+# ℹ 6,806 more rows</code></pre>
+</div>
+</div>
+</div></div>
+</section>
+<section id="example-politics-and-placenames-12" class="slide level2">
+<h2>Example: Politics and Placenames</h2>
+<div class="columns smallcode">
+<div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb74" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a aria-hidden="true" tabindex="-1"></a>place_tab <span class="sc">|&gt;</span></span>
+<span id="cb74-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(party_name, toponym) <span class="sc">|&gt;</span></span>
+<span id="cb74-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(party_name <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Conservative"</span>, <span class="st">"Labour"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb74-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(toponym, party_name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code># A tibble: 6,816 × 4
+# Groups:   toponym, party_name [24]
+   constituency party_name toponym value
+   &lt;chr&gt;        &lt;chr&gt;      &lt;chr&gt;   &lt;lgl&gt;
+ 1 Aberavon     Labour     shire   FALSE
+ 2 Aberavon     Labour     field   FALSE
+ 3 Aberavon     Labour     dale    FALSE
+ 4 Aberavon     Labour     pool    FALSE
+ 5 Aberavon     Labour     ton     FALSE
+ 6 Aberavon     Labour     wood    FALSE
+ 7 Aberavon     Labour     saint   FALSE
+ 8 Aberavon     Labour     port    FALSE
+ 9 Aberavon     Labour     ford    FALSE
+10 Aberavon     Labour     by      FALSE
+# ℹ 6,806 more rows</code></pre>
+</div>
+</div>
+</div></div>
+</section>
+<section id="example-politics-and-placenames-13" class="slide level2">
+<h2>Example: Politics and Placenames</h2>
+<div class="columns smallcode">
+<div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb76" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a aria-hidden="true" tabindex="-1"></a>place_tab <span class="sc">|&gt;</span></span>
+<span id="cb76-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(party_name, toponym) <span class="sc">|&gt;</span></span>
+<span id="cb76-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(party_name <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Conservative"</span>, <span class="st">"Labour"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb76-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(toponym, party_name) <span class="sc">|&gt;</span></span>
+<span id="cb76-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">freq =</span> <span class="fu">sum</span>(value))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code># A tibble: 24 × 3
+# Groups:   toponym [12]
+   toponym party_name    freq
+   &lt;chr&gt;   &lt;chr&gt;        &lt;int&gt;
+ 1 boro    Conservative     7
+ 2 boro    Labour           1
+ 3 by      Conservative     6
+ 4 by      Labour           2
+ 5 dale    Conservative     3
+ 6 dale    Labour           1
+ 7 field   Conservative    10
+ 8 field   Labour          10
+ 9 ford    Conservative    17
+10 ford    Labour          12
+# ℹ 14 more rows</code></pre>
+</div>
+</div>
+</div></div>
+</section>
+<section id="example-politics-and-placenames-14" class="slide level2">
+<h2>Example: Politics and Placenames</h2>
+<div class="columns smallcode">
+<div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb78" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a aria-hidden="true" tabindex="-1"></a>place_tab <span class="sc">|&gt;</span></span>
+<span id="cb78-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(party_name, toponym) <span class="sc">|&gt;</span></span>
+<span id="cb78-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(party_name <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Conservative"</span>, <span class="st">"Labour"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb78-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(toponym, party_name) <span class="sc">|&gt;</span></span>
+<span id="cb78-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">freq =</span> <span class="fu">sum</span>(value)) <span class="sc">|&gt;</span></span>
+<span id="cb78-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pct =</span> freq<span class="sc">/</span><span class="fu">sum</span>(freq))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code># A tibble: 24 × 4
+# Groups:   toponym [12]
+   toponym party_name    freq   pct
+   &lt;chr&gt;   &lt;chr&gt;        &lt;int&gt; &lt;dbl&gt;
+ 1 boro    Conservative     7 0.875
+ 2 boro    Labour           1 0.125
+ 3 by      Conservative     6 0.75 
+ 4 by      Labour           2 0.25 
+ 5 dale    Conservative     3 0.75 
+ 6 dale    Labour           1 0.25 
+ 7 field   Conservative    10 0.5  
+ 8 field   Labour          10 0.5  
+ 9 ford    Conservative    17 0.586
+10 ford    Labour          12 0.414
+# ℹ 14 more rows</code></pre>
+</div>
+</div>
+</div></div>
+</section>
+<section id="example-politics-and-placenames-15" class="slide level2">
+<h2>Example: Politics and Placenames</h2>
+<div class="columns smallcode">
+<div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb80" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a aria-hidden="true" tabindex="-1"></a>place_tab <span class="sc">|&gt;</span></span>
+<span id="cb80-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(party_name, toponym) <span class="sc">|&gt;</span></span>
+<span id="cb80-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(party_name <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Conservative"</span>, <span class="st">"Labour"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb80-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(toponym, party_name) <span class="sc">|&gt;</span></span>
+<span id="cb80-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">freq =</span> <span class="fu">sum</span>(value)) <span class="sc">|&gt;</span></span>
+<span id="cb80-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pct =</span> freq<span class="sc">/</span><span class="fu">sum</span>(freq)) <span class="sc">|&gt;</span></span>
+<span id="cb80-7"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(party_name <span class="sc">==</span> <span class="st">"Conservative"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code># A tibble: 12 × 4
+# Groups:   toponym [12]
+   toponym party_name    freq   pct
+   &lt;chr&gt;   &lt;chr&gt;        &lt;int&gt; &lt;dbl&gt;
+ 1 boro    Conservative     7 0.875
+ 2 by      Conservative     6 0.75 
+ 3 dale    Conservative     3 0.75 
+ 4 field   Conservative    10 0.5  
+ 5 ford    Conservative    17 0.586
+ 6 ley     Conservative    26 0.722
+ 7 pool    Conservative     2 0.286
+ 8 port    Conservative     3 0.333
+ 9 saint   Conservative     3 0.5  
+10 shire   Conservative    37 0.974
+11 ton     Conservative    37 0.507
+12 wood    Conservative     7 0.636</code></pre>
+</div>
+</div>
+</div></div>
+</section>
+<section id="example-politics-and-placenames-16" class="slide level2">
+<h2>Example: Politics and Placenames</h2>
+<div class="columns smallcode">
+<div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb82" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a aria-hidden="true" tabindex="-1"></a>place_tab <span class="sc">|&gt;</span></span>
+<span id="cb82-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(party_name, toponym) <span class="sc">|&gt;</span></span>
+<span id="cb82-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(party_name <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Conservative"</span>, <span class="st">"Labour"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb82-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(toponym, party_name) <span class="sc">|&gt;</span></span>
+<span id="cb82-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">freq =</span> <span class="fu">sum</span>(value)) <span class="sc">|&gt;</span></span>
+<span id="cb82-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pct =</span> freq<span class="sc">/</span><span class="fu">sum</span>(freq)) <span class="sc">|&gt;</span></span>
+<span id="cb82-7"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(party_name <span class="sc">==</span> <span class="st">"Conservative"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb82-8"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(pct))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code># A tibble: 12 × 4
+# Groups:   toponym [12]
+   toponym party_name    freq   pct
+   &lt;chr&gt;   &lt;chr&gt;        &lt;int&gt; &lt;dbl&gt;
+ 1 shire   Conservative    37 0.974
+ 2 boro    Conservative     7 0.875
+ 3 by      Conservative     6 0.75 
+ 4 dale    Conservative     3 0.75 
+ 5 ley     Conservative    26 0.722
+ 6 wood    Conservative     7 0.636
+ 7 ford    Conservative    17 0.586
+ 8 ton     Conservative    37 0.507
+ 9 field   Conservative    10 0.5  
+10 saint   Conservative     3 0.5  
+11 port    Conservative     3 0.333
+12 pool    Conservative     2 0.286</code></pre>
+</div>
+</div>
+</div></div>
+</section>
+<section id="example-politics-and-placenames-17" class="slide level2">
+<h2>Example: Politics and Placenames</h2>
+<div class="columns smallcode">
+<div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb84" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a aria-hidden="true" tabindex="-1"></a>place_tab <span class="sc">|&gt;</span></span>
+<span id="cb84-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(party_name, toponym) <span class="sc">|&gt;</span></span>
+<span id="cb84-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(party_name <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Conservative"</span>, <span class="st">"Labour"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb84-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(toponym, party_name) <span class="sc">|&gt;</span></span>
+<span id="cb84-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">freq =</span> <span class="fu">sum</span>(value)) <span class="sc">|&gt;</span></span>
+<span id="cb84-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pct =</span> freq<span class="sc">/</span><span class="fu">sum</span>(freq)) <span class="sc">|&gt;</span></span>
+<span id="cb84-7"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(party_name <span class="sc">==</span> <span class="st">"Conservative"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb84-8"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(pct))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code># A tibble: 12 × 4
+# Groups:   toponym [12]
+   toponym party_name    freq   pct
+   &lt;chr&gt;   &lt;chr&gt;        &lt;int&gt; &lt;dbl&gt;
+ 1 shire   Conservative    37 0.974
+ 2 boro    Conservative     7 0.875
+ 3 by      Conservative     6 0.75 
+ 4 dale    Conservative     3 0.75 
+ 5 ley     Conservative    26 0.722
+ 6 wood    Conservative     7 0.636
+ 7 ford    Conservative    17 0.586
+ 8 ton     Conservative    37 0.507
+ 9 field   Conservative    10 0.5  
+10 saint   Conservative     3 0.5  
+11 port    Conservative     3 0.333
+12 pool    Conservative     2 0.286</code></pre>
+</div>
+</div>
+</div></div>
+
+<div class="quarto-auto-generated-content">
+<div class="footer footer-default">
+
+</div>
+</div>
+</section></section>
+    </div>
+  </div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'fade',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'slow',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
+      const onCopySuccess = function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
+      });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp("https:\/\/kjhealy\.github\.io\/data_wrangling");
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+        const config = {
+          allowHTML: true,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start',
+        };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
+    
+
+<script src="../site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.js" defer="true"></script>
+</body></html>

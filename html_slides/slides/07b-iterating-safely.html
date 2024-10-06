@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.css" rel="stylesheet"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.5.54">
+
+  <meta name="author" content="Kieran Healy">
+  <meta name="dcterms.date" content="2024-10-02">
+  <title>Data Wrangling with R and the Tidyverse – Iterating Safely</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #f5bde6; background-color: #24273a; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #cad3f5; } /* Normal */
+    code span.al { color: #ed8796; font-weight: bold; } /* Alert */
+    code span.an { color: #eed49f; } /* Annotation */
+    code span.at { color: #b7bdf8; } /* Attribute */
+    code span.bn { color: #ed8796; } /* BaseN */
+    code span.bu { color: #ed8796; } /* BuiltIn */
+    code span.cf { color: #c6a0f6; } /* ControlFlow */
+    code span.ch { color: #f5bde6; } /* Char */
+    code span.cn { color: #8aadf4; } /* Constant */
+    code span.co { color: #6e738d; font-style: italic; } /* Comment */
+    code span.cv { color: #6e738d; font-style: italic; } /* CommentVar */
+    code span.do { color: #ed8796; } /* Documentation */
+    code span.dt { color: #c6a0f6; } /* DataType */
+    code span.dv { color: #f5a97f; } /* DecVal */
+    code span.er { color: #ed8796; text-decoration: underline; } /* Error */
+    code span.ex { color: #8aadf4; } /* Extension */
+    code span.fl { color: #f5a97f; } /* Float */
+    code span.fu { color: #8aadf4; } /* Function */
+    code span.im { color: #a6da95; } /* Import */
+    code span.in { color: #f5a97f; } /* Information */
+    code span.kw { color: #c6a0f6; } /* Keyword */
+    code span.op { color: #91d7e3; } /* Operator */
+    code span.ot { color: #f5a97f; } /* Other */
+    code span.pp { color: #f5bde6; } /* Preprocessor */
+    code span.re { color: #6e738d; font-style: italic; } /* RegionMarker */
+    code span.sc { color: #f5bde6; } /* SpecialChar */
+    code span.ss { color: #ed8796; } /* SpecialString */
+    code span.st { color: #a6da95; } /* String */
+    code span.va { color: #f5bde6; } /* Variable */
+    code span.vs { color: #ed8796; } /* VerbatimString */
+    code span.wa { color: #f5a97f; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+
+  .callout {
+    margin-top: 1em;
+    margin-bottom: 1em;  
+    border-radius: .25rem;
+  }
+
+  .callout.callout-style-simple { 
+    padding: 0em 0.5em;
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+    display: flex;
+  }
+
+  .callout.callout-style-default {
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+  }
+
+  .callout .callout-body-container {
+    flex-grow: 1;
+  }
+
+  .callout.callout-style-simple .callout-body {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-style-default .callout-body {
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-titled.callout-style-simple .callout-body {
+    margin-top: 0.2em;
+  }
+
+  .callout:not(.callout-titled) .callout-body {
+      display: flex;
+  }
+
+  .callout:not(.no-icon).callout-titled.callout-style-simple .callout-content {
+    padding-left: 1.6em;
+  }
+
+  .callout.callout-titled .callout-header {
+    padding-top: 0.2em;
+    margin-bottom: -0.2em;
+  }
+
+  .callout.callout-titled .callout-title  p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+    
+  .callout.callout-titled.callout-style-simple .callout-content  p {
+    margin-top: 0;
+  }
+
+  .callout.callout-titled.callout-style-default .callout-content  p {
+    margin-top: 0.7em;
+  }
+
+  .callout.callout-style-simple div.callout-title {
+    border-bottom: none;
+    font-size: .9rem;
+    font-weight: 600;
+    opacity: 75%;
+  }
+
+  .callout.callout-style-default  div.callout-title {
+    border-bottom: none;
+    font-weight: 600;
+    opacity: 85%;
+    font-size: 0.9rem;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-default div.callout-content {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-simple .callout-icon::before {
+    height: 1rem;
+    width: 1rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 1rem 1rem;
+  }
+
+  .callout.callout-style-default .callout-icon::before {
+    height: 0.9rem;
+    width: 0.9rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 0.9rem 0.9rem;
+  }
+
+  .callout-title {
+    display: flex
+  }
+    
+  .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  .callout.no-icon::before {
+    display: none !important;
+  }
+
+  .callout.callout-titled .callout-body > .callout-content > :last-child {
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
+  }
+
+  .callout.callout-titled .callout-icon::before {
+    margin-top: .5rem;
+    padding-right: .5rem;
+  }
+
+  .callout:not(.callout-titled) .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  /* Callout Types */
+
+  div.callout-note {
+    border-left-color: #4582ec !important;
+  }
+
+  div.callout-note .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
+  }
+
+  div.callout-note.callout-style-default .callout-title {
+    background-color: #dae6fb
+  }
+
+  div.callout-important {
+    border-left-color: #d9534f !important;
+  }
+
+  div.callout-important .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-important.callout-style-default .callout-title {
+    background-color: #f7dddc
+  }
+
+  div.callout-warning {
+    border-left-color: #f0ad4e !important;
+  }
+
+  div.callout-warning .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-warning.callout-style-default .callout-title {
+    background-color: #fcefdc
+  }
+
+  div.callout-tip {
+    border-left-color: #02b875 !important;
+  }
+
+  div.callout-tip .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-tip.callout-style-default .callout-title {
+    background-color: #ccf1e3
+  }
+
+  div.callout-caution {
+    border-left-color: #fd7e14 !important;
+  }
+
+  div.callout-caution .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
+  }
+
+  div.callout-caution.callout-style-default .callout-title {
+    background-color: #ffe5d0
+  }
+
+  </style>
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" data-background-color="#252F3E" class="quarto-title-block center">
+  <h1 class="title">Iterating Safely</h1>
+  <p class="subtitle">Data Wrangling, Session 7b</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Kieran Healy 
+</div>
+        <p class="quarto-title-affiliation">
+            Code Horizons
+          </p>
+    </div>
+</div>
+
+  <p class="date">October 2, 2024</p>
+</section>
+<section>
+<section id="safely-iterating-with-purrr-and-map" class="title-slide slide level1 inv-title center" data-background-color="#252F3E">
+<h1><span class="fg-green">Safely</span> iterating with <span class="fg-yellow">purrr</span> and <span class="fg-yellow">map</span></h1>
+
+</section>
+<section id="load-the-packages-as-always" class="slide level2">
+<h2>Load the packages, as always</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)      <span class="co"># manage file paths</span></span>
+<span id="cb1-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(socviz)    <span class="co"># data and some useful functions</span></span>
+<span id="cb1-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co"># your friend and mine</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="additional-libraries" class="slide level2">
+<h2>Additional libraries</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survey)</span>
+<span id="cb2-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(srvyr)</span>
+<span id="cb2-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb2-4"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gssr) <span class="co"># https://kjhealy.github.io/gssr</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="the-complete-gss" class="slide level2">
+<h2>The complete GSS</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(gss_all)</span>
+<span id="cb3-2"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a aria-hidden="true" tabindex="-1"></a>gss_all</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code># A tibble: 72,390 × 6,694
+   year         id wrkstat    hrs1        hrs2        evwork      occ   prestige
+   &lt;dbl+lbl&gt; &lt;dbl&gt; &lt;dbl+lbl&gt;  &lt;dbl+lbl&gt;   &lt;dbl+lbl&gt;   &lt;dbl+lbl&gt;   &lt;dbl&gt; &lt;dbl+lb&gt;
+ 1 1972          1 1 [workin… NA(i) [iap] NA(i) [iap] NA(i) [iap] 205   50      
+ 2 1972          2 5 [retire… NA(i) [iap] NA(i) [iap]     1 [yes] 441   45      
+ 3 1972          3 2 [workin… NA(i) [iap] NA(i) [iap] NA(i) [iap] 270   44      
+ 4 1972          4 1 [workin… NA(i) [iap] NA(i) [iap] NA(i) [iap]   1   57      
+ 5 1972          5 7 [keepin… NA(i) [iap] NA(i) [iap]     1 [yes] 385   40      
+ 6 1972          6 1 [workin… NA(i) [iap] NA(i) [iap] NA(i) [iap] 281   49      
+ 7 1972          7 1 [workin… NA(i) [iap] NA(i) [iap] NA(i) [iap] 522   41      
+ 8 1972          8 1 [workin… NA(i) [iap] NA(i) [iap] NA(i) [iap] 314   36      
+ 9 1972          9 2 [workin… NA(i) [iap] NA(i) [iap] NA(i) [iap] 912   26      
+10 1972         10 1 [workin… NA(i) [iap] NA(i) [iap] NA(i) [iap] 984   18      
+# ℹ 72,380 more rows
+# ℹ 6,686 more variables: wrkslf &lt;dbl+lbl&gt;, wrkgovt &lt;dbl+lbl&gt;,
+#   commute &lt;dbl+lbl&gt;, industry &lt;dbl+lbl&gt;, occ80 &lt;dbl+lbl&gt;, prestg80 &lt;dbl+lbl&gt;,
+#   indus80 &lt;dbl+lbl&gt;, indus07 &lt;dbl+lbl&gt;, occonet &lt;dbl+lbl&gt;, found &lt;dbl+lbl&gt;,
+#   occ10 &lt;dbl+lbl&gt;, occindv &lt;dbl+lbl&gt;, occstatus &lt;dbl+lbl&gt;, occtag &lt;dbl+lbl&gt;,
+#   prestg10 &lt;dbl+lbl&gt;, prestg105plus &lt;dbl+lbl&gt;, indus10 &lt;dbl+lbl&gt;,
+#   indstatus &lt;dbl+lbl&gt;, indtag &lt;dbl+lbl&gt;, marital &lt;dbl+lbl&gt;, …</code></pre>
+</div>
+</div>
+</section>
+<section id="set-up-our-analysis" class="slide level2">
+<h2>Set up our analysis</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb5" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-hidden="true" tabindex="-1"></a>cont_vars <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"year"</span>, <span class="st">"id"</span>, <span class="st">"ballot"</span>, <span class="st">"age"</span>)</span>
+<span id="cb5-2"><a aria-hidden="true" tabindex="-1"></a>cat_vars <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"race"</span>, <span class="st">"sex"</span>, <span class="st">"fefam"</span>)</span>
+<span id="cb5-3"><a aria-hidden="true" tabindex="-1"></a>wt_vars <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"vpsu"</span>,</span>
+<span id="cb5-4"><a aria-hidden="true" tabindex="-1"></a>             <span class="st">"vstrat"</span>,</span>
+<span id="cb5-5"><a aria-hidden="true" tabindex="-1"></a>             <span class="st">"oversamp"</span>,</span>
+<span id="cb5-6"><a aria-hidden="true" tabindex="-1"></a>             <span class="st">"formwt"</span>,              <span class="co"># weight to deal with experimental randomization</span></span>
+<span id="cb5-7"><a aria-hidden="true" tabindex="-1"></a>             <span class="st">"wtssall"</span>,             <span class="co"># main weight variable</span></span>
+<span id="cb5-8"><a aria-hidden="true" tabindex="-1"></a>             <span class="st">"sampcode"</span>,            <span class="co"># sampling error code</span></span>
+<span id="cb5-9"><a aria-hidden="true" tabindex="-1"></a>             <span class="st">"sample"</span>)              <span class="co"># sampling frame and method</span></span>
+<span id="cb5-10"><a aria-hidden="true" tabindex="-1"></a>my_vars <span class="ot">&lt;-</span> <span class="fu">c</span>(cont_vars, cat_vars, wt_vars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="clean-the-labeled-variables" class="slide level2">
+<h2>Clean the labeled variables</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb6" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-hidden="true" tabindex="-1"></a>gss_df <span class="ot">&lt;-</span> gss_all <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">&gt;</span> <span class="dv">1974</span> <span class="sc">&amp;</span> year <span class="sc">&lt;</span> <span class="dv">2021</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb6-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">all_of</span>(my_vars)) <span class="sc">|&gt;</span> </span>
+<span id="cb6-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), haven<span class="sc">::</span>zap_missing), <span class="co"># Convert labeled missing to regular NA</span></span>
+<span id="cb6-5"><a aria-hidden="true" tabindex="-1"></a>         <span class="fu">across</span>(<span class="fu">all_of</span>(wt_vars), as.numeric),</span>
+<span id="cb6-6"><a aria-hidden="true" tabindex="-1"></a>         <span class="fu">across</span>(<span class="fu">all_of</span>(cat_vars), as_factor), </span>
+<span id="cb6-7"><a aria-hidden="true" tabindex="-1"></a>         <span class="fu">across</span>(<span class="fu">all_of</span>(cat_vars), fct_relabel, tolower),</span>
+<span id="cb6-8"><a aria-hidden="true" tabindex="-1"></a>         <span class="fu">across</span>(<span class="fu">all_of</span>(cat_vars), fct_relabel, tools<span class="sc">::</span>toTitleCase),</span>
+<span id="cb6-9"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">compwt =</span> oversamp <span class="sc">*</span> formwt <span class="sc">*</span> wtssall)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="working-dataset" class="slide level2">
+<h2>Working dataset</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb7" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-hidden="true" tabindex="-1"></a>gss_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code># A tibble: 60,213 × 15
+   year         id ballot   age   race  sex   fefam  vpsu vstrat oversamp formwt
+   &lt;dbl+lbl&gt; &lt;dbl&gt; &lt;dbl+lb&gt; &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt; &lt;fct&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;
+ 1 1975          1 NA       38    White Male  &lt;NA&gt;      1   7001        1     NA
+ 2 1975          2 NA       20    White Fema… &lt;NA&gt;      1   7001        1     NA
+ 3 1975          3 NA       61    White Fema… &lt;NA&gt;      1   7001        1     NA
+ 4 1975          4 NA       19    White Male  &lt;NA&gt;      1   7001        1     NA
+ 5 1975          5 NA       28    White Male  &lt;NA&gt;      1   7001        1     NA
+ 6 1975          6 NA       28    White Fema… &lt;NA&gt;      1   7002        1     NA
+ 7 1975          7 NA       35    White Fema… &lt;NA&gt;      1   7002        1     NA
+ 8 1975          8 NA       64    White Fema… &lt;NA&gt;      1   7002        1     NA
+ 9 1975          9 NA       53    White Male  &lt;NA&gt;      1   7002        1     NA
+10 1975         10 NA       34    White Fema… &lt;NA&gt;      1   7002        1     NA
+# ℹ 60,203 more rows
+# ℹ 4 more variables: wtssall &lt;dbl&gt;, sampcode &lt;dbl&gt;, sample &lt;dbl&gt;, compwt &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="the-fefam-question" class="slide level2">
+<h2>The <code>fefam</code> question</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb9" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-hidden="true" tabindex="-1"></a>gss_df <span class="sc">|&gt;</span> </span>
+<span id="cb9-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(fefam) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code># A tibble: 5 × 2
+  fefam                 n
+  &lt;fct&gt;             &lt;int&gt;
+1 Strongly Agree     2543
+2 Agree              8992
+3 Disagree          13061
+4 Strongly Disagree  5479
+5 &lt;NA&gt;              30138</code></pre>
+</div>
+</div>
+</section>
+<section id="recoding" class="slide level2">
+<h2>Recoding</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb11" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-hidden="true" tabindex="-1"></a>gss_df <span class="ot">&lt;-</span> gss_df <span class="sc">|&gt;</span> </span>
+<span id="cb11-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fefam_d =</span> forcats<span class="sc">::</span><span class="fu">fct_recode</span>(fefam,</span>
+<span id="cb11-3"><a aria-hidden="true" tabindex="-1"></a>                                  <span class="at">Agree =</span> <span class="st">"Strongly Agree"</span>,</span>
+<span id="cb11-4"><a aria-hidden="true" tabindex="-1"></a>                                  <span class="at">Disagree =</span> <span class="st">"Strongly Disagree"</span>),</span>
+<span id="cb11-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">fefam_n =</span> <span class="fu">recode</span>(fefam_d, <span class="st">"Agree"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Disagree"</span> <span class="ot">=</span> <span class="dv">0</span>))</span>
+<span id="cb11-6"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a aria-hidden="true" tabindex="-1"></a><span class="co"># factor version</span></span>
+<span id="cb11-8"><a aria-hidden="true" tabindex="-1"></a>gss_df <span class="sc">|&gt;</span> </span>
+<span id="cb11-9"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(fefam_d) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code># A tibble: 3 × 2
+  fefam_d      n
+  &lt;fct&gt;    &lt;int&gt;
+1 Agree    11535
+2 Disagree 18540
+3 &lt;NA&gt;     30138</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># numeric version, 1 is "Agree"</span></span>
+<span id="cb13-2"><a aria-hidden="true" tabindex="-1"></a>gss_df <span class="sc">|&gt;</span> </span>
+<span id="cb13-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(fefam_n) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code># A tibble: 3 × 2
+  fefam_n     n
+    &lt;dbl&gt; &lt;int&gt;
+1       0 18540
+2       1 11535
+3      NA 30138</code></pre>
+</div>
+</div>
+</section>
+<section id="unweighted-model" class="slide level2">
+<h2>Unweighted model</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb15" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a aria-hidden="true" tabindex="-1"></a>out_all <span class="ot">&lt;-</span> <span class="fu">glm</span>(fefam_n <span class="sc">~</span> age <span class="sc">+</span> sex <span class="sc">+</span> race, </span>
+<span id="cb15-2"><a aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> gss_df, </span>
+<span id="cb15-3"><a aria-hidden="true" tabindex="-1"></a>              <span class="at">family=</span><span class="st">"binomial"</span>, </span>
+<span id="cb15-4"><a aria-hidden="true" tabindex="-1"></a>              <span class="at">na.action =</span> na.omit)</span>
+<span id="cb15-5"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(out_all)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code>
+Call:
+glm(formula = fefam_n ~ age + sex + race, family = "binomial", 
+    data = gss_df, na.action = na.omit)
+
+Coefficients:
+              Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept) -1.9185878  0.0399581 -48.015  &lt; 2e-16 ***
+age          0.0323648  0.0007275  44.486  &lt; 2e-16 ***
+sexFemale   -0.2247518  0.0248741  -9.036  &lt; 2e-16 ***
+raceBlack    0.0668275  0.0363201   1.840   0.0658 .  
+raceOther    0.3659411  0.0493673   7.413 1.24e-13 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 39921  on 29980  degrees of freedom
+Residual deviance: 37746  on 29976  degrees of freedom
+  (30232 observations deleted due to missingness)
+AIC: 37756
+
+Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+</div>
+</section>
+<section id="tidied-output" class="slide level2">
+<h2>Tidied output</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb17" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(out_all)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code># A tibble: 5 × 5
+  term        estimate std.error statistic  p.value
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)  -1.92    0.0400      -48.0  0       
+2 age           0.0324  0.000728     44.5  0       
+3 sexFemale    -0.225   0.0249       -9.04 1.63e-19
+4 raceBlack     0.0668  0.0363        1.84 6.58e- 2
+5 raceOther     0.366   0.0494        7.41 1.24e-13</code></pre>
+</div>
+</div>
+</section>
+<section id="group_map-and-possibly" class="slide level2">
+<h2><span class="fg-green"><strong><code>group_map()</code></strong></span> and <span class="fg-green"><strong><code>possibly()</code></strong></span></h2>
+<ul>
+<li>Model each year</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb19" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a aria-hidden="true" tabindex="-1"></a>out_yr <span class="ot">&lt;-</span> gss_df <span class="sc">|&gt;</span> </span>
+<span id="cb19-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year) <span class="sc">|&gt;</span> </span>
+<span id="cb19-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_map_dfr</span>(<span class="fu">possibly</span>(<span class="sc">~</span> <span class="fu">tidy</span>(<span class="fu">glm</span>(fefam_n <span class="sc">~</span> age <span class="sc">+</span> sex <span class="sc">+</span> race, </span>
+<span id="cb19-4"><a aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> .x, </span>
+<span id="cb19-5"><a aria-hidden="true" tabindex="-1"></a>                       <span class="at">family =</span> <span class="st">"binomial"</span>, </span>
+<span id="cb19-6"><a aria-hidden="true" tabindex="-1"></a>                       <span class="at">na.action =</span> na.omit), </span>
+<span id="cb19-7"><a aria-hidden="true" tabindex="-1"></a>                       <span class="at">conf.int =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb19-8"><a aria-hidden="true" tabindex="-1"></a>                     <span class="at">otherwise =</span> <span class="cn">NULL</span>))</span>
+<span id="cb19-9"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-10"><a aria-hidden="true" tabindex="-1"></a>out_yr</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code># A tibble: 105 × 8
+   year      term       estimate std.error statistic  p.value conf.low conf.high
+   &lt;dbl+lbl&gt; &lt;chr&gt;         &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+ 1 1977      (Intercep…  -1.20     0.178      -6.75  1.47e-11  -1.55     -0.854 
+ 2 1977      age          0.0483   0.00388    12.4   1.56e-35   0.0408    0.0561
+ 3 1977      sexFemale   -0.341    0.118      -2.90  3.77e- 3  -0.572    -0.111 
+ 4 1977      raceBlack   -0.0613   0.180      -0.340 7.34e- 1  -0.412     0.295 
+ 5 1977      raceOther    0.188    0.576       0.326 7.44e- 1  -0.912     1.40  
+ 6 1985      (Intercep…  -1.89     0.168     -11.2   2.89e-29  -2.23     -1.56  
+ 7 1985      age          0.0432   0.00332    13.0   1.03e-38   0.0368    0.0498
+ 8 1985      sexFemale   -0.261    0.112      -2.34  1.94e- 2  -0.481    -0.0426
+ 9 1985      raceBlack    0.148    0.189       0.782 4.34e- 1  -0.223     0.519 
+10 1985      raceOther   -0.319    0.338      -0.944 3.45e- 1  -1.00      0.329 
+# ℹ 95 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="group_map-and-possibly-1" class="slide level2">
+<h2><span class="fg-green"><strong><code>group_map()</code></strong></span> and <span class="fg-green"><strong><code>possibly()</code></strong></span></h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb21" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">possibly</span>(<span class="sc">~</span> <span class="fu">tidy</span>(<span class="fu">glm</span>(...)), <span class="at">otherwise =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="group_map-and-possibly-2" class="slide level2">
+<h2><span class="fg-green"><strong><code>group_map()</code></strong></span> and <span class="fg-green"><strong><code>possibly()</code></strong></span></h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb22" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a aria-hidden="true" tabindex="-1"></a>out_yr <span class="sc">|&gt;</span> </span>
+<span id="cb22-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"sexFemale"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb22-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> estimate,</span>
+<span id="cb22-4"><a aria-hidden="true" tabindex="-1"></a>                       <span class="at">ymin =</span> conf.low, <span class="at">ymax =</span> conf.high)) <span class="sc">+</span></span>
+<span id="cb22-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dotted"</span>) <span class="sc">+</span> </span>
+<span id="cb22-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb22-7"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_pointrange</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="07b-iterating-safely_files/figure-revealjs/07b-iterating-safely-14-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1152"></section>
+<section id="survey-weighted-estimates" class="slide level2">
+<h2>Survey-weighted estimates</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb23" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">survey.lonely.psu =</span> <span class="st">"adjust"</span>)</span>
+<span id="cb23-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">na.action=</span><span class="st">"na.pass"</span>)</span>
+<span id="cb23-3"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a aria-hidden="true" tabindex="-1"></a>gss_svy <span class="ot">&lt;-</span> gss_df <span class="sc">|&gt;</span></span>
+<span id="cb23-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">&gt;</span> <span class="dv">1974</span>) <span class="sc">|&gt;</span>  </span>
+<span id="cb23-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">stratvar =</span> <span class="fu">interaction</span>(year, vstrat)) <span class="sc">|&gt;</span></span>
+<span id="cb23-7"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_survey_design</span>(<span class="at">id =</span> vpsu,</span>
+<span id="cb23-8"><a aria-hidden="true" tabindex="-1"></a>                     <span class="at">strata =</span> stratvar,</span>
+<span id="cb23-9"><a aria-hidden="true" tabindex="-1"></a>                     <span class="at">weights =</span> wtssall,</span>
+<span id="cb23-10"><a aria-hidden="true" tabindex="-1"></a>                     <span class="at">nest =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb23-11"><a aria-hidden="true" tabindex="-1"></a>gss_svy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code>Stratified 1 - level Cluster Sampling design (with replacement)
+With (4555) clusters.
+Called via srvyr
+Sampling variables:
+ - ids: vpsu
+ - strata: stratvar
+ - weights: wtssall
+Data variables: year (dbl+lbl), id (dbl), ballot (dbl+lbl), age (dbl+lbl), race
+  (fct), sex (fct), fefam (fct), vpsu (dbl), vstrat (dbl), oversamp (dbl),
+  formwt (dbl), wtssall (dbl), sampcode (dbl), sample (dbl), compwt (dbl),
+  fefam_d (fct), fefam_n (dbl), stratvar (fct)</code></pre>
+</div>
+</div>
+</section>
+<section id="survey-weighted-estimates-1" class="slide level2">
+<h2>Survey-weighted estimates</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb25" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a aria-hidden="true" tabindex="-1"></a>gss_svy <span class="sc">|&gt;</span></span>
+<span id="cb25-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(fefam_d) <span class="sc">|&gt;</span> </span>
+<span id="cb25-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year, sex, race, fefam_d) <span class="sc">|&gt;</span></span>
+<span id="cb25-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">prop =</span> <span class="fu">survey_mean</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb25-5"><a aria-hidden="true" tabindex="-1"></a>                               <span class="at">vartype =</span> <span class="st">"ci"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code># A tibble: 252 × 7
+# Groups:   year, sex, race [126]
+   year      sex    race  fefam_d   prop prop_low prop_upp
+   &lt;dbl+lbl&gt; &lt;fct&gt;  &lt;fct&gt; &lt;fct&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+ 1 1977      Male   White Agree    0.694   0.655     0.732
+ 2 1977      Male   White Disagree 0.306   0.268     0.345
+ 3 1977      Male   Black Agree    0.686   0.564     0.807
+ 4 1977      Male   Black Disagree 0.314   0.193     0.436
+ 5 1977      Male   Other Agree    0.632   0.357     0.906
+ 6 1977      Male   Other Disagree 0.368   0.0936    0.643
+ 7 1977      Female White Agree    0.640   0.601     0.680
+ 8 1977      Female White Disagree 0.360   0.320     0.399
+ 9 1977      Female Black Agree    0.553   0.472     0.634
+10 1977      Female Black Disagree 0.447   0.366     0.528
+# ℹ 242 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="survey-weighted-estimates-2" class="slide level2">
+<h2>Survey-weighted estimates</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb27" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a aria-hidden="true" tabindex="-1"></a>out_svy_all <span class="ot">&lt;-</span> <span class="fu">svyglm</span>(fefam_n <span class="sc">~</span> age <span class="sc">+</span> sex <span class="sc">+</span> race, </span>
+<span id="cb27-2"><a aria-hidden="true" tabindex="-1"></a>                  <span class="at">design =</span> gss_svy, </span>
+<span id="cb27-3"><a aria-hidden="true" tabindex="-1"></a>                  <span class="at">family =</span> <span class="fu">quasibinomial</span>(),</span>
+<span id="cb27-4"><a aria-hidden="true" tabindex="-1"></a>                  <span class="at">na.action =</span> na.omit)</span>
+<span id="cb27-5"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-6"><a aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(out_svy_all)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code># A tibble: 5 × 5
+  term        estimate std.error statistic   p.value
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+1 (Intercept)  -1.83    0.0478     -38.3   6.34e-234
+2 age           0.0310  0.000852    36.4   9.99e-217
+3 sexFemale    -0.235   0.0277      -8.48  4.55e- 17
+4 raceBlack     0.0282  0.0432       0.653 5.14e-  1
+5 raceOther     0.382   0.0588       6.50  1.06e- 10</code></pre>
+</div>
+</div>
+</section>
+<section id="survey-weighted-estimates-3" class="slide level2">
+<h2>Survey-weighted estimates</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb29" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a aria-hidden="true" tabindex="-1"></a>out_svy_yrs <span class="ot">&lt;-</span> gss_svy <span class="sc">|&gt;</span> </span>
+<span id="cb29-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year) <span class="sc">|&gt;</span> </span>
+<span id="cb29-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_map_dfr</span>(<span class="fu">possibly</span>(<span class="sc">~</span> <span class="fu">tidy</span>(<span class="fu">svyglm</span>(fefam_n <span class="sc">~</span> age <span class="sc">+</span> sex <span class="sc">+</span> race, </span>
+<span id="cb29-4"><a aria-hidden="true" tabindex="-1"></a>                       <span class="at">design =</span> .x, </span>
+<span id="cb29-5"><a aria-hidden="true" tabindex="-1"></a>                       <span class="at">family =</span> <span class="fu">quasibinomial</span>(),</span>
+<span id="cb29-6"><a aria-hidden="true" tabindex="-1"></a>                       <span class="at">na.action =</span> na.omit),</span>
+<span id="cb29-7"><a aria-hidden="true" tabindex="-1"></a>                       <span class="at">conf.int =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb29-8"><a aria-hidden="true" tabindex="-1"></a>                     <span class="at">otherwise =</span> <span class="cn">NULL</span>))</span>
+<span id="cb29-9"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-10"><a aria-hidden="true" tabindex="-1"></a>out_svy_yrs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code># A tibble: 105 × 8
+   year      term       estimate std.error statistic  p.value conf.low conf.high
+   &lt;dbl+lbl&gt; &lt;chr&gt;         &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+ 1 1977      (Intercep…  -1.09     0.184      -5.93  3.74e- 7  -1.46    -0.720  
+ 2 1977      age          0.0469   0.00403    11.6   2.63e-15   0.0388   0.0550 
+ 3 1977      sexFemale   -0.344    0.126      -2.73  9.05e- 3  -0.599   -0.0901 
+ 4 1977      raceBlack   -0.144    0.215      -0.669 5.07e- 1  -0.576    0.288  
+ 5 1977      raceOther    0.276    0.552       0.500 6.19e- 1  -0.835    1.39   
+ 6 1985      (Intercep…  -1.89     0.199      -9.49  9.05e-13  -2.29    -1.49   
+ 7 1985      age          0.0431   0.00369    11.7   6.47e-16   0.0357   0.0505 
+ 8 1985      sexFemale   -0.174    0.123      -1.42  1.61e- 1  -0.421    0.0720 
+ 9 1985      raceBlack    0.157    0.228       0.688 4.95e- 1  -0.301    0.614  
+10 1985      raceOther   -0.533    0.268      -1.99  5.24e- 2  -1.07     0.00573
+# ℹ 95 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="survey-weighted-estimates-4" class="slide level2">
+<h2>Survey-weighted estimates</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb31" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a aria-hidden="true" tabindex="-1"></a>out_svy_yrs <span class="sc">|&gt;</span> </span>
+<span id="cb31-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"sexFemale"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb31-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> year, </span>
+<span id="cb31-4"><a aria-hidden="true" tabindex="-1"></a>                       <span class="at">y =</span> estimate,</span>
+<span id="cb31-5"><a aria-hidden="true" tabindex="-1"></a>                       <span class="at">ymin =</span> conf.low,</span>
+<span id="cb31-6"><a aria-hidden="true" tabindex="-1"></a>                       <span class="at">ymax =</span> conf.high)) <span class="sc">+</span></span>
+<span id="cb31-7"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dotted"</span>) <span class="sc">+</span> </span>
+<span id="cb31-8"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb31-9"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_pointrange</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+
+<img data-src="07b-iterating-safely_files/figure-revealjs/07b-iterating-safely-19-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1152"><div class="quarto-auto-generated-content">
+<div class="footer footer-default">
+
+</div>
+</div>
+</section></section>
+    </div>
+  </div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'fade',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'slow',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
+      const onCopySuccess = function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
+      });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp("https:\/\/kjhealy\.github\.io\/data_wrangling");
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+        const config = {
+          allowHTML: true,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start',
+        };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
+    
+
+<script src="../site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.js" defer="true"></script>
+</body></html>
