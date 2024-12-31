@@ -473,7 +473,7 @@
     "href": "slides/03a-dplyr-basics.html#name-new-columns-with-.names",
     "title": "Manipulating tables with dplyr",
     "section": "Name new columns with .names",
-    "text": "Name new columns with .names\n\norgandata |&gt; \n  group_by(consent_law, country) |&gt;\n  summarize(across(where(is.numeric),           \n                   list(mean = \\(x) mean(x, na.rm = TRUE), \n                        var = \\(x) var(x, na.rm = TRUE), \n                        median = \\(x) median(x, na.rm = TRUE)) \n                  ),\n            .names = \"{fn}_{col}\") |&gt; \n  print(n = 3) \n\n# A tibble: 17 × 42\n# Groups:   consent_law [2]\n  consent_law country   donors_mean donors_var donors_median pop_mean  pop_var\n  &lt;chr&gt;       &lt;chr&gt;           &lt;dbl&gt;      &lt;dbl&gt;         &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;\n1 Informed    Australia        10.6      1.31           10.4   18318.  690385.\n2 Informed    Canada           14.0      0.564          14.0   29608. 1422648.\n3 Informed    Denmark          13.1      2.16           12.9    5257.    6497.\n# ℹ 14 more rows\n# ℹ 35 more variables: pop_median &lt;int&gt;, pop_dens_mean &lt;dbl&gt;,\n#   pop_dens_var &lt;dbl&gt;, pop_dens_median &lt;dbl&gt;, gdp_mean &lt;dbl&gt;, gdp_var &lt;dbl&gt;,\n#   gdp_median &lt;int&gt;, gdp_lag_mean &lt;dbl&gt;, gdp_lag_var &lt;dbl&gt;,\n#   gdp_lag_median &lt;dbl&gt;, health_mean &lt;dbl&gt;, health_var &lt;dbl&gt;,\n#   health_median &lt;dbl&gt;, health_lag_mean &lt;dbl&gt;, health_lag_var &lt;dbl&gt;,\n#   health_lag_median &lt;dbl&gt;, pubhealth_mean &lt;dbl&gt;, pubhealth_var &lt;dbl&gt;, …"
+    "text": "Name new columns with .names\n\norgandata |&gt; \n  group_by(consent_law, country) |&gt;\n  summarize(across(where(is.numeric),           \n                   list(mean = \\(x) mean(x, na.rm = TRUE), \n                        sd = \\(x) sd(x, na.rm = TRUE), \n                        median = \\(x) median(x, na.rm = TRUE)), \n                   .names = \"{fn}_{col}\" \n                   ) \n            ) |&gt; \n  print(n = 3) \n\n# A tibble: 17 × 41\n# Groups:   consent_law [2]\n  consent_law country   mean_donors sd_donors median_donors mean_pop sd_pop\n  &lt;chr&gt;       &lt;chr&gt;           &lt;dbl&gt;     &lt;dbl&gt;         &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;\n1 Informed    Australia        10.6     1.14           10.4   18318.  831. \n2 Informed    Canada           14.0     0.751          14.0   29608. 1193. \n3 Informed    Denmark          13.1     1.47           12.9    5257.   80.6\n# ℹ 14 more rows\n# ℹ 34 more variables: median_pop &lt;int&gt;, mean_pop_dens &lt;dbl&gt;,\n#   sd_pop_dens &lt;dbl&gt;, median_pop_dens &lt;dbl&gt;, mean_gdp &lt;dbl&gt;, sd_gdp &lt;dbl&gt;,\n#   median_gdp &lt;int&gt;, mean_gdp_lag &lt;dbl&gt;, sd_gdp_lag &lt;dbl&gt;,\n#   median_gdp_lag &lt;dbl&gt;, mean_health &lt;dbl&gt;, sd_health &lt;dbl&gt;,\n#   median_health &lt;dbl&gt;, mean_health_lag &lt;dbl&gt;, sd_health_lag &lt;dbl&gt;,\n#   median_health_lag &lt;dbl&gt;, mean_pubhealth &lt;dbl&gt;, sd_pubhealth &lt;dbl&gt;, …"
   },
   {
     "objectID": "slides/03a-dplyr-basics.html#name-new-columns-with-.names-1",
@@ -1418,7 +1418,7 @@
     "href": "slides/04-tidy-data.html#get-your-data-into-long-format",
     "title": "Tidy data",
     "section": "Get your data into long format",
-    "text": "Get your data into long format\nVery, very often, the solution to some data-wrangling problem in Tidyverse-focused workflow is:\n\n\nGet the data in long format\n\n\nThen do the recoding thing that you want.\n\n\nThen transform it back to something wider if needed."
+    "text": "Get your data into long format\nVery, very often, the solution to some data-wrangling problem in Tidyverse-focused workflow is:\n\nGet the data in long format\n\n\nThen do the recoding thing that you want.\n\n\nThen transform it back to something wider if needed."
   },
   {
     "objectID": "slides/04-tidy-data.html#this-isnt-an-iron-rule",
@@ -1453,7 +1453,7 @@
     "href": "slides/04-tidy-data.html#tidy-data-3",
     "title": "Tidy data",
     "section": "Tidy data",
-    "text": "Tidy data\n\n\nEach variable has its own column.\n\n\n\nEach observation has its own row.\n\n\n\nEach value has its own cell.\n\n\n\nWhen data is tidy in this way, the vectorized character of R’s way of doing things works best."
+    "text": "Tidy data\n\nEach variable has its own column.\n\n\nEach observation has its own row.\n\n\nEach value has its own cell.\n\n\nWhen data is tidy in this way, the vectorized character of R’s way of doing things works best."
   },
   {
     "objectID": "slides/04-tidy-data.html#untidy-data-common-for-good-reasons",
