@@ -6,12 +6,12 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ab006101b7430f837520e76e9991ac05.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.css" rel="stylesheet"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.6.37">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-5acd1f5414a849314995cb65ca2adae1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/fonts-0.0/fonts-embed.css" rel="stylesheet"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.25">
 
   <meta name="author" content="Kieran Healy">
-  <meta name="dcterms.date" content="2024-10-02">
   <title>Data Wrangling with R and the Tidyverse – Manipulating tables with dplyr</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -31,8 +31,9 @@
       vertical-align: middle;
     }
     /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -43,7 +44,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -96,7 +97,7 @@
     code span.vs { color: #ed8796; } /* VerbatimString */
     code span.wa { color: #f5a97f; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-d821f746f1112e15bc8fd593da8fbad9.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-a3041996942c967027168b1379f3528e.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -208,7 +209,7 @@ Kieran Healy
     </div>
 </div>
 
-  <p class="date">October 2, 2024</p>
+  <p class="date">December 2025</p>
 </section>
 <section>
 <section id="manipulating-tables-with-dplyr-contd" class="title-slide slide level1 inv-title center" data-background-color="#252F3E">
@@ -224,19 +225,19 @@ Kieran Healy
 <section id="load-our-libraries" class="slide level2">
 <h2>Load our libraries</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb1" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)      <span class="co"># manage file paths</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)      <span class="co"># manage file paths</span></span>
 <span id="cb1-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(socviz)    <span class="co"># data and some useful functions</span></span>
-<span id="cb1-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co"># your friend and mine</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co"># your friend and mine</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="dplyrs-window-functions" class="slide level2">
 <h2><strong><code>dplyr</code></strong>’s <span class="fg-yellow">window</span> functions</h2>
 <p>Ranking and cumulation within groups.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb2" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-hidden="true" tabindex="-1"></a><span class="do">## Data on COVID-19</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-hidden="true" tabindex="-1"></a><span class="do">## Data on COVID-19</span></span>
 <span id="cb2-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(covdata)</span>
 <span id="cb2-3"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a aria-hidden="true" tabindex="-1"></a>covnat_weekly </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-4"><a aria-hidden="true" tabindex="-1"></a>covnat_weekly </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 4,966 × 11
    date       year_week cname   iso3      pop cases deaths cu_cases cu_deaths
@@ -260,11 +261,11 @@ Kieran Healy
 <h2><strong><code>dplyr</code></strong>’s <span class="fg-yellow">window</span> functions</h2>
 <p><span class="fg-green"><strong><code>cumsum()</code></strong></span> gives cumulative sums</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb4" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-hidden="true" tabindex="-1"></a>covnat_weekly <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-hidden="true" tabindex="-1"></a>covnat_weekly <span class="sc">|&gt;</span> </span>
 <span id="cb4-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(iso3 <span class="sc">==</span> <span class="st">"FRA"</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb4-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(date, cname, iso3, cases) <span class="sc">|&gt;</span> </span>
 <span id="cb4-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cases =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(cases), <span class="dv">0</span>, cases), <span class="co"># convert NA vals in `cases` to 0</span></span>
-<span id="cb4-5"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">cumulative =</span> <span class="fu">cumsum</span>(cases)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-5"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">cumulative =</span> <span class="fu">cumsum</span>(cases)) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 159 × 5
    date       cname  iso3  cases cumulative
@@ -287,10 +288,10 @@ Kieran Healy
 <h2><strong><code>dplyr</code></strong>’s <span class="fg-yellow">window</span> functions</h2>
 <p><span class="fg-green"><strong><code>cume_dist()</code></strong></span> gives the proportion of values &lt;= to the current value.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb6" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-hidden="true" tabindex="-1"></a>covnat_weekly <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-hidden="true" tabindex="-1"></a>covnat_weekly <span class="sc">|&gt;</span> </span>
 <span id="cb6-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(date, cname, iso3, deaths) <span class="sc">|&gt;</span> </span>
 <span id="cb6-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(iso3 <span class="sc">==</span> <span class="st">"FRA"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb6-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">cume_dist</span>(<span class="fu">desc</span>(deaths)) <span class="sc">&lt;</span> <span class="fl">0.1</span>) <span class="co"># i.e. Top 10%</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">cume_dist</span>(<span class="fu">desc</span>(deaths)) <span class="sc">&lt;</span> <span class="fl">0.1</span>) <span class="co"># i.e. Top 10%</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 15 × 4
    date       cname  iso3  deaths
@@ -319,11 +320,11 @@ Kieran Healy
 <section id="an-application" class="slide level2">
 <h2>An application</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb8" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-hidden="true" tabindex="-1"></a>covus <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-hidden="true" tabindex="-1"></a>covus <span class="sc">|&gt;</span> </span>
 <span id="cb8-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(measure <span class="sc">==</span> <span class="st">"death"</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb8-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(state) <span class="sc">|&gt;</span> </span>
 <span id="cb8-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(state, <span class="fu">desc</span>(date)) <span class="sc">|&gt;</span> </span>
-<span id="cb8-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(state <span class="sc">%in%</span> <span class="st">"NY"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(state <span class="sc">%in%</span> <span class="st">"NY"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 371 × 7
 # Groups:   state [1]
@@ -348,16 +349,16 @@ Kieran Healy
 <h2>An application</h2>
 <p><code>dplyr</code> has <span class="fg-green"><strong><code>lead()</code></strong></span> and <span class="fg-green"><strong><code>lag()</code></strong></span> functions. These allow you to access the previous and next values in a vector. You can calculate offsets this way.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb10" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a aria-hidden="true" tabindex="-1"></a>my_vec <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>)</span>
-<span id="cb10-2"><a aria-hidden="true" tabindex="-1"></a>my_vec</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a aria-hidden="true" tabindex="-1"></a>my_vec <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>)</span>
+<span id="cb10-2"><a aria-hidden="true" tabindex="-1"></a>my_vec</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code> [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb12" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">lag</span>(my_vec) <span class="co"># first element has no lag</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">lag</span>(my_vec) <span class="co"># first element has no lag</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code> [1] NA  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb14" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-hidden="true" tabindex="-1"></a>my_vec <span class="sc">-</span> <span class="fu">lag</span>(my_vec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-hidden="true" tabindex="-1"></a>my_vec <span class="sc">-</span> <span class="fu">lag</span>(my_vec)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code> [1] NA  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1</code></pre>
 </div>
@@ -367,14 +368,14 @@ Kieran Healy
 <h2>An application</h2>
 <p>We can write the expression directly:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb16" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a aria-hidden="true" tabindex="-1"></a>covus <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a aria-hidden="true" tabindex="-1"></a>covus <span class="sc">|&gt;</span></span>
 <span id="cb16-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>data_quality_grade) <span class="sc">|&gt;</span> </span>
 <span id="cb16-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(measure <span class="sc">==</span> <span class="st">"death"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb16-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(state) <span class="sc">|&gt;</span></span>
 <span id="cb16-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(date) <span class="sc">|&gt;</span> </span>
 <span id="cb16-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">deaths_daily =</span> count <span class="sc">-</span> <span class="fu">lag</span>(count, <span class="at">order_by =</span> date)) <span class="sc">|&gt;</span> </span>
 <span id="cb16-7"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(state, <span class="fu">desc</span>(date)) <span class="sc">|&gt;</span> </span>
-<span id="cb16-8"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(state <span class="sc">%in%</span> <span class="st">"NY"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-8"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(state <span class="sc">%in%</span> <span class="st">"NY"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 371 × 7
 # Groups:   state [1]
@@ -398,21 +399,22 @@ Kieran Healy
 <h2>Writing our own <span class="fg-orange">functions</span></h2>
 <p>We write functions using the special <span class="fg-green"><strong><code>function()</code></strong></span> function.*</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb18" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a aria-hidden="true" tabindex="-1"></a>my_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a aria-hidden="true" tabindex="-1"></a>my_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
 <span id="cb18-2"><a aria-hidden="true" tabindex="-1"></a>  x <span class="sc">+</span> <span class="dv">1</span></span>
 <span id="cb18-3"><a aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb18-4"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-5"><a aria-hidden="true" tabindex="-1"></a>my_fun <span class="co"># we've created the function; it's just an object</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-5"><a aria-hidden="true" tabindex="-1"></a>my_fun <span class="co"># we've created the function; it's just an object</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code>function(x) {
-  x + 1
+<pre data-code-line-numbers=""><code>function (x) 
+{
+    x + 1
 }</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb20" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">my_fun</span>(<span class="at">x =</span> <span class="dv">1</span>) <span class="co"># But we can supply it with an input!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">my_fun</span>(<span class="at">x =</span> <span class="dv">1</span>) <span class="co"># But we can supply it with an input!</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 2</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb22" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">my_fun</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">my_fun</span>(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 11</code></pre>
 </div>
@@ -425,9 +427,9 @@ Kieran Healy
 <h2>Writing our own <span class="fg-orange">functions</span></h2>
 <p>We write our function. It’s just the expression we originally wrote, wrapped up.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb24" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a aria-hidden="true" tabindex="-1"></a>get_daily_count <span class="ot">&lt;-</span> <span class="cf">function</span>(count, date){</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a aria-hidden="true" tabindex="-1"></a>get_daily_count <span class="ot">&lt;-</span> <span class="cf">function</span>(count, date){</span>
 <span id="cb24-2"><a aria-hidden="true" tabindex="-1"></a>  count <span class="sc">-</span> <span class="fu">lag</span>(count, <span class="at">order_by =</span> date)</span>
-<span id="cb24-3"><a aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-3"><a aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>This function has no generality, error-handling, or anything else. It’s a once-off.</p>
 </section>
@@ -435,14 +437,14 @@ Kieran Healy
 <h2>Writing our own <span class="fg-orange">functions</span></h2>
 <p>Now we can use it like any other:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb25" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a aria-hidden="true" tabindex="-1"></a>covus <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a aria-hidden="true" tabindex="-1"></a>covus <span class="sc">|&gt;</span></span>
 <span id="cb25-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(measure <span class="sc">==</span> <span class="st">"death"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb25-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>data_quality_grade) <span class="sc">|&gt;</span> </span>
 <span id="cb25-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(state) <span class="sc">|&gt;</span></span>
 <span id="cb25-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(date) <span class="sc">|&gt;</span> </span>
 <span id="cb25-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">deaths_daily =</span> <span class="fu">get_daily_count</span>(count, date)) <span class="sc">|&gt;</span> </span>
 <span id="cb25-7"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(state, <span class="fu">desc</span>(date)) <span class="sc">|&gt;</span> </span>
-<span id="cb25-8"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(state <span class="sc">%in%</span> <span class="st">"NY"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-8"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(state <span class="sc">%in%</span> <span class="st">"NY"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 371 × 7
 # Groups:   state [1]
@@ -474,14 +476,14 @@ Kieran Healy
 <p>There are several options, notably <a href="https://cran.r-project.org/web/packages/RcppRoll/index.html"><code>RcppRoll</code></a></p>
 <p>We’ll use the <a href="https://cran.r-project.org/web/packages/slider/vignettes/slider.html"><code>slider</code></a> package.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb27" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("slider")</span></span>
-<span id="cb27-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(slider)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("slider")</span></span>
+<span id="cb27-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(slider)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="tidy-moving-averages-with-slider-1" class="slide level2">
 <h2>Tidy moving averages with <span class="fg-orange"><code>slider</code></span></h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb28" data-source-line-numbers="nil" data-code-line-numbers="8,9,10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a aria-hidden="true" tabindex="-1"></a>covus <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28" data-source-line-numbers="nil" data-code-line-numbers="8,9,10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a aria-hidden="true" tabindex="-1"></a>covus <span class="sc">|&gt;</span></span>
 <span id="cb28-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(measure <span class="sc">==</span> <span class="st">"death"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb28-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>data_quality_grade) <span class="sc">|&gt;</span> </span>
 <span id="cb28-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(state) <span class="sc">|&gt;</span></span>
@@ -492,7 +494,7 @@ Kieran Healy
 <span id="cb28-9"><a aria-hidden="true" tabindex="-1"></a>                         <span class="at">before =</span> <span class="dv">7</span>, </span>
 <span id="cb28-10"><a aria-hidden="true" tabindex="-1"></a>                         <span class="at">na_rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb28-11"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(state, <span class="fu">desc</span>(date)) <span class="sc">|&gt;</span> </span>
-<span id="cb28-12"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(state <span class="sc">%in%</span> <span class="st">"NY"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb28-12"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(state <span class="sc">%in%</span> <span class="st">"NY"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 371 × 8
 # Groups:   state [1]
@@ -514,16 +516,16 @@ Kieran Healy
 </section>
 <section id="tidy-moving-averages-with-slider-2" class="slide level2">
 <h2>Tidy moving averages with <span class="fg-orange"><code>slider</code></span></h2>
-<div class="sourceCode" id="cb30" data-code-line-numbers=""><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a aria-hidden="true" tabindex="-1"></a>    deaths7 <span class="ot">=</span> <span class="fu">slide_mean</span>(deaths_daily, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30" data-code-line-numbers=""><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a aria-hidden="true" tabindex="-1"></a>    deaths7 <span class="ot">=</span> <span class="fu">slide_mean</span>(deaths_daily, </span>
 <span id="cb30-2"><a aria-hidden="true" tabindex="-1"></a>                         <span class="at">before =</span> <span class="dv">7</span>, </span>
-<span id="cb30-3"><a aria-hidden="true" tabindex="-1"></a>                         <span class="at">na_rm =</span> <span class="cn">TRUE</span>)<span class="er">)</span> <span class="sc">|&gt;</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb30-3"><a aria-hidden="true" tabindex="-1"></a>                         <span class="at">na_rm =</span> <span class="cn">TRUE</span>)<span class="er">)</span> <span class="sc">|&gt;</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Notice the Tidyverse-style <code>na_rm</code> argument rather than the usual base <code>na.rm</code></p>
 <p>The package provides a lot of different functions, from general-purpose <span class="fg-green"><strong><code>slide_max()</code></strong></span>, <span class="fg-green"><strong><code>slide_min()</code></strong></span> to more specialized sliding functions. In particular note e.g.&nbsp;<span class="fg-green"><strong><code>slide_index_mean()</code></strong></span> that addresses some subtleties in averaging over dates with gaps.</p>
 </section>
 <section id="move-columns-with-relocate" class="slide level2">
 <h2>Move columns with <span class="fg-green"><strong><code>relocate()</code></strong></span></h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb31" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a aria-hidden="true" tabindex="-1"></a>gss_sm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a aria-hidden="true" tabindex="-1"></a>gss_sm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 2,867 × 32
     year    id ballot       age childs sibs   degree race  sex   region income16
@@ -552,7 +554,7 @@ Kieran Healy
 <div class="columns smallcode">
 <div class="column" style="width:35%;">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb33" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a aria-hidden="true" tabindex="-1"></a>gss_sm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a aria-hidden="true" tabindex="-1"></a>gss_sm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:65%;">
 <div class="cell" data-layout-align="center">
@@ -585,11 +587,11 @@ Kieran Healy
 <div class="columns smallcode">
 <div class="column" style="width:35%;">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb35" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a aria-hidden="true" tabindex="-1"></a>gss_sm <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a aria-hidden="true" tabindex="-1"></a>gss_sm <span class="sc">|&gt;</span></span>
 <span id="cb35-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(region, bigregion, year,</span>
 <span id="cb35-3"><a aria-hidden="true" tabindex="-1"></a>         id<span class="sc">:</span>region,</span>
 <span id="cb35-4"><a aria-hidden="true" tabindex="-1"></a>         <span class="fu">starts_with</span>(<span class="st">"p"</span>),</span>
-<span id="cb35-5"><a aria-hidden="true" tabindex="-1"></a>         <span class="fu">contains</span>(<span class="st">"income"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb35-5"><a aria-hidden="true" tabindex="-1"></a>         <span class="fu">contains</span>(<span class="st">"income"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:65%;">
 <div class="cell" data-layout-align="center">
@@ -620,13 +622,13 @@ Kieran Healy
 <div class="columns smallcode">
 <div class="column" style="width:35%;">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb37" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a aria-hidden="true" tabindex="-1"></a>gss_sm <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a aria-hidden="true" tabindex="-1"></a>gss_sm <span class="sc">|&gt;</span></span>
 <span id="cb37-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(region, bigregion, year,</span>
 <span id="cb37-3"><a aria-hidden="true" tabindex="-1"></a>         id<span class="sc">:</span>region,</span>
 <span id="cb37-4"><a aria-hidden="true" tabindex="-1"></a>         <span class="fu">starts_with</span>(<span class="st">"p"</span>),</span>
 <span id="cb37-5"><a aria-hidden="true" tabindex="-1"></a>         <span class="fu">contains</span>(<span class="st">"income"</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb37-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">children =</span> childs,</span>
-<span id="cb37-7"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">siblings =</span> sibs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb37-7"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">siblings =</span> sibs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:65%;">
 <div class="cell" data-layout-align="center">
@@ -657,14 +659,14 @@ Kieran Healy
 <div class="columns smallcode">
 <div class="column" style="width:35%;">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb39" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a aria-hidden="true" tabindex="-1"></a>gss_sm <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a aria-hidden="true" tabindex="-1"></a>gss_sm <span class="sc">|&gt;</span></span>
 <span id="cb39-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(region, bigregion, year,</span>
 <span id="cb39-3"><a aria-hidden="true" tabindex="-1"></a>         id<span class="sc">:</span>region,</span>
 <span id="cb39-4"><a aria-hidden="true" tabindex="-1"></a>         <span class="fu">starts_with</span>(<span class="st">"p"</span>),</span>
 <span id="cb39-5"><a aria-hidden="true" tabindex="-1"></a>         <span class="fu">contains</span>(<span class="st">"income"</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb39-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">children =</span> childs,</span>
 <span id="cb39-7"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">siblings =</span> sibs) <span class="sc">|&gt;</span></span>
-<span id="cb39-8"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(id)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb39-8"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(id)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:65%;">
 <div class="cell" data-layout-align="center">
@@ -695,7 +697,7 @@ Kieran Healy
 <div class="columns smallcode">
 <div class="column" style="width:35%;">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb41" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a aria-hidden="true" tabindex="-1"></a>gss_sm <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a aria-hidden="true" tabindex="-1"></a>gss_sm <span class="sc">|&gt;</span></span>
 <span id="cb41-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(region, bigregion, year,</span>
 <span id="cb41-3"><a aria-hidden="true" tabindex="-1"></a>         id<span class="sc">:</span>region,</span>
 <span id="cb41-4"><a aria-hidden="true" tabindex="-1"></a>         <span class="fu">starts_with</span>(<span class="st">"p"</span>),</span>
@@ -703,7 +705,7 @@ Kieran Healy
 <span id="cb41-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">children =</span> childs,</span>
 <span id="cb41-7"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">siblings =</span> sibs) <span class="sc">|&gt;</span></span>
 <span id="cb41-8"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(id) <span class="sc">|&gt;</span></span>
-<span id="cb41-9"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>ballot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb41-9"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>ballot)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:65%;">
 <div class="cell" data-layout-align="center">
@@ -733,7 +735,7 @@ Kieran Healy
 <div class="columns smallcode">
 <div class="column" style="width:35%;">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb43" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a aria-hidden="true" tabindex="-1"></a>gss_sm <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a aria-hidden="true" tabindex="-1"></a>gss_sm <span class="sc">|&gt;</span></span>
 <span id="cb43-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(region, bigregion, year,</span>
 <span id="cb43-3"><a aria-hidden="true" tabindex="-1"></a>         id<span class="sc">:</span>region,</span>
 <span id="cb43-4"><a aria-hidden="true" tabindex="-1"></a>         <span class="fu">starts_with</span>(<span class="st">"p"</span>),</span>
@@ -743,7 +745,7 @@ Kieran Healy
 <span id="cb43-8"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(id) <span class="sc">|&gt;</span></span>
 <span id="cb43-9"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>ballot) <span class="sc">|&gt;</span></span>
 <span id="cb43-10"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(<span class="fu">where</span>(is.numeric),</span>
-<span id="cb43-11"><a aria-hidden="true" tabindex="-1"></a>           <span class="at">.before =</span> <span class="fu">where</span>(is.factor))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb43-11"><a aria-hidden="true" tabindex="-1"></a>           <span class="at">.before =</span> <span class="fu">where</span>(is.factor))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:65%;">
 <div class="cell" data-layout-align="center">
@@ -773,7 +775,7 @@ Kieran Healy
 <div class="columns smallcode">
 <div class="column" style="width:35%;">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb45" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a aria-hidden="true" tabindex="-1"></a>gss_sm <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a aria-hidden="true" tabindex="-1"></a>gss_sm <span class="sc">|&gt;</span></span>
 <span id="cb45-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(region, bigregion, year,</span>
 <span id="cb45-3"><a aria-hidden="true" tabindex="-1"></a>         id<span class="sc">:</span>region,</span>
 <span id="cb45-4"><a aria-hidden="true" tabindex="-1"></a>         <span class="fu">starts_with</span>(<span class="st">"p"</span>),</span>
@@ -785,7 +787,7 @@ Kieran Healy
 <span id="cb45-10"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(<span class="fu">where</span>(is.numeric),</span>
 <span id="cb45-11"><a aria-hidden="true" tabindex="-1"></a>           <span class="at">.before =</span> <span class="fu">where</span>(is.factor)) <span class="sc">|&gt;</span></span>
 <span id="cb45-12"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(<span class="fu">contains</span>(<span class="st">"region"</span>),</span>
-<span id="cb45-13"><a aria-hidden="true" tabindex="-1"></a>           <span class="at">.after =</span> year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb45-13"><a aria-hidden="true" tabindex="-1"></a>           <span class="at">.after =</span> year)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:65%;">
 <div class="cell" data-layout-align="center">
@@ -813,9 +815,9 @@ Kieran Healy
 <section id="example-uk-election-data" class="slide level2">
 <h2>Example: UK Election Data</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb47" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ukelection2019)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ukelection2019)</span>
 <span id="cb47-2"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-3"><a aria-hidden="true" tabindex="-1"></a>ukvote2019</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb47-3"><a aria-hidden="true" tabindex="-1"></a>ukvote2019</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 3,320 × 13
    cid     constituency electorate party_name candidate votes vote_share_percent
@@ -840,24 +842,24 @@ Kieran Healy
 <h2>Example: UK Election Data</h2>
 <p>Use <span class="fg-green"><strong><code>sample_n()</code></strong></span> to sample <code>n</code> rows of your tibble.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb49" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ukelection2019)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ukelection2019)</span>
 <span id="cb49-2"><a aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb49-3"><a aria-hidden="true" tabindex="-1"></a>ukvote2019 <span class="sc">|&gt;</span> </span>
-<span id="cb49-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_n</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb49-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_n</span>(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 10 × 13
    cid     constituency electorate party_name candidate votes vote_share_percent
    &lt;chr&gt;   &lt;chr&gt;             &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;     &lt;int&gt;              &lt;dbl&gt;
- 1 E14001… Wythenshawe…      76313 Labour     Mike Kane 23855               53.3
- 2 E14000… Mole Valley       74665 Independe… Robin Ho…   536                0.9
- 3 W07000… Clwyd South       53919 Liberal D… Calum Da…  1496                4.1
- 4 E14000… Kettering         73187 Labour     Clare Pa… 13022               26.4
- 5 E14001… Truro &amp; Fal…      76719 Green      Tom Scott  1714                2.9
- 6 E14000… Knowsley          84060 Green      Paul Woo…  1262                2.3
- 7 W07000… Merthyr Tyd…      56322 Plaid Cym… Mark Eva…  2446                7.6
- 8 E14000… Chelsea &amp; F…      67110 Labour     Matt Ube… 10872               23.2
- 9 E14000… Romsey &amp; So…      68228 Liberal D… Craig Fl… 16990               33.1
-10 E14000… Leigh             77417 The Brexi… James Me…  3161                6.7
+ 1 E14000… Thanet South      73302 Liberal D… Martyn P…  2727                5.7
+ 2 E14000… South Shiel…      62793 The Brexi… Glenn Th…  6446               17  
+ 3 E14000… Normanton, …      84527 The Yorks… Laura Wa…  1762                3.7
+ 4 E14000… Hastings &amp; …      80524 Independe… Paul Cro…   565                1  
+ 5 S14000… Glasgow Nor…      57130 The Brexi… Dionne C…   320                0.9
+ 6 E14000… Birmingham …      78295 Green      Jane McK…   328                0.7
+ 7 E14000… St Albans         73721 Liberal D… Daisy Co… 28867               50.1
+ 8 E14000… Broadland         78151 Labour     Jess Bar… 12073               21.2
+ 9 E14001… Walsall Nor…      67177 Green      Mark Wil…   617                1.7
+10 E14000… Tatton            69018 Conservat… Esther M… 28277               57.7
 # ℹ 6 more variables: vote_share_change &lt;dbl&gt;, total_votes_cast &lt;int&gt;,
 #   vrank &lt;int&gt;, turnout &lt;dbl&gt;, fname &lt;chr&gt;, lname &lt;chr&gt;</code></pre>
 </div>
@@ -869,8 +871,8 @@ Kieran Healy
 <li>A vector of unique constituency names</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb51" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a aria-hidden="true" tabindex="-1"></a>ukvote2019 <span class="sc">|&gt;</span> </span>
-<span id="cb51-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(constituency)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a aria-hidden="true" tabindex="-1"></a>ukvote2019 <span class="sc">|&gt;</span> </span>
+<span id="cb51-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(constituency)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 650 × 1
    constituency                   
@@ -895,9 +897,9 @@ Kieran Healy
 <li>Tally them up</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb53" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a aria-hidden="true" tabindex="-1"></a>ukvote2019 <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a aria-hidden="true" tabindex="-1"></a>ukvote2019 <span class="sc">|&gt;</span> </span>
 <span id="cb53-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(constituency) <span class="sc">|&gt;</span> </span>
-<span id="cb53-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb53-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 1 × 1
       n
@@ -906,9 +908,9 @@ Kieran Healy
 </div>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb55" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># Base R / non-pipeline version</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># Base R / non-pipeline version</span></span>
 <span id="cb55-2"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(ukvote2019<span class="sc">$</span>constituency))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb55-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(ukvote2019<span class="sc">$</span>constituency))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 650</code></pre>
 </div>
@@ -918,9 +920,9 @@ Kieran Healy
 <h2>Example: UK Election Data</h2>
 <p>Which parties fielded the most candidates?</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb57" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a aria-hidden="true" tabindex="-1"></a>ukvote2019 <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a aria-hidden="true" tabindex="-1"></a>ukvote2019 <span class="sc">|&gt;</span> </span>
 <span id="cb57-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(party_name) <span class="sc">|&gt;</span> </span>
-<span id="cb57-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb57-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 69 × 2
    party_name                     n
@@ -947,9 +949,9 @@ Kieran Healy
 <li>Top 5</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb59" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a aria-hidden="true" tabindex="-1"></a>ukvote2019 <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a aria-hidden="true" tabindex="-1"></a>ukvote2019 <span class="sc">|&gt;</span> </span>
 <span id="cb59-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(party_name) <span class="sc">|&gt;</span> </span>
-<span id="cb59-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(<span class="at">order_by =</span> n, <span class="at">n =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb59-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(<span class="at">order_by =</span> n, <span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 5 × 2
   party_name           n
@@ -973,9 +975,9 @@ Kieran Healy
 <li>Top 5</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb61" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a aria-hidden="true" tabindex="-1"></a>ukvote2019 <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a aria-hidden="true" tabindex="-1"></a>ukvote2019 <span class="sc">|&gt;</span> </span>
 <span id="cb61-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(party_name) <span class="sc">|&gt;</span> </span>
-<span id="cb61-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(<span class="at">order_by =</span> n, <span class="at">n =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb61-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(<span class="at">order_by =</span> n, <span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 5 × 2
   party_name           n
@@ -992,9 +994,9 @@ Kieran Healy
 <li>Bottom 5</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb63" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a aria-hidden="true" tabindex="-1"></a>ukvote2019 <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a aria-hidden="true" tabindex="-1"></a>ukvote2019 <span class="sc">|&gt;</span> </span>
 <span id="cb63-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(party_name) <span class="sc">|&gt;</span> </span>
-<span id="cb63-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_min</span>(<span class="at">order_by =</span> n, <span class="at">n =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb63-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_min</span>(<span class="at">order_by =</span> n, <span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 25 × 2
    party_name                              n
@@ -1020,8 +1022,8 @@ Kieran Healy
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb65" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a aria-hidden="true" tabindex="-1"></a>ukvote2019 <span class="sc">|&gt;</span> </span>
-<span id="cb65-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(constituency) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a aria-hidden="true" tabindex="-1"></a>ukvote2019 <span class="sc">|&gt;</span> </span>
+<span id="cb65-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(constituency) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 650 × 2
    constituency                        n
@@ -1041,9 +1043,9 @@ Kieran Healy
 </div>
 </div><div class="column right" style="width:50%;">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb67" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a aria-hidden="true" tabindex="-1"></a>ukvote2019 <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a aria-hidden="true" tabindex="-1"></a>ukvote2019 <span class="sc">|&gt;</span> </span>
 <span id="cb67-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(constituency) <span class="sc">|&gt;</span> </span>
-<span id="cb67-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb67-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 1 × 1
       n
@@ -1052,8 +1054,8 @@ Kieran Healy
 </div>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb69" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># Base R style ...</span></span>
-<span id="cb69-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(ukvote2019<span class="sc">$</span>constituency))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb69" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># Base R style ...</span></span>
+<span id="cb69-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(ukvote2019<span class="sc">$</span>constituency))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 650</code></pre>
 </div>
@@ -1063,9 +1065,9 @@ Kieran Healy
 <section id="counting-twice-over" class="slide level2">
 <h2>Counting Twice Over</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb71" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a aria-hidden="true" tabindex="-1"></a>ukvote2019 <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a aria-hidden="true" tabindex="-1"></a>ukvote2019 <span class="sc">|&gt;</span> </span>
 <span id="cb71-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(constituency) <span class="sc">|&gt;</span> </span>
-<span id="cb71-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb71-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(n)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 8 × 2
       n    nn
@@ -1086,7 +1088,7 @@ Kieran Healy
 <div class="columns smallcode">
 <div class="column" style="width:45%;">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb73" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a aria-hidden="true" tabindex="-1"></a>ukvote2019</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a aria-hidden="true" tabindex="-1"></a>ukvote2019</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:55%;">
 <div class="cell" data-layout-align="center">
@@ -1116,8 +1118,8 @@ Kieran Healy
 <div class="columns smallcode">
 <div class="column" style="width:45%;">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb75" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a aria-hidden="true" tabindex="-1"></a>ukvote2019 <span class="sc">|&gt;</span></span>
-<span id="cb75-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(constituency, <span class="at">name =</span> <span class="st">"n_cands"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb75" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a aria-hidden="true" tabindex="-1"></a>ukvote2019 <span class="sc">|&gt;</span></span>
+<span id="cb75-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(constituency, <span class="at">name =</span> <span class="st">"n_cands"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:55%;">
 <div class="cell" data-layout-align="center">
@@ -1145,9 +1147,9 @@ Kieran Healy
 <div class="columns smallcode">
 <div class="column" style="width:45%;">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb77" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a aria-hidden="true" tabindex="-1"></a>ukvote2019 <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb77" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a aria-hidden="true" tabindex="-1"></a>ukvote2019 <span class="sc">|&gt;</span></span>
 <span id="cb77-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(constituency, <span class="at">name =</span> <span class="st">"n_cands"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb77-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(n_cands, <span class="at">name =</span> <span class="st">"n_const"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb77-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(n_cands, <span class="at">name =</span> <span class="st">"n_const"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:55%;">
 <div class="cell" data-layout-align="center">
@@ -1213,9 +1215,9 @@ Kieran Healy
 <h2>A dplyr shortcut</h2>
 <p>So far we have been writing, e.g.,</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb79" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a aria-hidden="true" tabindex="-1"></a>gss_sm <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb79" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a aria-hidden="true" tabindex="-1"></a>gss_sm <span class="sc">|&gt;</span> </span>
 <span id="cb79-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(bigregion, religion) <span class="sc">|&gt;</span> </span>
-<span id="cb79-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">total =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb79-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">total =</span> <span class="fu">n</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 24 × 3
 # Groups:   bigregion [4]
@@ -1239,9 +1241,9 @@ Kieran Healy
 <h2>A dplyr shortcut</h2>
 <p>Or</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb81" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a aria-hidden="true" tabindex="-1"></a>gss_sm <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a aria-hidden="true" tabindex="-1"></a>gss_sm <span class="sc">|&gt;</span> </span>
 <span id="cb81-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(bigregion, religion) <span class="sc">|&gt;</span> </span>
-<span id="cb81-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb81-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 24 × 3
 # Groups:   bigregion [4]
@@ -1265,8 +1267,8 @@ Kieran Healy
 <h2>A dplyr shortcut</h2>
 <p>Or</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb83" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a aria-hidden="true" tabindex="-1"></a>gss_sm <span class="sc">|&gt;</span> </span>
-<span id="cb83-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(bigregion, religion) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb83" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a aria-hidden="true" tabindex="-1"></a>gss_sm <span class="sc">|&gt;</span> </span>
+<span id="cb83-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(bigregion, religion) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 24 × 3
    bigregion religion       n
@@ -1290,8 +1292,8 @@ Kieran Healy
 <h2>A dplyr shortcut</h2>
 <p>But we can also write this:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb85" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a aria-hidden="true" tabindex="-1"></a>gss_sm <span class="sc">|&gt;</span> </span>
-<span id="cb85-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">total =</span> <span class="fu">n</span>(), <span class="at">.by =</span> <span class="fu">c</span>(bigregion, religion))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb85" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a aria-hidden="true" tabindex="-1"></a>gss_sm <span class="sc">|&gt;</span> </span>
+<span id="cb85-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">total =</span> <span class="fu">n</span>(), <span class="at">.by =</span> <span class="fu">c</span>(bigregion, religion))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 24 × 3
    bigregion religion   total
@@ -1317,8 +1319,8 @@ Kieran Healy
 <h2>Data as implicitly first</h2>
 <p>This code:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb87" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a aria-hidden="true" tabindex="-1"></a>gss_sm <span class="sc">|&gt;</span> </span>
-<span id="cb87-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">total =</span> <span class="fu">n</span>(), <span class="at">.by =</span> <span class="fu">c</span>(bigregion, religion))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb87" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a aria-hidden="true" tabindex="-1"></a>gss_sm <span class="sc">|&gt;</span> </span>
+<span id="cb87-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">total =</span> <span class="fu">n</span>(), <span class="at">.by =</span> <span class="fu">c</span>(bigregion, religion))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 24 × 3
    bigregion religion   total
@@ -1341,7 +1343,7 @@ Kieran Healy
 <h2>Data as implicitly first</h2>
 <p>… is equivalent to this:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb89" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">summarize</span>(gss_sm, <span class="at">total =</span> <span class="fu">n</span>(), <span class="at">.by =</span> <span class="fu">c</span>(bigregion, religion))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb89" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">summarize</span>(gss_sm, <span class="at">total =</span> <span class="fu">n</span>(), <span class="at">.by =</span> <span class="fu">c</span>(bigregion, religion))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 24 × 3
    bigregion religion   total
@@ -1370,7 +1372,7 @@ Kieran Healy
 <h2>Comparisons filtering on proportions</h2>
 <p>Let’s say you are working with proportions …</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb91" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb91" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 4 × 3
   id    prop1 prop2
@@ -1386,8 +1388,8 @@ Kieran Healy
 <h2>Comparisons filtering on proportions</h2>
 <p>And you want to focus on cases where <code>prop1</code> <em>plus</em> <code>prop2</code> is greater than 0.3:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb93" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
-<span id="cb93-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(prop1 <span class="sc">+</span> prop2 <span class="sc">&gt;</span> <span class="fl">0.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb93" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb93-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(prop1 <span class="sc">+</span> prop2 <span class="sc">&gt;</span> <span class="fl">0.3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 3 × 3
   id    prop1 prop2
@@ -1408,8 +1410,8 @@ Kieran Healy
 <section id="comparisons-filtering-on-proportions-2" class="slide level2">
 <h2>Comparisons filtering on proportions</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb95" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
-<span id="cb95-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(prop1 <span class="sc">+</span> prop2 <span class="sc">==</span> <span class="fl">0.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb95" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb95-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(prop1 <span class="sc">+</span> prop2 <span class="sc">==</span> <span class="fl">0.3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 0 × 3
 # ℹ 3 variables: id &lt;chr&gt;, prop1 &lt;dbl&gt;, prop2 &lt;dbl&gt;</code></pre>
@@ -1421,9 +1423,9 @@ Kieran Healy
 <h2>Comparisons filtering on proportions</h2>
 <p>This won’t give the right behavior either:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb97" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb97" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
 <span id="cb97-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prop3 =</span> prop1 <span class="sc">+</span> prop2) <span class="sc">|&gt;</span> </span>
-<span id="cb97-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(prop3 <span class="sc">==</span> <span class="fl">0.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb97-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(prop3 <span class="sc">==</span> <span class="fl">0.3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 0 × 4
 # ℹ 4 variables: id &lt;chr&gt;, prop1 &lt;dbl&gt;, prop2 &lt;dbl&gt;, prop3 &lt;dbl&gt;</code></pre>
@@ -1434,8 +1436,8 @@ Kieran Healy
 <h2>Comparisons filtering on proportions</h2>
 <p>So, beware.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb99" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
-<span id="cb99-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(prop1<span class="sc">*</span><span class="dv">100</span> <span class="sc">+</span> prop2<span class="sc">*</span><span class="dv">100</span> <span class="sc">==</span> <span class="fl">0.3</span><span class="sc">*</span><span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb99" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb99-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(prop1<span class="sc">*</span><span class="dv">100</span> <span class="sc">+</span> prop2<span class="sc">*</span><span class="dv">100</span> <span class="sc">==</span> <span class="fl">0.3</span><span class="sc">*</span><span class="dv">100</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 1 × 3
   id    prop1 prop2
@@ -1445,8 +1447,8 @@ Kieran Healy
 </div>
 <p>Better:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb101" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
-<span id="cb101-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">near</span>(prop1 <span class="sc">+</span> prop2, <span class="fl">0.3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb101" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb101-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">near</span>(prop1 <span class="sc">+</span> prop2, <span class="fl">0.3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 1 × 3
   id    prop1 prop2
@@ -1458,9 +1460,9 @@ Kieran Healy
 <section id="zero-counts-in-dplyr" class="slide level2">
 <h2><span class="fg-orange">Zero Counts</span> in dplyr</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb103" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"first_terms.csv"</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb103" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"first_terms.csv"</span>))</span>
 <span id="cb103-2"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb103-3"><a aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb103-3"><a aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 280 × 4
      pid start_year party      sex  
@@ -1482,10 +1484,10 @@ Kieran Healy
 <section id="zero-counts-in-dplyr-1" class="slide level2">
 <h2><span class="fg-orange">Zero Counts</span> in dplyr</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb105" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb105" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
 <span id="cb105-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(start_year, party, sex) <span class="sc">|&gt;</span></span>
 <span id="cb105-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">N =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span></span>
-<span id="cb105-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">freq =</span> N <span class="sc">/</span> <span class="fu">sum</span>(N))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb105-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">freq =</span> N <span class="sc">/</span> <span class="fu">sum</span>(N))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 14 × 5
 # Groups:   start_year, party [8]
@@ -1511,7 +1513,7 @@ Kieran Healy
 <section id="zero-counts-in-dplyr-2" class="slide level2">
 <h2><span class="fg-orange">Zero Counts</span> in dplyr</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb107" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a aria-hidden="true" tabindex="-1"></a>p_col <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb107" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a aria-hidden="true" tabindex="-1"></a>p_col <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
 <span id="cb107-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(start_year, party, sex) <span class="sc">|&gt;</span></span>
 <span id="cb107-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">N =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span></span>
 <span id="cb107-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">freq =</span> N <span class="sc">/</span> <span class="fu">sum</span>(N)) <span class="sc">|&gt;</span></span>
@@ -1522,20 +1524,20 @@ Kieran Healy
 <span id="cb107-9"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
 <span id="cb107-10"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> sex_colors, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Women"</span>, <span class="st">"Men"</span>)) <span class="sc">+</span></span>
 <span id="cb107-11"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Percent"</span>, <span class="at">fill =</span> <span class="st">"Group"</span>) <span class="sc">+</span></span>
-<span id="cb107-12"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> party)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb107-12"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> party)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="zero-counts-in-dplyr-3" class="slide level2">
 <h2><span class="fg-orange">Zero Counts</span> in dplyr</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb108" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a aria-hidden="true" tabindex="-1"></a>p_col</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb108" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a aria-hidden="true" tabindex="-1"></a>p_col</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="03b-dplyr-basics_files/figure-revealjs/03b-dplyr-basics-38-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
 <section id="zero-counts-in-dplyr-4" class="slide level2">
 <h2>2. <span class="fg-orange">Zero Counts</span> in dplyr</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb109" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a aria-hidden="true" tabindex="-1"></a>p_line <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb109" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a aria-hidden="true" tabindex="-1"></a>p_line <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
 <span id="cb109-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(start_year, party, sex) <span class="sc">|&gt;</span></span>
 <span id="cb109-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">N =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span></span>
 <span id="cb109-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">freq =</span> N <span class="sc">/</span> <span class="fu">sum</span>(N)) <span class="sc">|&gt;</span></span>
@@ -1547,13 +1549,13 @@ Kieran Healy
 <span id="cb109-10"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_manual</span>(<span class="at">values =</span> sex_colors, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Women"</span>, <span class="st">"Men"</span>)) <span class="sc">+</span></span>
 <span id="cb109-11"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">color =</span> <span class="fu">guide_legend</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>)) <span class="sc">+</span></span>
 <span id="cb109-12"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Percent"</span>, <span class="at">color =</span> <span class="st">"Group"</span>) <span class="sc">+</span></span>
-<span id="cb109-13"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> party)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb109-13"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> party)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="zero-counts-in-dplyr-5" class="slide level2">
 <h2><span class="fg-orange">Zero Counts</span> in dplyr</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb110" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a aria-hidden="true" tabindex="-1"></a>p_line</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb110" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a aria-hidden="true" tabindex="-1"></a>p_line</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="03b-dplyr-basics_files/figure-revealjs/03b-dplyr-basics-40-1.png" class="quarto-figure quarto-figure-center r-stretch" width="864"></section>
@@ -1562,10 +1564,10 @@ Kieran Healy
 <p>Factors are for categorical variables and are stored differently from characters.</p>
 <p>This can matter when modeling, and also now.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb111" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a aria-hidden="true" tabindex="-1"></a>df_f <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb111" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a aria-hidden="true" tabindex="-1"></a>df_f <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
 <span id="cb111-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">party_f =</span> <span class="fu">factor</span>(party))</span>
 <span id="cb111-3"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb111-4"><a aria-hidden="true" tabindex="-1"></a>df_f</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb111-4"><a aria-hidden="true" tabindex="-1"></a>df_f</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 280 × 5
      pid start_year party      sex   party_f   
@@ -1587,9 +1589,9 @@ Kieran Healy
 <section id="option-1-factors-and-.drop-1" class="slide level2">
 <h2>Option 1: <span class="fg-orange">factors</span> and <span class="fg-red"><code>.drop</code></span></h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb113" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a aria-hidden="true" tabindex="-1"></a>df_f <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb113" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a aria-hidden="true" tabindex="-1"></a>df_f <span class="sc">|&gt;</span> </span>
 <span id="cb113-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(party_f) <span class="sc">|&gt;</span> </span>
-<span id="cb113-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb113-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 2 × 2
   party_f        n
@@ -1600,11 +1602,11 @@ Kieran Healy
 </div>
 <p>Factors are integer values with named labels, or <em>levels</em>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb115" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(df_f<span class="sc">$</span>party_f)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb115" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(df_f<span class="sc">$</span>party_f)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] "integer"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb117" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(df_f<span class="sc">$</span>party_f)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb117" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(df_f<span class="sc">$</span>party_f)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] "Democrat"   "Republican"</code></pre>
 </div>
@@ -1614,14 +1616,14 @@ Kieran Healy
 <h2>Option 1: <span class="fg-orange">factors</span> and <span class="fg-red"><code>.drop</code></span></h2>
 <p>By default, unused levels won’t display:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb119" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a aria-hidden="true" tabindex="-1"></a>df_f <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb119" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a aria-hidden="true" tabindex="-1"></a>df_f <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
 <span id="cb119-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">party_f =</span> <span class="fu">factor</span>(party, </span>
 <span id="cb119-3"><a aria-hidden="true" tabindex="-1"></a>                          <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Democrat"</span>, </span>
 <span id="cb119-4"><a aria-hidden="true" tabindex="-1"></a>                                     <span class="st">"Republican"</span>, </span>
 <span id="cb119-5"><a aria-hidden="true" tabindex="-1"></a>                                     <span class="st">"Libertarian"</span>)))</span>
 <span id="cb119-6"><a aria-hidden="true" tabindex="-1"></a>df_f <span class="sc">|&gt;</span> </span>
 <span id="cb119-7"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(party_f) <span class="sc">|&gt;</span> </span>
-<span id="cb119-8"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb119-8"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 2 × 2
   party_f        n
@@ -1629,7 +1631,7 @@ Kieran Healy
 1 Democrat     135
 2 Republican   145</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb121" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb121-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(df_f<span class="sc">$</span>party_f)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb121" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb121-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(df_f<span class="sc">$</span>party_f)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] "Democrat"    "Republican"  "Libertarian"</code></pre>
 </div>
@@ -1639,11 +1641,11 @@ Kieran Healy
 <h2>Option 1: <span class="fg-orange">factors</span> and <span class="fg-red"><code>.drop</code></span></h2>
 <p>By default, unused levels won’t display:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb123" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb123-1"><a aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb123" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb123-1"><a aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
 <span id="cb123-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.character), as_factor)) <span class="sc">|&gt;</span> </span>
 <span id="cb123-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(start_year, party, sex) <span class="sc">|&gt;</span></span>
 <span id="cb123-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">N =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span></span>
-<span id="cb123-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">freq =</span> N <span class="sc">/</span> <span class="fu">sum</span>(N))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb123-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">freq =</span> N <span class="sc">/</span> <span class="fu">sum</span>(N))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 14 × 5
 # Groups:   start_year, party [8]
@@ -1670,11 +1672,11 @@ Kieran Healy
 <h2>Option 1: <span class="fg-orange">factors</span> and <span class="fg-red"><code>.drop</code></span></h2>
 <p>You can make <code>dplyr</code> keep empty factor levels though:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb125" data-source-line-numbers="nil" data-code-line-numbers="3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb125-1"><a aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb125" data-source-line-numbers="nil" data-code-line-numbers="3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb125-1"><a aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
 <span id="cb125-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.character), as_factor)) <span class="sc">|&gt;</span> </span>
 <span id="cb125-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(start_year, party, sex, <span class="at">.drop =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb125-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">N =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span></span>
-<span id="cb125-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">freq =</span> N <span class="sc">/</span> <span class="fu">sum</span>(N))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb125-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">freq =</span> N <span class="sc">/</span> <span class="fu">sum</span>(N))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 16 × 5
 # Groups:   start_year, party [8]
@@ -1703,19 +1705,19 @@ Kieran Healy
 <h2>Option 2: <span class="fg-green">ungroup()</span> and <span class="fg-green">complete()</span></h2>
 <p>Maybe you don’t want to deal with factors.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb127" data-source-line-numbers="nil" data-code-line-numbers="5,6,7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb127-1"><a aria-hidden="true" tabindex="-1"></a>df_c <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb127" data-source-line-numbers="nil" data-code-line-numbers="5,6,7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb127-1"><a aria-hidden="true" tabindex="-1"></a>df_c <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
 <span id="cb127-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(start_year, party, sex) <span class="sc">|&gt;</span></span>
 <span id="cb127-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">N =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span></span>
 <span id="cb127-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">freq =</span> N <span class="sc">/</span> <span class="fu">sum</span>(N)) <span class="sc">|&gt;</span></span>
 <span id="cb127-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
 <span id="cb127-6"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">complete</span>(start_year, party, sex,</span>
-<span id="cb127-7"><a aria-hidden="true" tabindex="-1"></a>             <span class="at">fill =</span> <span class="fu">list</span>(<span class="at">N =</span> <span class="dv">0</span>, <span class="at">freq =</span> <span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb127-7"><a aria-hidden="true" tabindex="-1"></a>             <span class="at">fill =</span> <span class="fu">list</span>(<span class="at">N =</span> <span class="dv">0</span>, <span class="at">freq =</span> <span class="dv">0</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="option-2-ungroup-and-complete-1" class="slide level2">
 <h2>Option 2: <span class="fg-green">ungroup()</span> and <span class="fg-green">complete()</span></h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb128" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a aria-hidden="true" tabindex="-1"></a>df_c</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb128" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a aria-hidden="true" tabindex="-1"></a>df_c</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 16 × 5
    start_year party      sex       N   freq
@@ -1742,7 +1744,7 @@ Kieran Healy
 <section id="option-2-ungroup-and-complete-2" class="slide level2">
 <h2>Option 2: <span class="fg-green">ungroup()</span> and <span class="fg-green">complete()</span></h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb130" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a aria-hidden="true" tabindex="-1"></a>p_out <span class="ot">&lt;-</span> df_c <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb130" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a aria-hidden="true" tabindex="-1"></a>p_out <span class="ot">&lt;-</span> df_c <span class="sc">|&gt;</span> </span>
 <span id="cb130-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> start_year,</span>
 <span id="cb130-3"><a aria-hidden="true" tabindex="-1"></a>               <span class="at">y =</span> freq,</span>
 <span id="cb130-4"><a aria-hidden="true" tabindex="-1"></a>               <span class="at">color =</span> sex)) <span class="sc">+</span></span>
@@ -1751,13 +1753,13 @@ Kieran Healy
 <span id="cb130-7"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_manual</span>(<span class="at">values =</span> sex_colors, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Women"</span>, <span class="st">"Men"</span>)) <span class="sc">+</span></span>
 <span id="cb130-8"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">color =</span> <span class="fu">guide_legend</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>)) <span class="sc">+</span></span>
 <span id="cb130-9"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Percent"</span>, <span class="at">color =</span> <span class="st">"Group"</span>) <span class="sc">+</span></span>
-<span id="cb130-10"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> party)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb130-10"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> party)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="option-2-ungroup-and-complete-3" class="slide level2">
 <h2>Option 2: <span class="fg-green">ungroup()</span> and <span class="fg-green">complete()</span></h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb131" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb131-1"><a aria-hidden="true" tabindex="-1"></a>p_out</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb131" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb131-1"><a aria-hidden="true" tabindex="-1"></a>p_out</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 
@@ -1952,7 +1954,7 @@ Kieran Healy
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -2017,190 +2019,173 @@ Kieran Healy
     </script>
 
     <script id="quarto-html-after-body" type="application/javascript">
-    window.document.addEventListener("DOMContentLoaded", function (event) {
-      const toggleBodyColorMode = (bsSheetEl) => {
-        const mode = bsSheetEl.getAttribute("data-mode");
-        const bodyEl = window.document.querySelector("body");
-        if (mode === "dark") {
-          bodyEl.classList.add("quarto-dark");
-          bodyEl.classList.remove("quarto-light");
-        } else {
-          bodyEl.classList.add("quarto-light");
-          bodyEl.classList.remove("quarto-dark");
-        }
-      }
-      const toggleBodyColorPrimary = () => {
-        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-        if (bsSheetEl) {
-          toggleBodyColorMode(bsSheetEl);
-        }
-      }
-      toggleBodyColorPrimary();  
-      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
-      tabsets.forEach(function(tabset) {
-        const tabby = new Tabby('#' + tabset.id);
-      });
-      const isCodeAnnotation = (el) => {
-        for (const clz of el.classList) {
-          if (clz.startsWith('code-annotation-')) {                     
-            return true;
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
           }
+          return false;
         }
-        return false;
-      }
-      const onCopySuccess = function(e) {
-        // button target
-        const button = e.trigger;
-        // don't keep focus
-        button.blur();
-        // flash "checked"
-        button.classList.add('code-copy-button-checked');
-        var currentTitle = button.getAttribute("title");
-        button.setAttribute("title", "Copied!");
-        let tooltip;
-        if (window.bootstrap) {
-          button.setAttribute("data-bs-toggle", "tooltip");
-          button.setAttribute("data-bs-placement", "left");
-          button.setAttribute("data-bs-title", "Copied!");
-          tooltip = new bootstrap.Tooltip(button, 
-            { trigger: "manual", 
-              customClass: "code-copy-button-tooltip",
-              offset: [0, -8]});
-          tooltip.show();    
-        }
-        setTimeout(function() {
-          if (tooltip) {
-            tooltip.hide();
-            button.removeAttribute("data-bs-title");
-            button.removeAttribute("data-bs-toggle");
-            button.removeAttribute("data-bs-placement");
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
           }
-          button.setAttribute("title", currentTitle);
-          button.classList.remove('code-copy-button-checked');
-        }, 1000);
-        // clear code selection
-        e.clearSelection();
-      }
-      const getTextToCopy = function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
           for (const childEl of codeEl.children) {
             if (isCodeAnnotation(childEl)) {
               childEl.remove();
             }
           }
           return codeEl.innerText;
-      }
-      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-        text: getTextToCopy
-      });
-      clipboard.on('success', onCopySuccess);
-      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-          text: getTextToCopy,
-          container: window.document.getElementById('quarto-embedded-source-code-modal')
-        });
-        clipboardModal.on('success', onCopySuccess);
-      }
-        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-        var mailtoRegex = new RegExp(/^mailto:/);
-          var filterRegex = new RegExp("https:\/\/kjhealy\.github\.io\/data_wrangling");
-        var isInternal = (href) => {
-            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
         }
-        // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-        for (var i=0; i<links.length; i++) {
-          const link = links[i];
-          if (!isInternal(link.href)) {
-            // undo the damage that might have been done by quarto-nav.js in the case of
-            // links that we want to consider external
-            if (link.dataset.originalHref !== undefined) {
-              link.href = link.dataset.originalHref;
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp("https:\/\/kjhealy\.github\.io\/data_wrangling");
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
             }
           }
-        }
-      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-        const config = {
-          allowHTML: true,
-          maxWidth: 500,
-          delay: 100,
-          arrow: false,
-          appendTo: function(el) {
-              return el.closest('section.slide') || el.parentElement;
-          },
-          interactive: true,
-          interactiveBorder: 10,
-          theme: 'light-border',
-          placement: 'bottom-start',
-        };
-        if (contentFn) {
-          config.content = contentFn;
-        }
-        if (onTriggerFn) {
-          config.onTrigger = onTriggerFn;
-        }
-        if (onUntriggerFn) {
-          config.onUntrigger = onUntriggerFn;
-        }
-          config['offset'] = [0,0];
-          config['maxWidth'] = 700;
-        window.tippy(el, config); 
-      }
-      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-      for (var i=0; i<noterefs.length; i++) {
-        const ref = noterefs[i];
-        tippyHover(ref, function() {
-          // use id or data attribute instead here
-          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-          try { href = new URL(href).hash; } catch {}
-          const id = href.replace(/^#\/?/, "");
-          const note = window.document.getElementById(id);
-          if (note) {
-            return note.innerHTML;
-          } else {
-            return "";
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
           }
-        });
-      }
-      const findCites = (el) => {
-        const parentEl = el.parentElement;
-        if (parentEl) {
-          const cites = parentEl.dataset.cites;
-          if (cites) {
-            return {
-              el,
-              cites: cites.split(' ')
-            };
-          } else {
-            return findCites(el.parentElement)
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
           }
-        } else {
-          return undefined;
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
         }
-      };
-      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-      for (var i=0; i<bibliorefs.length; i++) {
-        const ref = bibliorefs[i];
-        const citeInfo = findCites(ref);
-        if (citeInfo) {
-          tippyHover(citeInfo.el, function() {
-            var popup = window.document.createElement('div');
-            citeInfo.cites.forEach(function(cite) {
-              var citeDiv = window.document.createElement('div');
-              citeDiv.classList.add('hanging-indent');
-              citeDiv.classList.add('csl-entry');
-              var biblioDiv = window.document.getElementById('ref-' + cite);
-              if (biblioDiv) {
-                citeDiv.innerHTML = biblioDiv.innerHTML;
-              }
-              popup.appendChild(citeDiv);
-            });
-            return popup.innerHTML;
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
           });
         }
-      }
-    });
-    </script>
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
     
 
 <script src="../site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.js" defer="true"></script>

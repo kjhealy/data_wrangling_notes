@@ -6,12 +6,12 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ab006101b7430f837520e76e9991ac05.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.css" rel="stylesheet"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.6.37">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-5acd1f5414a849314995cb65ca2adae1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/fonts-0.0/fonts-embed.css" rel="stylesheet"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.25">
 
   <meta name="author" content="Kieran Healy">
-  <meta name="dcterms.date" content="2024-10-02">
   <title>Data Wrangling with R and the Tidyverse – Parallel Processing</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -31,8 +31,9 @@
       vertical-align: middle;
     }
     /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -43,7 +44,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -96,7 +97,7 @@
     code span.vs { color: #ed8796; } /* VerbatimString */
     code span.wa { color: #f5a97f; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-d821f746f1112e15bc8fd593da8fbad9.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-a3041996942c967027168b1379f3528e.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -208,18 +209,18 @@ Kieran Healy
     </div>
 </div>
 
-  <p class="date">October 2, 2024</p>
+  <p class="date">December 2025</p>
 </section>
 <section id="load-the-packages-as-always" class="slide level2">
 <h2>Load the packages, as always</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb1" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)      <span class="co"># manage file paths</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)      <span class="co"># manage file paths</span></span>
 <span id="cb1-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(socviz)    <span class="co"># data and some useful functions</span></span>
 <span id="cb1-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co"># your friend and mine</span></span>
 <span id="cb1-4"><a aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-5"><a aria-hidden="true" tabindex="-1"></a><span class="do">## Magic new package</span></span>
 <span id="cb1-6"><a aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("furrr")</span></span>
-<span id="cb1-7"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(furrr) <span class="co"># Also loads `future`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-7"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(furrr) <span class="co"># Also loads `future`</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre data-code-line-numbers=""><code>Loading required package: future</code></pre>
 </div>
@@ -241,8 +242,8 @@ Kieran Healy
 <h2>For example</h2>
 <p><code>dplyr</code> is all about this.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb3" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-hidden="true" tabindex="-1"></a>gss_sm <span class="sc">|&gt;</span> </span>
-<span id="cb3-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(bigregion)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-hidden="true" tabindex="-1"></a>gss_sm <span class="sc">|&gt;</span> </span>
+<span id="cb3-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(bigregion)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 4 × 2
   bigregion     n
@@ -260,9 +261,9 @@ Kieran Healy
 <p>We can split, apply, combine in various ways.</p>
 <p>Base R has the <code>split()</code> function:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb5" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> mtcars <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> mtcars <span class="sc">|&gt;</span> </span>
 <span id="cb5-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">split</span>(mtcars<span class="sc">$</span>cyl)</span>
-<span id="cb5-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(out) <span class="co"># mtcars split into a list of data frames by the `cyl` variable</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(out) <span class="co"># mtcars split into a list of data frames by the `cyl` variable</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>  Length Class      Mode
 4 11     data.frame list
@@ -275,9 +276,9 @@ Kieran Healy
 <h2>For example: <span class="fg-green">split</span></h2>
 <p>Tidyverse has <code>group_split()</code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb7" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> mtcars <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> mtcars <span class="sc">|&gt;</span> </span>
 <span id="cb7-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_split</span>(cyl)</span>
-<span id="cb7-3"><a aria-hidden="true" tabindex="-1"></a>out</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-3"><a aria-hidden="true" tabindex="-1"></a>out</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>&lt;list_of&lt;
   tbl_df&lt;
@@ -347,20 +348,20 @@ Kieran Healy
 <h2>For example: <span class="fg-green">apply</span></h2>
 <p>The application step is “I want to fit a linear model to each piece”</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb9" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> mtcars <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> mtcars <span class="sc">|&gt;</span> </span>
 <span id="cb9-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_split</span>(cyl) <span class="sc">|&gt;</span> </span>
-<span id="cb9-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(\(df) <span class="fu">lm</span>(mpg <span class="sc">~</span> wt <span class="sc">+</span> hp <span class="sc">+</span> gear, <span class="at">data =</span> df))  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(\(df) <span class="fu">lm</span>(mpg <span class="sc">~</span> wt <span class="sc">+</span> hp <span class="sc">+</span> gear, <span class="at">data =</span> df))  </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="for-example-apply-1" class="slide level2">
 <h2>For example: <span class="fg-green">apply</span></h2>
 <p>The application step is “I want to fit a linear model to each piece” and get a summary</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb10" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">|&gt;</span> </span>
 <span id="cb10-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_split</span>(cyl) <span class="sc">|&gt;</span> </span>
 <span id="cb10-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(\(df) <span class="fu">lm</span>(mpg <span class="sc">~</span> wt <span class="sc">+</span> hp <span class="sc">+</span> gear, <span class="at">data =</span> df))  <span class="sc">|&gt;</span> </span>
 <span id="cb10-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(summary) <span class="sc">|&gt;</span> </span>
-<span id="cb10-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_dbl</span>(<span class="st">"r.squared"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_dbl</span>(<span class="st">"r.squared"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 0.7301860 0.6597413 0.4995237</code></pre>
 </div>
@@ -370,11 +371,11 @@ Kieran Healy
 <h2>For example: <span class="fg-green">combine</span></h2>
 <p>In this case the “combine” step is implicitly at the end: we get a vector of R squareds back, and it’s as long as the number of groups.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb12" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">|&gt;</span> </span>
 <span id="cb12-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_split</span>(cyl) <span class="sc">|&gt;</span> </span>
 <span id="cb12-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(\(df) <span class="fu">lm</span>(mpg <span class="sc">~</span> wt <span class="sc">+</span> hp <span class="sc">+</span> gear, <span class="at">data =</span> df))  <span class="sc">|&gt;</span> </span>
 <span id="cb12-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(summary) <span class="sc">|&gt;</span> </span>
-<span id="cb12-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_dbl</span>(<span class="st">"r.squared"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_dbl</span>(<span class="st">"r.squared"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 0.7301860 0.6597413 0.4995237</code></pre>
 </div>
@@ -384,12 +385,12 @@ Kieran Healy
 <h2>For example: <span class="fg-green">apply</span></h2>
 <p>This is also what we’re doing more elegantly (staying within a tibble structure) if we <code>nest()</code> and use <code>broom</code> to get a summary out.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb14" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">|&gt;</span></span>
 <span id="cb14-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(cyl) <span class="sc">|&gt;</span> </span>
 <span id="cb14-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>() <span class="sc">|&gt;</span> </span>
 <span id="cb14-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">model =</span> <span class="fu">map</span>(data, \(df) <span class="fu">lm</span>(mpg <span class="sc">~</span> wt <span class="sc">+</span> hp <span class="sc">+</span> gear, <span class="at">data =</span> df)), </span>
 <span id="cb14-5"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">perf =</span> <span class="fu">map</span>(model, broom<span class="sc">::</span>glance)) <span class="sc">|&gt;</span> </span>
-<span id="cb14-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(perf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(perf)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 3 × 15
 # Groups:   cyl [3]
@@ -412,7 +413,7 @@ Kieran Healy
 <p>For small tasks that’s fine. But for bigger tasks it gets inefficient quickly.</p>
 <div class="smallcode">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb16" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a aria-hidden="true" tabindex="-1"></a><span class="do">## From Henrik Bengtsson's documentation for future/furr</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a aria-hidden="true" tabindex="-1"></a><span class="do">## From Henrik Bengtsson's documentation for future/furrr</span></span>
 <span id="cb16-2"><a aria-hidden="true" tabindex="-1"></a>slow_sum <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
 <span id="cb16-3"><a aria-hidden="true" tabindex="-1"></a>  sum <span class="ot">&lt;-</span> <span class="dv">0</span></span>
 <span id="cb16-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (value <span class="cf">in</span> x) {</span>
@@ -424,13 +425,13 @@ Kieran Healy
 <span id="cb16-10"><a aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-11"><a aria-hidden="true" tabindex="-1"></a><span class="co"># This takes &gt; ten seconds to run.</span></span>
 <span id="cb16-12"><a aria-hidden="true" tabindex="-1"></a>tictoc<span class="sc">::</span><span class="fu">tic</span>()</span>
-<span id="cb16-13"><a aria-hidden="true" tabindex="-1"></a><span class="fu">slow_sum</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-13"><a aria-hidden="true" tabindex="-1"></a><span class="fu">slow_sum</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 55</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb18" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a aria-hidden="true" tabindex="-1"></a>tictoc<span class="sc">::</span><span class="fu">toc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a aria-hidden="true" tabindex="-1"></a>tictoc<span class="sc">::</span><span class="fu">toc</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code>10.036 sec elapsed</code></pre>
+<pre data-code-line-numbers=""><code>10.052 sec elapsed</code></pre>
 </div>
 </div>
 </div>
@@ -464,8 +465,8 @@ Kieran Healy
 <p>Most of the time, even when we are using them, our computers sit around doing PRETTY MUCH NOTHING.</p>
 
 <img data-src="img/08_idle_cpu.png" class="r-stretch"><div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb20" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a aria-hidden="true" tabindex="-1"></a><span class="do">## How many cores do we have?</span></span>
-<span id="cb20-2"><a aria-hidden="true" tabindex="-1"></a>parallelly<span class="sc">::</span><span class="fu">availableCores</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a aria-hidden="true" tabindex="-1"></a><span class="do">## How many cores do we have?</span></span>
+<span id="cb20-2"><a aria-hidden="true" tabindex="-1"></a>parallelly<span class="sc">::</span><span class="fu">availableCores</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>system 
     16 </code></pre>
@@ -474,70 +475,190 @@ Kieran Healy
 <p>Remember, processor clock cycles are <em>really fast</em>. They’re measured in billions of cycles per second.</p>
 <p>We need to put those cores to work!</p>
 </section>
-<section id="future-and-furrr" class="slide level2">
-<h2>Future and furrr</h2>
-<p>These packages make parallel computing <em>way</em> more straightforward than it used to be. In particular, for Tidyverse-centric workflows, <code>furrr</code> provides a set of <code>future_</code> functions that are drop-in replacements for <code>map</code> and friends. So <code>map()</code> becomes <code>future_map()</code> and so on.</p>
-<p>We set things up like this:</p>
+<section id="previously-future-and-furrr" class="slide level2">
+<h2>Previously: Future and furrr</h2>
+<p><code>future</code> and <code>furrr</code> made parallel computing <em>way</em> more straightforward than it used to be. In particular, for Tidyverse-centric workflows, <code>furrr</code> provides a set of <code>future_</code> functions that are drop-in replacements for <code>map</code> and friends. So <code>map()</code> becomes <code>future_map()</code> and so on.</p>
+<p>However, <code>purrr</code> has recently added support for parallelization via the <code>in_parallel()</code> function. It uses <code>crate</code> and <code>mirai</code> under the hood.</p>
+</section>
+<section id="parallel-purrr" class="slide level2">
+<h2>Parallel <code>purrr</code></h2>
+<p>Update your R packages with <code>remotes::update_packages()</code>.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb22" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># library(furrr) # We did this already</span></span>
-<span id="cb22-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plan</span>(multisession) <span class="co"># Default will use the available resources</span></span>
-<span id="cb22-3"><a aria-hidden="true" tabindex="-1"></a><span class="do">## Note difference between multisession and multicore </span></span>
-<span id="cb22-4"><a aria-hidden="true" tabindex="-1"></a><span class="do">## [tl;dr: the latter is faster, but you can't use it on Windows]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb22-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb22-3"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a aria-hidden="true" tabindex="-1"></a><span class="co"># Set up parallel processing</span></span>
+<span id="cb22-5"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mirai)</span>
+<span id="cb22-6"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a aria-hidden="true" tabindex="-1"></a><span class="fu">status</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code>$connections
+[1] 0
+
+$daemons
+[1] 0</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># Summon daemons. Do not summon more daemons than you have cores. People often choose one less than the number of cores.</span></span>
+<span id="cb24-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">daemons</span>(<span class="dv">15</span>)</span>
+<span id="cb24-3"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a aria-hidden="true" tabindex="-1"></a><span class="fu">status</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code>$connections
+[1] 15
+
+$daemons
+[1] "ipc:///tmp/2223b6a0a0c3faee6151d441"
+
+$mirai
+ awaiting executing completed 
+        0         0         0 </code></pre>
+</div>
 </div>
 </section>
 <section id="toy-example" class="slide level2">
 <h2>Toy Example</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb23" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># Another slow function (from </span></span>
-<span id="cb23-2"><a aria-hidden="true" tabindex="-1"></a><span class="co"># Grant McDermott this time)</span></span>
-<span id="cb23-3"><a aria-hidden="true" tabindex="-1"></a>slow_square <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">x =</span> <span class="dv">1</span>) {</span>
-<span id="cb23-4"><a aria-hidden="true" tabindex="-1"></a>    x_sq <span class="ot">&lt;-</span> x<span class="sc">^</span><span class="dv">2</span> </span>
-<span id="cb23-5"><a aria-hidden="true" tabindex="-1"></a>    out <span class="ot">&lt;-</span>  <span class="fu">tibble</span>(<span class="at">value =</span> x, <span class="at">value_sq =</span> x_sq)</span>
-<span id="cb23-6"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">Sys.sleep</span>(<span class="dv">2</span>) <span class="co"># Zzzz</span></span>
-<span id="cb23-7"><a aria-hidden="true" tabindex="-1"></a>    out</span>
-<span id="cb23-8"><a aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb23-9"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-10"><a aria-hidden="true" tabindex="-1"></a>tictoc<span class="sc">::</span><span class="fu">tic</span>(<span class="st">"Serially"</span>)</span>
-<span id="cb23-11"><a aria-hidden="true" tabindex="-1"></a><span class="do">## This is of course way slower than just writing </span></span>
-<span id="cb23-12"><a aria-hidden="true" tabindex="-1"></a><span class="do">## slow_square(1:15) but nvm that for now</span></span>
-<span id="cb23-13"><a aria-hidden="true" tabindex="-1"></a>serial_out <span class="ot">&lt;-</span> <span class="fu">map</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>, slow_square) <span class="sc">|&gt;</span> </span>
-<span id="cb23-14"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">list_rbind</span>()</span>
-<span id="cb23-15"><a aria-hidden="true" tabindex="-1"></a>tictoc<span class="sc">::</span><span class="fu">toc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># Another slow function (from</span></span>
+<span id="cb26-2"><a aria-hidden="true" tabindex="-1"></a><span class="co"># Grant McDermott this time)</span></span>
+<span id="cb26-3"><a aria-hidden="true" tabindex="-1"></a>slow_square <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">x =</span> <span class="dv">1</span>) {</span>
+<span id="cb26-4"><a aria-hidden="true" tabindex="-1"></a>    x_sq <span class="ot">&lt;-</span> x<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb26-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="do">## We explicitly namespace all our package function calls</span></span>
+<span id="cb26-6"><a aria-hidden="true" tabindex="-1"></a>    out <span class="ot">&lt;-</span>  tibble<span class="sc">::</span><span class="fu">tibble</span>(<span class="at">value =</span> x, <span class="at">value_sq =</span> x_sq)</span>
+<span id="cb26-7"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">Sys.sleep</span>(<span class="dv">2</span>) <span class="co"># Zzzz</span></span>
+<span id="cb26-8"><a aria-hidden="true" tabindex="-1"></a>    out</span>
+<span id="cb26-9"><a aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb26-10"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-11"><a aria-hidden="true" tabindex="-1"></a>tictoc<span class="sc">::</span><span class="fu">tic</span>(<span class="st">"Serially"</span>)</span>
+<span id="cb26-12"><a aria-hidden="true" tabindex="-1"></a><span class="do">## This is of course way slower than just writing</span></span>
+<span id="cb26-13"><a aria-hidden="true" tabindex="-1"></a><span class="do">## slow_square(1:20) but nvm that for now</span></span>
+<span id="cb26-14"><a aria-hidden="true" tabindex="-1"></a>serial_out <span class="ot">&lt;-</span> <span class="fu">map</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>, slow_square) <span class="sc">|&gt;</span></span>
+<span id="cb26-15"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">list_rbind</span>()</span>
+<span id="cb26-16"><a aria-hidden="true" tabindex="-1"></a>tictoc<span class="sc">::</span><span class="fu">toc</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code>Serially: 30.099 sec elapsed</code></pre>
+<pre data-code-line-numbers=""><code>Serially: 40.13 sec elapsed</code></pre>
 </div>
 </div>
 </section>
 <section id="toy-example-1" class="slide level2">
 <h2>Toy Example</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb25" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a aria-hidden="true" tabindex="-1"></a>tictoc<span class="sc">::</span><span class="fu">tic</span>(<span class="st">"Parallelized"</span>)</span>
-<span id="cb25-2"><a aria-hidden="true" tabindex="-1"></a>parallel_out <span class="ot">&lt;-</span>  <span class="fu">future_map_dfr</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>, slow_square)</span>
-<span id="cb25-3"><a aria-hidden="true" tabindex="-1"></a>tictoc<span class="sc">::</span><span class="fu">toc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a aria-hidden="true" tabindex="-1"></a>tictoc<span class="sc">::</span><span class="fu">tic</span>(<span class="st">"Parallelized"</span>)</span>
+<span id="cb28-2"><a aria-hidden="true" tabindex="-1"></a>parallel_out <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span> <span class="sc">|&gt;</span></span>
+<span id="cb28-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="fu">in_parallel</span>(\(x) <span class="fu">slow_square</span>(x),</span>
+<span id="cb28-4"><a aria-hidden="true" tabindex="-1"></a>      <span class="at">slow_square =</span> slow_square)) <span class="sc">|&gt;</span></span>
+<span id="cb28-5"><a aria-hidden="true" tabindex="-1"></a>        <span class="fu">list_rbind</span>()</span>
+<span id="cb28-6"><a aria-hidden="true" tabindex="-1"></a>tictoc<span class="sc">::</span><span class="fu">toc</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code>Parallelized: 3.825 sec elapsed</code></pre>
+<pre data-code-line-numbers=""><code>Parallelized: 4.076 sec elapsed</code></pre>
 </div>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb27" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">identical</span>(serial_out, parallel_out)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">identical</span>(serial_out, parallel_out)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] TRUE</code></pre>
 </div>
 </div>
 </section>
-<section id="noaa-data" class="slide level2">
-<h2>NOAA Data</h2>
-<p>Data obtained with:</p>
-<pre class="bassh" data-code-line-numbers=""><code>mkdir raw
-cd raw
-wget --no-parent -r -l inf --wait 5 --random-wait 'https://www.ncei.noaa.gov/data/sea-surface-temperature-optimum-interpolation/v2.1/access/avhrr/'</code></pre>
-<p>This tries to be polite with the NOAA: it enforces a wait time and in addition randomizes it to make it variably longer. Note also no boundary on depth of folder recursion. There are a lot of files (&gt;15,000). Doing it this way will take several <em>days</em> in real time (though much much less in actual transfer time of course).</p>
+<section id="using-in_parallel" class="slide level2">
+<h2>Using <code>in_parallel()</code></h2>
+<ul>
+<li>If you use <code>in_parallel()</code> but don’t set <code>daemons()</code>, then the map will just proceed sequentially, as if <code>in_parallel()</code> were not there.</li>
+<li>You have to explicitly pass through the names of any local functions you’re using, as well as any local objects. This can make the code a little more verbose, but with more complex jobs it’s clear what’s being passed in and from where.</li>
+<li>If you have written a local function and are passing that along, you must make sure any package functions it calls are fully namespaced (e.g.&nbsp;<code>tibble::tibble()</code> rather than just <code>tibble()</code>).</li>
+</ul>
+</section>
+<section id="using-in_parallel-1" class="slide level2">
+<h2>Using <code>in_parallel()</code></h2>
+<p>E.g. From the help:</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># ❌ This won't work - external dependencies not declared</span></span>
+<span id="cb32-2"><a aria-hidden="true" tabindex="-1"></a>my_data <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb32-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">map</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="fu">in_parallel</span>(\(x) <span class="fu">mean</span>(my_data)))</span>
+<span id="cb32-4"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-5"><a aria-hidden="true" tabindex="-1"></a><span class="co"># ✅ This works - dependencies explicitly provided</span></span>
+<span id="cb32-6"><a aria-hidden="true" tabindex="-1"></a>my_data <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb32-7"><a aria-hidden="true" tabindex="-1"></a><span class="fu">map</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="fu">in_parallel</span>(\(x) <span class="fu">mean</span>(my_data), <span class="at">my_data =</span> my_data))</span>
+<span id="cb32-8"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-9"><a aria-hidden="true" tabindex="-1"></a><span class="co"># ✅ Package functions need explicit namespacing</span></span>
+<span id="cb32-10"><a aria-hidden="true" tabindex="-1"></a><span class="fu">map</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="fu">in_parallel</span>(\(x) vctrs<span class="sc">::</span><span class="fu">vec_init</span>(<span class="fu">integer</span>(), x)))</span>
+<span id="cb32-11"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-12"><a aria-hidden="true" tabindex="-1"></a><span class="co"># ✅ Or load packages within the function</span></span>
+<span id="cb32-13"><a aria-hidden="true" tabindex="-1"></a><span class="fu">map</span>(</span>
+<span id="cb32-14"><a aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
+<span id="cb32-15"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">in_parallel</span>(\(x) {</span>
+<span id="cb32-16"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">library</span>(vctrs)</span>
+<span id="cb32-17"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">vec_init</span>(<span class="fu">integer</span>(), x)</span>
+<span id="cb32-18"><a aria-hidden="true" tabindex="-1"></a>  })</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </section>
 <section id="noaa-temperature-data" class="slide level2">
 <h2>NOAA Temperature Data</h2>
-<p>Raw data directories:</p>
+<p>See: <a href="https://github.com/kjhealy/noaa_ncei/" class="uri">https://github.com/kjhealy/noaa_ncei/</a>. This function gets one folder full of NCDF files from NOAA.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb30" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">basename</span>(fs<span class="sc">::</span><span class="fu">dir_ls</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"avhrr"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a aria-hidden="true" tabindex="-1"></a><span class="co">#' Get a year-month folder of NCDF Files from NOAA</span></span>
+<span id="cb33-2"><a aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb33-3"><a aria-hidden="true" tabindex="-1"></a><span class="co">#' @param url The endpoint URL of the AVHRR data, &lt;https://www.ncei.noaa.gov/data/sea-surface-temperature-optimum-interpolation/v2.1/access/avhrr/&gt;</span></span>
+<span id="cb33-4"><a aria-hidden="true" tabindex="-1"></a><span class="co">#' @param local A local file path for the raw data folders, i.e. where all the year-month dirs go. Defaults to a local version under raw/ of the same path as the NOAA website.</span></span>
+<span id="cb33-5"><a aria-hidden="true" tabindex="-1"></a><span class="co">#' @param subdir The subdirectory of monthly data to get. A character string of digits, of the form "YYYYMM". No default. Gets appended to `local`</span></span>
+<span id="cb33-6"><a aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb33-7"><a aria-hidden="true" tabindex="-1"></a><span class="co">#' @return  A directory of NCDF files.</span></span>
+<span id="cb33-8"><a aria-hidden="true" tabindex="-1"></a><span class="co">#' @export</span></span>
+<span id="cb33-9"><a aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb33-10"><a aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb33-11"><a aria-hidden="true" tabindex="-1"></a>get_nc_files <span class="ot">&lt;-</span> <span class="cf">function</span>(</span>
+<span id="cb33-12"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">url =</span> <span class="st">"https://www.ncei.noaa.gov/data/sea-surface-temperature-optimum-interpolation/v2.1/access/avhrr/"</span>,</span>
+<span id="cb33-13"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">local =</span> here<span class="sc">::</span><span class="fu">here</span>(</span>
+<span id="cb33-14"><a aria-hidden="true" tabindex="-1"></a>    <span class="st">"raw/www.ncei.noaa.gov/data/sea-surface-temperature-optimum-interpolation/v2.1/access/avhrr/"</span></span>
+<span id="cb33-15"><a aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb33-16"><a aria-hidden="true" tabindex="-1"></a>  subdir</span>
+<span id="cb33-17"><a aria-hidden="true" tabindex="-1"></a>) {</span>
+<span id="cb33-18"><a aria-hidden="true" tabindex="-1"></a>  localdir <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(local, subdir)</span>
+<span id="cb33-19"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-20"><a aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span>fs<span class="sc">::</span><span class="fu">dir_exists</span>(localdir)) {</span>
+<span id="cb33-21"><a aria-hidden="true" tabindex="-1"></a>    fs<span class="sc">::</span><span class="fu">dir_create</span>(localdir)</span>
+<span id="cb33-22"><a aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb33-23"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-24"><a aria-hidden="true" tabindex="-1"></a>  files <span class="ot">&lt;-</span> rvest<span class="sc">::</span><span class="fu">read_html</span>(<span class="fu">paste0</span>(url, subdir)) <span class="sc">|&gt;</span></span>
+<span id="cb33-25"><a aria-hidden="true" tabindex="-1"></a>    rvest<span class="sc">::</span><span class="fu">html_elements</span>(<span class="st">"a"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb33-26"><a aria-hidden="true" tabindex="-1"></a>    rvest<span class="sc">::</span><span class="fu">html_text2</span>()</span>
+<span id="cb33-27"><a aria-hidden="true" tabindex="-1"></a>  files <span class="ot">&lt;-</span> <span class="fu">subset</span>(files, <span class="fu">str_detect</span>(files, <span class="st">"nc"</span>))</span>
+<span id="cb33-28"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-29"><a aria-hidden="true" tabindex="-1"></a>  full_urls <span class="ot">&lt;-</span> <span class="fu">paste0</span>(url, subdir, <span class="st">"/"</span>, files)</span>
+<span id="cb33-30"><a aria-hidden="true" tabindex="-1"></a>  full_outpaths <span class="ot">&lt;-</span> <span class="fu">paste0</span>(localdir, <span class="st">"/"</span>, files)</span>
+<span id="cb33-31"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-32"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">walk2</span>(full_urls, full_outpaths, \(x, y) {</span>
+<span id="cb33-33"><a aria-hidden="true" tabindex="-1"></a>    httr<span class="sc">::</span><span class="fu">GET</span>(x, httr<span class="sc">::</span><span class="fu">write_disk</span>(y, <span class="at">overwrite =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb33-34"><a aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb33-35"><a aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="noaa-temperature-data-1" class="slide level2">
+<h2>NOAA Temperature Data</h2>
+<p>Initial get:</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a aria-hidden="true" tabindex="-1"></a><span class="do">## Functions, incl. actual get_nc_files() function to get 1 year-month's batch of files.</span></span>
+<span id="cb34-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="fu">here</span>(<span class="st">"R"</span>, <span class="st">"functions.R"</span>))</span>
+<span id="cb34-3"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-4"><a aria-hidden="true" tabindex="-1"></a><span class="do">### Initial get. Only have to do this once.</span></span>
+<span id="cb34-5"><a aria-hidden="true" tabindex="-1"></a><span class="do">## We try to be nice.</span></span>
+<span id="cb34-6"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-7"><a aria-hidden="true" tabindex="-1"></a><span class="co"># Data collection starts in September 1981</span></span>
+<span id="cb34-8"><a aria-hidden="true" tabindex="-1"></a>first_yr <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"1981"</span>, <span class="fu">sprintf</span>(<span class="st">'%0.2d'</span>, <span class="dv">9</span><span class="sc">:</span><span class="dv">12</span>))</span>
+<span id="cb34-9"><a aria-hidden="true" tabindex="-1"></a>yrs <span class="ot">&lt;-</span> <span class="dv">1982</span><span class="sc">:</span><span class="dv">2024</span></span>
+<span id="cb34-10"><a aria-hidden="true" tabindex="-1"></a>months <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(<span class="st">'%0.2d'</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>)</span>
+<span id="cb34-11"><a aria-hidden="true" tabindex="-1"></a>subdirs <span class="ot">&lt;-</span> <span class="fu">c</span>(first_yr, <span class="fu">paste0</span>(<span class="fu">rep</span>(yrs, <span class="at">each =</span> <span class="dv">12</span>), months))</span>
+<span id="cb34-12"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-13"><a aria-hidden="true" tabindex="-1"></a>slowly_get_nc_files <span class="ot">&lt;-</span> <span class="fu">slowly</span>(get_nc_files)</span>
+<span id="cb34-14"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-15"><a aria-hidden="true" tabindex="-1"></a><span class="fu">walk</span>(subdirs, \(x) <span class="fu">slowly_get_nc_files</span>(<span class="at">subdir =</span> x))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>This tries to be polite with the NOAA: it enforces a wait time and in addition randomizes it to make it variably longer. There are a lot of files (&gt;15,000). Doing it this way will take several <em>days</em> in real time (though much much less in actual transfer time of course).</p>
+</section>
+<section id="noaa-temperature-data-2" class="slide level2">
+<h2>NOAA Temperature Data</h2>
+<p>Raw data directories locally:</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">basename</span>(fs<span class="sc">::</span><span class="fu">dir_ls</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"avhrr"</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>  [1] "198109" "198110" "198111" "198112" "198201" "198202" "198203" "198204"
   [9] "198205" "198206" "198207" "198208" "198209" "198210" "198211" "198212"
@@ -552,15 +673,15 @@ wget --no-parent -r -l inf --wait 5 --random-wait 'https://www.ncei.noaa.gov/dat
  [81] "198805" "198806" "198807" "198808" "198809" "198810" "198811" "198812"
  [89] "198901" "198902" "198903" "198904" "198905" "198906" "198907" "198908"
  [97] "198909" "198910" "198911" "198912"
- [ reached getOption("max.print") -- omitted 421 entries ]</code></pre>
+ [ reached 'max' / getOption("max.print") -- omitted 428 entries ]</code></pre>
 </div>
 </div>
 </section>
-<section id="noaa-temperature-data-1" class="slide level2">
+<section id="noaa-temperature-data-3" class="slide level2">
 <h2>NOAA Temperature Data</h2>
 <p>Raw data files, in netCDF (Version 4) format</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb32" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">basename</span>(fs<span class="sc">::</span><span class="fu">dir_ls</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"avhrr"</span>, <span class="st">"202402"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">basename</span>(fs<span class="sc">::</span><span class="fu">dir_ls</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"avhrr"</span>, <span class="st">"202402"</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code> [1] "oisst-avhrr-v02r01.20240201.nc" "oisst-avhrr-v02r01.20240202.nc"
  [3] "oisst-avhrr-v02r01.20240203.nc" "oisst-avhrr-v02r01.20240204.nc"
@@ -583,60 +704,60 @@ wget --no-parent -r -l inf --wait 5 --random-wait 'https://www.ncei.noaa.gov/dat
 <section id="some-prep" class="slide level2">
 <h2>Some Prep</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb34" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a aria-hidden="true" tabindex="-1"></a><span class="do">## Seasons for plotting</span></span>
-<span id="cb34-2"><a aria-hidden="true" tabindex="-1"></a>season <span class="ot">&lt;-</span>  <span class="cf">function</span>(in_date){</span>
-<span id="cb34-3"><a aria-hidden="true" tabindex="-1"></a>  br <span class="ot">=</span> <span class="fu">yday</span>(<span class="fu">as.Date</span>(<span class="fu">c</span>(<span class="st">"2019-03-01"</span>,</span>
-<span id="cb34-4"><a aria-hidden="true" tabindex="-1"></a>                      <span class="st">"2019-06-01"</span>,</span>
-<span id="cb34-5"><a aria-hidden="true" tabindex="-1"></a>                      <span class="st">"2019-09-01"</span>,</span>
-<span id="cb34-6"><a aria-hidden="true" tabindex="-1"></a>                      <span class="st">"2019-12-01"</span>)))</span>
-<span id="cb34-7"><a aria-hidden="true" tabindex="-1"></a>  x <span class="ot">=</span> <span class="fu">yday</span>(in_date)</span>
-<span id="cb34-8"><a aria-hidden="true" tabindex="-1"></a>  x <span class="ot">=</span> <span class="fu">cut</span>(x, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, br, <span class="dv">366</span>))</span>
-<span id="cb34-9"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">levels</span>(x) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Winter"</span>, <span class="st">"Spring"</span>, <span class="st">"Summer"</span>, <span class="st">"Autumn"</span>, <span class="st">"Winter"</span>)</span>
-<span id="cb34-10"><a aria-hidden="true" tabindex="-1"></a>  x</span>
-<span id="cb34-11"><a aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb34-12"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-13"><a aria-hidden="true" tabindex="-1"></a>season_lab <span class="ot">&lt;-</span>  <span class="fu">tibble</span>(<span class="at">yrday =</span> <span class="fu">yday</span>(<span class="fu">as.Date</span>(<span class="fu">c</span>(<span class="st">"2019-03-01"</span>,</span>
-<span id="cb34-14"><a aria-hidden="true" tabindex="-1"></a>                                             <span class="st">"2019-06-01"</span>,</span>
-<span id="cb34-15"><a aria-hidden="true" tabindex="-1"></a>                                             <span class="st">"2019-09-01"</span>,</span>
-<span id="cb34-16"><a aria-hidden="true" tabindex="-1"></a>                                             <span class="st">"2019-12-01"</span>))),</span>
-<span id="cb34-17"><a aria-hidden="true" tabindex="-1"></a>                      <span class="at">lab =</span> <span class="fu">c</span>(<span class="st">"Spring"</span>, <span class="st">"Summer"</span>, <span class="st">"Autumn"</span>, <span class="st">"Winter"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a aria-hidden="true" tabindex="-1"></a><span class="do">## Seasons for plotting</span></span>
+<span id="cb39-2"><a aria-hidden="true" tabindex="-1"></a>season <span class="ot">&lt;-</span>  <span class="cf">function</span>(in_date){</span>
+<span id="cb39-3"><a aria-hidden="true" tabindex="-1"></a>  br <span class="ot">=</span> <span class="fu">yday</span>(<span class="fu">as.Date</span>(<span class="fu">c</span>(<span class="st">"2019-03-01"</span>,</span>
+<span id="cb39-4"><a aria-hidden="true" tabindex="-1"></a>                      <span class="st">"2019-06-01"</span>,</span>
+<span id="cb39-5"><a aria-hidden="true" tabindex="-1"></a>                      <span class="st">"2019-09-01"</span>,</span>
+<span id="cb39-6"><a aria-hidden="true" tabindex="-1"></a>                      <span class="st">"2019-12-01"</span>)))</span>
+<span id="cb39-7"><a aria-hidden="true" tabindex="-1"></a>  x <span class="ot">=</span> <span class="fu">yday</span>(in_date)</span>
+<span id="cb39-8"><a aria-hidden="true" tabindex="-1"></a>  x <span class="ot">=</span> <span class="fu">cut</span>(x, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, br, <span class="dv">366</span>))</span>
+<span id="cb39-9"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">levels</span>(x) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Winter"</span>, <span class="st">"Spring"</span>, <span class="st">"Summer"</span>, <span class="st">"Autumn"</span>, <span class="st">"Winter"</span>)</span>
+<span id="cb39-10"><a aria-hidden="true" tabindex="-1"></a>  x</span>
+<span id="cb39-11"><a aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb39-12"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-13"><a aria-hidden="true" tabindex="-1"></a>season_lab <span class="ot">&lt;-</span>  <span class="fu">tibble</span>(<span class="at">yrday =</span> <span class="fu">yday</span>(<span class="fu">as.Date</span>(<span class="fu">c</span>(<span class="st">"2019-03-01"</span>,</span>
+<span id="cb39-14"><a aria-hidden="true" tabindex="-1"></a>                                             <span class="st">"2019-06-01"</span>,</span>
+<span id="cb39-15"><a aria-hidden="true" tabindex="-1"></a>                                             <span class="st">"2019-09-01"</span>,</span>
+<span id="cb39-16"><a aria-hidden="true" tabindex="-1"></a>                                             <span class="st">"2019-12-01"</span>))),</span>
+<span id="cb39-17"><a aria-hidden="true" tabindex="-1"></a>                      <span class="at">lab =</span> <span class="fu">c</span>(<span class="st">"Spring"</span>, <span class="st">"Summer"</span>, <span class="st">"Autumn"</span>, <span class="st">"Winter"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="noaa-temperature-data-2" class="slide level2">
+<section id="noaa-temperature-data-4" class="slide level2">
 <h2>NOAA Temperature Data</h2>
 <p>Raw data files</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb35" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("ncdf4")</span></span>
-<span id="cb35-2"><a aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("terra")</span></span>
-<span id="cb35-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
-<span id="cb35-4"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-5"><a aria-hidden="true" tabindex="-1"></a><span class="do">## For the filename processing</span></span>
-<span id="cb35-6"><a aria-hidden="true" tabindex="-1"></a><span class="do">## This one gives you an unknown number of chunks each with approx n elements</span></span>
-<span id="cb35-7"><a aria-hidden="true" tabindex="-1"></a>chunk <span class="ot">&lt;-</span> <span class="cf">function</span>(x, n) <span class="fu">split</span>(x, <span class="fu">ceiling</span>(<span class="fu">seq_along</span>(x)<span class="sc">/</span>n))</span>
-<span id="cb35-8"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-9"><a aria-hidden="true" tabindex="-1"></a><span class="do">## This one gives you n chunks each with an approx equal but unknown number of elements</span></span>
-<span id="cb35-10"><a aria-hidden="true" tabindex="-1"></a>chunk2 <span class="ot">&lt;-</span> <span class="cf">function</span>(x, n) <span class="fu">split</span>(x, <span class="fu">cut</span>(<span class="fu">seq_along</span>(x), n, <span class="at">labels =</span> <span class="cn">FALSE</span>))</span>
-<span id="cb35-11"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-12"><a aria-hidden="true" tabindex="-1"></a><span class="do">## All the daily .nc files:</span></span>
-<span id="cb35-13"><a aria-hidden="true" tabindex="-1"></a>all_fnames <span class="ot">&lt;-</span> <span class="fu">as.character</span>(fs<span class="sc">::</span><span class="fu">dir_ls</span>(<span class="fu">here</span>(<span class="st">"avhrr"</span>), <span class="at">recurse =</span> <span class="cn">TRUE</span>, <span class="at">glob =</span> <span class="st">"*.nc"</span>))</span>
-<span id="cb35-14"><a aria-hidden="true" tabindex="-1"></a>chunked_fnames <span class="ot">&lt;-</span> <span class="fu">chunk</span>(all_fnames, <span class="dv">25</span>)</span>
-<span id="cb35-15"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-16"><a aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(all_fnames)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("ncdf4")</span></span>
+<span id="cb40-2"><a aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("terra")</span></span>
+<span id="cb40-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
+<span id="cb40-4"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-5"><a aria-hidden="true" tabindex="-1"></a><span class="do">## For the filename processing</span></span>
+<span id="cb40-6"><a aria-hidden="true" tabindex="-1"></a><span class="do">## This one gives you an unknown number of chunks each with approx n elements</span></span>
+<span id="cb40-7"><a aria-hidden="true" tabindex="-1"></a>chunk <span class="ot">&lt;-</span> <span class="cf">function</span>(x, n) <span class="fu">split</span>(x, <span class="fu">ceiling</span>(<span class="fu">seq_along</span>(x)<span class="sc">/</span>n))</span>
+<span id="cb40-8"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-9"><a aria-hidden="true" tabindex="-1"></a><span class="do">## This one gives you n chunks each with an approx equal but unknown number of elements</span></span>
+<span id="cb40-10"><a aria-hidden="true" tabindex="-1"></a>chunk2 <span class="ot">&lt;-</span> <span class="cf">function</span>(x, n) <span class="fu">split</span>(x, <span class="fu">cut</span>(<span class="fu">seq_along</span>(x), n, <span class="at">labels =</span> <span class="cn">FALSE</span>))</span>
+<span id="cb40-11"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-12"><a aria-hidden="true" tabindex="-1"></a><span class="do">## All the daily .nc files:</span></span>
+<span id="cb40-13"><a aria-hidden="true" tabindex="-1"></a>all_fnames <span class="ot">&lt;-</span> <span class="fu">as.character</span>(fs<span class="sc">::</span><span class="fu">dir_ls</span>(<span class="fu">here</span>(<span class="st">"avhrr"</span>), <span class="at">recurse =</span> <span class="cn">TRUE</span>, <span class="at">glob =</span> <span class="st">"*.nc"</span>))</span>
+<span id="cb40-14"><a aria-hidden="true" tabindex="-1"></a>chunked_fnames <span class="ot">&lt;-</span> <span class="fu">chunk</span>(all_fnames, <span class="dv">25</span>)</span>
+<span id="cb40-15"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-16"><a aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(all_fnames)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code>[1] 15549</code></pre>
+<pre data-code-line-numbers=""><code>[1] 16065</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb37" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(chunked_fnames)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(chunked_fnames)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code>[1] 622</code></pre>
+<pre data-code-line-numbers=""><code>[1] 643</code></pre>
 </div>
 </div>
 </section>
-<section id="noaa-temperature-data-3" class="slide level2">
+<section id="noaa-temperature-data-5" class="slide level2">
 <h2>NOAA Temperature Data</h2>
 <p>The data is in netCDF (Version 4) format. An interesting self-documenting format. Read one in with the netCDF reader.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb39" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a aria-hidden="true" tabindex="-1"></a>tmp <span class="ot">&lt;-</span> ncdf4<span class="sc">::</span><span class="fu">nc_open</span>(all_fnames[<span class="dv">10000</span>])</span>
-<span id="cb39-2"><a aria-hidden="true" tabindex="-1"></a>tmp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a aria-hidden="true" tabindex="-1"></a>tmp <span class="ot">&lt;-</span> ncdf4<span class="sc">::</span><span class="fu">nc_open</span>(all_fnames[<span class="dv">10000</span>])</span>
+<span id="cb44-2"><a aria-hidden="true" tabindex="-1"></a>tmp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>File /Users/kjhealy/Documents/courses/data_wrangling/avhrr/200901/oisst-avhrr-v02r01.20090120.nc (NC_FORMAT_NETCDF4):
 
@@ -734,18 +855,18 @@ wget --no-parent -r -l inf --wait 5 --random-wait 'https://www.ncei.noaa.gov/dat
 </div>
 </div>
 </section>
-<section id="noaa-temperature-data-4" class="slide level2">
+<section id="noaa-temperature-data-6" class="slide level2">
 <h2>NOAA Temperature Data</h2>
-<p>For analysis we are going to use the <code>terra</code> package, which understands many GIS type formats. Fundamentally we have a grid or <em>raster</em> of data that’s 1440 x 720 in size. The data has several <em>layers</em>, each one a specific measure, such as sea-surface temperature, sea ice coverage, and so on.</p>
+<p>We use the <code>terra</code> package, which understands many GIS formats. Each day is a grid or <em>raster</em> of data that’s 1440 x 720 in size. It has several <em>layers</em>, each one a specific measure—sea-surface temperature, sea ice, etc.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb41" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a aria-hidden="true" tabindex="-1"></a>tmp <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(all_fnames[<span class="dv">10000</span>])</span>
-<span id="cb41-2"><a aria-hidden="true" tabindex="-1"></a>tmp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a aria-hidden="true" tabindex="-1"></a>tmp <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(all_fnames[<span class="dv">10000</span>])</span>
+<span id="cb46-2"><a aria-hidden="true" tabindex="-1"></a>tmp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>class       : SpatRaster 
-dimensions  : 720, 1440, 4  (nrow, ncol, nlyr)
+size        : 720, 1440, 4  (nrow, ncol, nlyr)
 resolution  : 0.25, 0.25  (x, y)
 extent      : 0, 360, -90, 90  (xmin, xmax, ymin, ymax)
-coord. ref. : lon/lat WGS 84 
+coord. ref. : lon/lat WGS 84 (CRS84) (OGC:CRS84) 
 sources     : oisst-avhrr-v02r01.20090120.nc:anom  
               oisst-avhrr-v02r01.20090120.nc:err  
               oisst-avhrr-v02r01.20090120.nc:ice  
@@ -756,172 +877,212 @@ varnames    : anom (Daily sea surface temperature anomalies)
               ...
 names       : anom_zlev=0, err_zlev=0, ice_zlev=0, sst_zlev=0 
 unit        :     Celsius,    Celsius,          %,    Celsius 
+depth       : 0 
 time (days) : 2009-01-20 </code></pre>
 </div>
 </div>
-<p>Terra can understand rasters that are aggregated into slabs or “bricks” covering the same area repeatedly, and has methods for aggregating these arrays in different ways.</p>
+<p>Terra can understand rasters aggregated into slabs or “bricks” covering the same area repeatedly, and has methods for aggregating these arrays in different ways.</p>
 </section>
-<section id="noaa-temperature-data-5" class="slide level2">
+<section id="noaa-temperature-data-7" class="slide level2">
 <h2>NOAA Temperature Data</h2>
 <p>Read one in with <code>terra</code>. Get the <code>sst</code> (Sea Surface Temperature) layer only.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb43" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a aria-hidden="true" tabindex="-1"></a>tmp <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(all_fnames[<span class="dv">10000</span>])[<span class="st">"sst"</span>]</span>
-<span id="cb43-2"><a aria-hidden="true" tabindex="-1"></a>tmp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a aria-hidden="true" tabindex="-1"></a>tmp <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(all_fnames[<span class="dv">10000</span>])[<span class="st">"sst"</span>]</span>
+<span id="cb48-2"><a aria-hidden="true" tabindex="-1"></a>tmp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>class       : SpatRaster 
-dimensions  : 720, 1440, 1  (nrow, ncol, nlyr)
+size        : 720, 1440, 1  (nrow, ncol, nlyr)
 resolution  : 0.25, 0.25  (x, y)
 extent      : 0, 360, -90, 90  (xmin, xmax, ymin, ymax)
-coord. ref. : lon/lat WGS 84 
+coord. ref. : lon/lat WGS 84 (CRS84) (OGC:CRS84) 
 source      : oisst-avhrr-v02r01.20090120.nc:sst 
 varname     : sst (Daily sea surface temperature) 
 name        : sst_zlev=0 
 unit        :    Celsius 
+depth       : 0 
 time (days) : 2009-01-20 </code></pre>
 </div>
 </div>
 </section>
-<section id="noaa-temperature-data-6" class="slide level2">
+<section id="noaa-temperature-data-8" class="slide level2">
 <h2>NOAA Temperature Data</h2>
 <p>What reading a <em>chunk</em> of filenames (with all their layers) does:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb45" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a aria-hidden="true" tabindex="-1"></a>tmp2 <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(chunked_fnames[[<span class="dv">10</span>]])</span>
-<span id="cb45-2"><a aria-hidden="true" tabindex="-1"></a>tmp2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a aria-hidden="true" tabindex="-1"></a>tmp2 <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(chunked_fnames[[<span class="dv">10</span>]])</span>
+<span id="cb50-2"><a aria-hidden="true" tabindex="-1"></a>tmp2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>class       : SpatRaster 
-dimensions  : 720, 1440, 100  (nrow, ncol, nlyr)
+size        : 720, 1440, 100  (nrow, ncol, nlyr)
 resolution  : 0.25, 0.25  (x, y)
 extent      : 0, 360, -90, 90  (xmin, xmax, ymin, ymax)
-coord. ref. : lon/lat WGS 84 
+coord. ref. : lon/lat WGS 84 (CRS84) (OGC:CRS84) 
 sources     : oisst-avhrr-v02r01.19820414.nc:anom  
               oisst-avhrr-v02r01.19820414.nc:err  
               oisst-avhrr-v02r01.19820414.nc:ice  
-              ... and 97 more source(s)
+              ... and 97 more sources
 varnames    : anom (Daily sea surface temperature anomalies) 
               err (Estimated error standard deviation of analysed_sst) 
               ice (Sea ice concentration) 
               ...
 names       : anom_zlev=0, err_zlev=0, ice_zlev=0, sst_zlev=0, anom_zlev=0, err_zlev=0, ... 
 unit        :     Celsius,    Celsius,          %,    Celsius,     Celsius,    Celsius, ... 
-time (days) : 1982-04-14 to 1982-05-08 </code></pre>
+depth       : 0 
+time (days) : 1982-04-14 to 1982-05-08 (25 steps) </code></pre>
 </div>
 </div>
 </section>
-<section id="noaa-temperature-data-7" class="slide level2">
+<section id="noaa-temperature-data-9" class="slide level2">
 <h2>NOAA Temperature Data</h2>
 <p>Write a function to get a file, read in the SST raster, and get its area-weighted mean, for the North Atlantic region only.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb47" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a aria-hidden="true" tabindex="-1"></a>process_raster <span class="ot">&lt;-</span> <span class="cf">function</span>(fnames, <span class="at">crop_area =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">80</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">60</span>), <span class="at">var =</span> <span class="st">"sst"</span>) {</span>
-<span id="cb47-2"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-3"><a aria-hidden="true" tabindex="-1"></a>  tdf <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="fu">as.character</span>(fnames))[var] <span class="sc">|&gt;</span></span>
-<span id="cb47-4"><a aria-hidden="true" tabindex="-1"></a>    terra<span class="sc">::</span><span class="fu">rotate</span>() <span class="sc">|&gt;</span>   <span class="co"># Fix 0-360 lon</span></span>
-<span id="cb47-5"><a aria-hidden="true" tabindex="-1"></a>    terra<span class="sc">::</span><span class="fu">crop</span>(crop_area) <span class="co"># Manually crop to a defined box. Default is Atlantic lat/lon box</span></span>
-<span id="cb47-6"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-7"><a aria-hidden="true" tabindex="-1"></a>  wts <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">cellSize</span>(tdf, <span class="at">unit =</span> <span class="st">"km"</span>) <span class="co"># For scaling</span></span>
-<span id="cb47-8"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-9"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(</span>
-<span id="cb47-10"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">date =</span> terra<span class="sc">::</span><span class="fu">time</span>(tdf),</span>
-<span id="cb47-11"><a aria-hidden="true" tabindex="-1"></a>    <span class="co"># global() calculates a quantity for the whole grid on a particular SpatRaster</span></span>
-<span id="cb47-12"><a aria-hidden="true" tabindex="-1"></a>    <span class="co"># so we get one weighted mean per file that comes in</span></span>
-<span id="cb47-13"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">wt_mean_sst =</span> terra<span class="sc">::</span><span class="fu">global</span>(tdf, <span class="st">"mean"</span>, <span class="at">weights =</span> wts, <span class="at">na.rm=</span><span class="cn">TRUE</span>)<span class="sc">$</span>weighted_mean</span>
-<span id="cb47-14"><a aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb47-15"><a aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a aria-hidden="true" tabindex="-1"></a><span class="co">#' Process NCDF temperature rasters</span></span>
+<span id="cb52-2"><a aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb52-3"><a aria-hidden="true" tabindex="-1"></a><span class="co">#' Use terra to process a temperature NCDF file</span></span>
+<span id="cb52-4"><a aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb52-5"><a aria-hidden="true" tabindex="-1"></a><span class="co">#' @param fnames</span></span>
+<span id="cb52-6"><a aria-hidden="true" tabindex="-1"></a><span class="co">#' @param crop_area</span></span>
+<span id="cb52-7"><a aria-hidden="true" tabindex="-1"></a><span class="co">#' @param layerinfo</span></span>
+<span id="cb52-8"><a aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb52-9"><a aria-hidden="true" tabindex="-1"></a><span class="co">#' @returns</span></span>
+<span id="cb52-10"><a aria-hidden="true" tabindex="-1"></a><span class="co">#' @export</span></span>
+<span id="cb52-11"><a aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb52-12"><a aria-hidden="true" tabindex="-1"></a><span class="co">#' @examples</span></span>
+<span id="cb52-13"><a aria-hidden="true" tabindex="-1"></a>process_raster <span class="ot">&lt;-</span> <span class="cf">function</span>(</span>
+<span id="cb52-14"><a aria-hidden="true" tabindex="-1"></a>  fnames,</span>
+<span id="cb52-15"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">crop_area =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">80</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">60</span>),</span>
+<span id="cb52-16"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">layerinfo =</span> <span class="cn">NULL</span></span>
+<span id="cb52-17"><a aria-hidden="true" tabindex="-1"></a>) {</span>
+<span id="cb52-18"><a aria-hidden="true" tabindex="-1"></a>  nc_layerinfo <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb52-19"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">num =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>),</span>
+<span id="cb52-20"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">raw_name =</span> <span class="fu">c</span>(<span class="st">"anom_zlev=0"</span>, <span class="st">"err_zlev=0"</span>, <span class="st">"ice_zlev=0"</span>, <span class="st">"sst_zlev=0"</span>),</span>
+<span id="cb52-21"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="fu">c</span>(<span class="st">"anom"</span>, <span class="st">"err"</span>, <span class="st">"ice"</span>, <span class="st">"sst"</span>)</span>
+<span id="cb52-22"><a aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb52-23"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-24"><a aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(layerinfo)) {</span>
+<span id="cb52-25"><a aria-hidden="true" tabindex="-1"></a>    nc_layerinfo <span class="ot">&lt;-</span> layerinfo</span>
+<span id="cb52-26"><a aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb52-27"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-28"><a aria-hidden="true" tabindex="-1"></a>  tdf <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(fnames) <span class="sc">|&gt;</span></span>
+<span id="cb52-29"><a aria-hidden="true" tabindex="-1"></a>    terra<span class="sc">::</span><span class="fu">rotate</span>() <span class="sc">|&gt;</span> <span class="co"># Convert 0 to 360 lon to -180 to +180 lon</span></span>
+<span id="cb52-30"><a aria-hidden="true" tabindex="-1"></a>    terra<span class="sc">::</span><span class="fu">crop</span>(crop_area) <span class="co"># Manually crop to a defined box.  Default is roughly N. Atlantic lat/lon box</span></span>
+<span id="cb52-31"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-32"><a aria-hidden="true" tabindex="-1"></a>  wts <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">cellSize</span>(tdf, <span class="at">unit =</span> <span class="st">"km"</span>) <span class="co"># For scaling</span></span>
+<span id="cb52-33"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-34"><a aria-hidden="true" tabindex="-1"></a>  <span class="co"># global() calculates a quantity for the whole grid on a particular SpatRaster</span></span>
+<span id="cb52-35"><a aria-hidden="true" tabindex="-1"></a>  <span class="co"># so we get one weighted mean per file that comes in</span></span>
+<span id="cb52-36"><a aria-hidden="true" tabindex="-1"></a>  out <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb52-37"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">date =</span> terra<span class="sc">::</span><span class="fu">time</span>(tdf),</span>
+<span id="cb52-38"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">means =</span> terra<span class="sc">::</span><span class="fu">global</span>(tdf, <span class="st">"mean"</span>, <span class="at">weights =</span> wts, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb52-39"><a aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb52-40"><a aria-hidden="true" tabindex="-1"></a>  out<span class="sc">$</span>var <span class="ot">&lt;-</span> <span class="fu">rownames</span>(out)</span>
+<span id="cb52-41"><a aria-hidden="true" tabindex="-1"></a>  out<span class="sc">$</span>var <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"_.*"</span>, <span class="st">""</span>, out<span class="sc">$</span>var)</span>
+<span id="cb52-42"><a aria-hidden="true" tabindex="-1"></a>  out <span class="ot">&lt;-</span> <span class="fu">reshape</span>(out, <span class="at">idvar =</span> <span class="st">"date"</span>, <span class="at">timevar =</span> <span class="st">"var"</span>, <span class="at">direction =</span> <span class="st">"wide"</span>)</span>
+<span id="cb52-43"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-44"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>(out) <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"weighted_mean</span><span class="sc">\\</span><span class="st">."</span>, <span class="st">""</span>, <span class="fu">colnames</span>(out))</span>
+<span id="cb52-45"><a aria-hidden="true" tabindex="-1"></a>  out</span>
+<span id="cb52-46"><a aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="noaa-temperature-data-8" class="slide level2">
+<section id="noaa-temperature-data-10" class="slide level2">
 <h2>NOAA Temperature Data</h2>
 <p>Try it on one data file:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb48" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">process_raster</span>(all_fnames[<span class="dv">1000</span>]) <span class="sc">|&gt;</span> </span>
-<span id="cb48-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">process_raster</span>(all_fnames[<span class="dv">1000</span>]) <span class="sc">|&gt;</span></span>
+<span id="cb53-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code># A tibble: 1 × 2
-  date       wt_mean_sst
-  &lt;date&gt;           &lt;dbl&gt;
-1 1984-05-27        20.6</code></pre>
+<pre data-code-line-numbers=""><code># A tibble: 1 × 5
+  date         anom   err   ice   sst
+  &lt;date&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 1984-05-27 -0.372 0.182 0.437  20.6</code></pre>
 </div>
 </div>
 </section>
 <section id="try-it-on-one-chunk-of-data-files" class="slide level2">
 <h2>Try it on one <em>chunk</em> of data files:</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb50" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">process_raster</span>(chunked_fnames[[<span class="dv">500</span>]]) <span class="sc">|&gt;</span> </span>
-<span id="cb50-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">process_raster</span>(chunked_fnames[[<span class="dv">500</span>]]) <span class="sc">|&gt;</span></span>
+<span id="cb55-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code># A tibble: 25 × 2
-   date       wt_mean_sst
-   &lt;date&gt;           &lt;dbl&gt;
- 1 2015-11-02        22.8
- 2 2015-11-03        22.8
- 3 2015-11-04        22.8
- 4 2015-11-05        22.7
- 5 2015-11-06        22.7
- 6 2015-11-07        22.7
- 7 2015-11-08        22.6
- 8 2015-11-09        22.5
- 9 2015-11-10        22.5
-10 2015-11-11        22.4
+<pre data-code-line-numbers=""><code># A tibble: 25 × 5
+   date        anom   err   ice   sst
+   &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1 2015-11-02 0.566 0.160 0.267  22.8
+ 2 2015-11-03 0.561 0.174 0.264  22.8
+ 3 2015-11-04 0.559 0.167 0.271  22.8
+ 4 2015-11-05 0.571 0.157 0.271  22.7
+ 5 2015-11-06 0.588 0.154 0.273  22.7
+ 6 2015-11-07 0.581 0.159 0.274  22.7
+ 7 2015-11-08 0.559 0.162 0.275  22.6
+ 8 2015-11-09 0.529 0.157 0.300  22.5
+ 9 2015-11-10 0.492 0.156 0.311  22.5
+10 2015-11-11 0.476 0.156 0.311  22.4
 # ℹ 15 more rows</code></pre>
-</div>
-</div>
-</section>
-<section id="noaa-temperature-data-9" class="slide level2">
-<h2>NOAA Temperature Data</h2>
-<p>Do it in parallel for all files:</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb52" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># library(furrr) # We did this already</span></span>
-<span id="cb52-2"><a aria-hidden="true" tabindex="-1"></a><span class="co"># plan(multisession) </span></span>
-<span id="cb52-3"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-4"><a aria-hidden="true" tabindex="-1"></a>tictoc<span class="sc">::</span><span class="fu">tic</span>(<span class="st">"Terra Method"</span>)</span>
-<span id="cb52-5"><a aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">future_map</span>(chunked_fnames, process_raster) <span class="sc">|&gt;</span></span>
-<span id="cb52-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">list_rbind</span>() <span class="sc">|&gt;</span></span>
-<span id="cb52-7"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb52-8"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">date =</span> <span class="fu">ymd</span>(date),</span>
-<span id="cb52-9"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">year =</span> lubridate<span class="sc">::</span><span class="fu">year</span>(date),</span>
-<span id="cb52-10"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">month =</span> lubridate<span class="sc">::</span><span class="fu">month</span>(date),</span>
-<span id="cb52-11"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">day =</span> lubridate<span class="sc">::</span><span class="fu">day</span>(date),</span>
-<span id="cb52-12"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">yrday =</span> lubridate<span class="sc">::</span><span class="fu">yday</span>(date),</span>
-<span id="cb52-13"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">season =</span> <span class="fu">season</span>(date))</span>
-<span id="cb52-14"><a aria-hidden="true" tabindex="-1"></a>tictoc<span class="sc">::</span><span class="fu">toc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code>Terra Method: 30.309 sec elapsed</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb54" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code>[1] 15549     7</code></pre>
-</div>
-</div>
-</section>
-<section id="noaa-temperature-data-10" class="slide level2">
-<h2>NOAA Temperature Data</h2>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb56" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
-<span id="cb56-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code># A tibble: 10 × 7
-   date       wt_mean_sst  year month   day yrday season
-   &lt;date&gt;           &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;fct&gt; 
- 1 2000-07-12        22.8  2000     7    12   194 Summer
- 2 1991-11-12        21.6  1991    11    12   316 Autumn
- 3 2016-06-01        21.6  2016     6     1   153 Summer
- 4 2016-08-04        24.1  2016     8     4   217 Summer
- 5 2005-04-23        20.3  2005     4    23   113 Spring
- 6 2012-01-25        19.7  2012     1    25    25 Winter
- 7 2006-11-18        22.3  2006    11    18   322 Autumn
- 8 2001-12-22        20.7  2001    12    22   356 Winter
- 9 1986-09-20        23.2  1986     9    20   263 Autumn
-10 2016-04-01        19.6  2016     4     1    92 Spring</code></pre>
 </div>
 </div>
 </section>
 <section id="noaa-temperature-data-11" class="slide level2">
 <h2>NOAA Temperature Data</h2>
+<p>Do it in parallel for all files:</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a aria-hidden="true" tabindex="-1"></a>tictoc<span class="sc">::</span><span class="fu">tic</span>(<span class="st">"Terra Method"</span>)</span>
+<span id="cb57-2"><a aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> chunked_fnames <span class="sc">|&gt;</span></span>
+<span id="cb57-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="fu">in_parallel</span>(</span>
+<span id="cb57-4"><a aria-hidden="true" tabindex="-1"></a>    \(x) <span class="fu">process_raster</span>(x),</span>
+<span id="cb57-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">process_raster =</span> process_raster</span>
+<span id="cb57-6"><a aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">|&gt;</span></span>
+<span id="cb57-7"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">list_rbind</span>() <span class="sc">|&gt;</span></span>
+<span id="cb57-8"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
+<span id="cb57-9"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb57-10"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">date =</span> <span class="fu">ymd</span>(date),</span>
+<span id="cb57-11"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">year =</span> lubridate<span class="sc">::</span><span class="fu">year</span>(date),</span>
+<span id="cb57-12"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">month =</span> lubridate<span class="sc">::</span><span class="fu">month</span>(date),</span>
+<span id="cb57-13"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">day =</span> lubridate<span class="sc">::</span><span class="fu">day</span>(date),</span>
+<span id="cb57-14"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">yrday =</span> lubridate<span class="sc">::</span><span class="fu">yday</span>(date),</span>
+<span id="cb57-15"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">season =</span> <span class="fu">season</span>(date)</span>
+<span id="cb57-16"><a aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb57-17"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-18"><a aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code>[1] 16065    10</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a aria-hidden="true" tabindex="-1"></a>tictoc<span class="sc">::</span><span class="fu">toc</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code>Terra Method: 163.588 sec elapsed</code></pre>
+</div>
+</div>
+</section>
+<section id="noaa-temperature-data-12" class="slide level2">
+<h2>NOAA Temperature Data</h2>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb61-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code># A tibble: 10 × 10
+   date         anom   err   ice   sst  year month   day yrday season
+   &lt;date&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;fct&gt; 
+ 1 1991-10-19 -0.262 0.181 0.169  22.5  1991    10    19   292 Autumn
+ 2 1993-03-03 -0.307 0.189 0.621  18.9  1993     3     3    62 Spring
+ 3 1985-10-18 -0.344 0.186 0.102  22.5  1985    10    18   291 Autumn
+ 4 1983-07-27 -0.117 0.219 0.206  23.2  1983     7    27   208 Summer
+ 5 2020-10-10  0.734 0.162 0.233  23.8  2020    10    10   284 Autumn
+ 6 2016-11-13  0.586 0.159 0.183  22.4  2016    11    13   318 Autumn
+ 7 2006-04-10  0.230 0.171 0.579  19.7  2006     4    10   100 Spring
+ 8 1986-07-12 -0.296 0.187 0.163  22.6  1986     7    12   193 Summer
+ 9 2024-01-07  0.990 0.130 0.453  20.9  2024     1     7     7 Winter
+10 2005-05-28  0.461 0.155 0.495  21.5  2005     5    28   148 Spring</code></pre>
+</div>
+</div>
+</section>
+<section id="noaa-temperature-data-13" class="slide level2">
+<h2>NOAA Temperature Data</h2>
 <p>Make our cores work even harder</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb58" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a aria-hidden="true" tabindex="-1"></a><span class="do">## Seas of the world polygons</span></span>
-<span id="cb58-2"><a aria-hidden="true" tabindex="-1"></a>seas <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">read_sf</span>(<span class="fu">here</span>(<span class="st">"seas"</span>)) </span>
-<span id="cb58-3"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-4"><a aria-hidden="true" tabindex="-1"></a>seas</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># All the seas with rasterize() and zonal()</span></span>
+<span id="cb63-2"><a aria-hidden="true" tabindex="-1"></a><span class="co"># Seas of the world polygons from https://www.marineregions.org/downloads.php,</span></span>
+<span id="cb63-3"><a aria-hidden="true" tabindex="-1"></a><span class="co"># IHO Sea Areas V3 shapefile.</span></span>
+<span id="cb63-4"><a aria-hidden="true" tabindex="-1"></a>seas <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">read_sf</span>(<span class="fu">here</span>(<span class="st">"seas"</span>))</span>
+<span id="cb63-5"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-6"><a aria-hidden="true" tabindex="-1"></a>seas</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>Simple feature collection with 101 features and 10 fields
 Geometry type: MULTIPOLYGON
@@ -946,23 +1107,22 @@ Geodetic CRS:  WGS 84
 </div>
 </div>
 </section>
-<section id="noaa-temperature-data-12" class="slide level2">
+<section id="noaa-temperature-data-14" class="slide level2">
 <h2>NOAA Temperature Data</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb60" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a aria-hidden="true" tabindex="-1"></a><span class="do">## Rasterize the seas polygons using one of the nc files</span></span>
-<span id="cb60-2"><a aria-hidden="true" tabindex="-1"></a><span class="do">## as a reference grid for the rasterization process</span></span>
-<span id="cb60-3"><a aria-hidden="true" tabindex="-1"></a><span class="do">## They're all on the same grid so it doesn't matter which one</span></span>
-<span id="cb60-4"><a aria-hidden="true" tabindex="-1"></a>one_raster <span class="ot">&lt;-</span> all_fnames[<span class="dv">1</span>]</span>
-<span id="cb60-5"><a aria-hidden="true" tabindex="-1"></a>seas_vect <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">vect</span>(seas)</span>
-<span id="cb60-6"><a aria-hidden="true" tabindex="-1"></a>tmp_tdf_seas <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(one_raster)[<span class="st">"sst"</span>] <span class="sc">|&gt;</span></span>
-<span id="cb60-7"><a aria-hidden="true" tabindex="-1"></a>  terra<span class="sc">::</span><span class="fu">rotate</span>()</span>
-<span id="cb60-8"><a aria-hidden="true" tabindex="-1"></a>seas_zonal <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rasterize</span>(seas_vect, tmp_tdf_seas, <span class="st">"NAME"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a aria-hidden="true" tabindex="-1"></a><span class="do">## Rasterize the seas polygons using one of the nc files</span></span>
+<span id="cb65-2"><a aria-hidden="true" tabindex="-1"></a><span class="do">## as a reference grid for the rasterization process</span></span>
+<span id="cb65-3"><a aria-hidden="true" tabindex="-1"></a>one_raster <span class="ot">&lt;-</span> all_fnames[<span class="dv">1</span>]</span>
+<span id="cb65-4"><a aria-hidden="true" tabindex="-1"></a>seas_vect <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">vect</span>(seas)</span>
+<span id="cb65-5"><a aria-hidden="true" tabindex="-1"></a>tmp_tdf_seas <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(one_raster)[<span class="st">"sst"</span>] <span class="sc">|&gt;</span></span>
+<span id="cb65-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">rotate</span>()</span>
+<span id="cb65-7"><a aria-hidden="true" tabindex="-1"></a>seas_zonal <span class="ot">&lt;-</span> <span class="fu">rasterize</span>(seas_vect, tmp_tdf_seas, <span class="st">"NAME"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="noaa-temperature-data-13" class="slide level2">
+<section id="noaa-temperature-data-15" class="slide level2">
 <h2>NOAA Temperature Data</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb61" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(seas_zonal, <span class="at">legend =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(seas_zonal, <span class="at">legend =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="07d-parallelism_files/figure-revealjs/unnamed-chunk-32-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
@@ -970,136 +1130,167 @@ Geodetic CRS:  WGS 84
 <h2>Pointers and wrapping</h2>
 <p>We’ll need to apply this grid of seas and oceans repeatedly — once for each <code>.nc</code> file — which means it has to get passed to all our worker cores. But it is stored as a pointer, so we can’t do that directly. We need to wrap it:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb62" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># If we don't do this it can't be passed around</span></span>
-<span id="cb62-2"><a aria-hidden="true" tabindex="-1"></a><span class="co"># across the processes that future_map() will spawn</span></span>
-<span id="cb62-3"><a aria-hidden="true" tabindex="-1"></a>seas_zonal_wrapped <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">wrap</span>(seas_zonal)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># If we don't do this it can't be passed around</span></span>
+<span id="cb67-2"><a aria-hidden="true" tabindex="-1"></a><span class="co"># across the processes that in_parallel() will spawn</span></span>
+<span id="cb67-3"><a aria-hidden="true" tabindex="-1"></a>seas_zonal_wrapped <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">wrap</span>(seas_zonal)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="noaa-temperature-data-14" class="slide level2">
+<section id="noaa-temperature-data-16" class="slide level2">
 <h2>NOAA Temperature Data</h2>
 <p>Write a function very similar to the other one.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb63" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a aria-hidden="true" tabindex="-1"></a>process_raster_zonal <span class="ot">&lt;-</span> <span class="cf">function</span>(fnames, <span class="at">var =</span> <span class="st">"sst"</span>) {</span>
-<span id="cb63-2"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb63-3"><a aria-hidden="true" tabindex="-1"></a>  tdf_seas <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="fu">as.character</span>(fnames))[var] <span class="sc">|&gt;</span></span>
-<span id="cb63-4"><a aria-hidden="true" tabindex="-1"></a>    terra<span class="sc">::</span><span class="fu">rotate</span>() <span class="sc">|&gt;</span></span>
-<span id="cb63-5"><a aria-hidden="true" tabindex="-1"></a>    terra<span class="sc">::</span><span class="fu">zonal</span>(terra<span class="sc">::</span><span class="fu">unwrap</span>(seas_zonal_wrapped), mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb63-6"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb63-7"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>(tdf_seas) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"ID"</span>, <span class="fu">paste0</span>(<span class="st">"d_"</span>, terra<span class="sc">::</span><span class="fu">time</span>(terra<span class="sc">::</span><span class="fu">rast</span>(<span class="fu">as.character</span>(fnames))[var])))</span>
-<span id="cb63-8"><a aria-hidden="true" tabindex="-1"></a>  tdf_seas <span class="sc">|&gt;</span></span>
-<span id="cb63-9"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(<span class="sc">-</span>ID, <span class="at">names_to =</span> <span class="st">"date"</span>, <span class="at">values_to =</span> <span class="st">"sst_wt_mean"</span>)</span>
-<span id="cb63-10"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb63-11"><a aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a aria-hidden="true" tabindex="-1"></a><span class="co">#' Process raster zonally</span></span>
+<span id="cb68-2"><a aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb68-3"><a aria-hidden="true" tabindex="-1"></a><span class="co">#' Use terra to process the NCDF files</span></span>
+<span id="cb68-4"><a aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb68-5"><a aria-hidden="true" tabindex="-1"></a><span class="co">#' @param fnames Vector of filenames</span></span>
+<span id="cb68-6"><a aria-hidden="true" tabindex="-1"></a><span class="co">#' @param wrapped_seas wrapped object containing rasterized seas data</span></span>
+<span id="cb68-7"><a aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb68-8"><a aria-hidden="true" tabindex="-1"></a><span class="co">#' @returns</span></span>
+<span id="cb68-9"><a aria-hidden="true" tabindex="-1"></a><span class="co">#' @export</span></span>
+<span id="cb68-10"><a aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb68-11"><a aria-hidden="true" tabindex="-1"></a><span class="co">#' @examples</span></span>
+<span id="cb68-12"><a aria-hidden="true" tabindex="-1"></a>process_raster_zonal <span class="ot">&lt;-</span> <span class="cf">function</span>(fnames, <span class="at">wrapped_seas =</span> seas_zonal_wrapped) {</span>
+<span id="cb68-13"><a aria-hidden="true" tabindex="-1"></a>  d <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(fnames)</span>
+<span id="cb68-14"><a aria-hidden="true" tabindex="-1"></a>  wts <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">cellSize</span>(d, <span class="at">unit =</span> <span class="st">"km"</span>) <span class="co"># For scaling</span></span>
+<span id="cb68-15"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-16"><a aria-hidden="true" tabindex="-1"></a>  layer_varnames <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">varnames</span>(d) <span class="co"># vector of layers</span></span>
+<span id="cb68-17"><a aria-hidden="true" tabindex="-1"></a>  date_seq <span class="ot">&lt;-</span> <span class="fu">rep</span>(terra<span class="sc">::</span><span class="fu">time</span>(d)) <span class="co"># vector of dates</span></span>
+<span id="cb68-18"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-19"><a aria-hidden="true" tabindex="-1"></a>  <span class="co"># New colnames for use post zonal calculation below</span></span>
+<span id="cb68-20"><a aria-hidden="true" tabindex="-1"></a>  new_colnames <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"sea"</span>, <span class="fu">paste</span>(layer_varnames, date_seq, <span class="at">sep =</span> <span class="st">"_"</span>))</span>
+<span id="cb68-21"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-22"><a aria-hidden="true" tabindex="-1"></a>  <span class="co"># Better colnames</span></span>
+<span id="cb68-23"><a aria-hidden="true" tabindex="-1"></a>  tdf_seas <span class="ot">&lt;-</span> d <span class="sc">|&gt;</span></span>
+<span id="cb68-24"><a aria-hidden="true" tabindex="-1"></a>    terra<span class="sc">::</span><span class="fu">rotate</span>() <span class="sc">|&gt;</span> <span class="co"># Convert 0 to 360 lon to -180 to +180 lon</span></span>
+<span id="cb68-25"><a aria-hidden="true" tabindex="-1"></a>    terra<span class="sc">::</span><span class="fu">zonal</span>(terra<span class="sc">::</span><span class="fu">unwrap</span>(wrapped_seas), mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb68-26"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>(tdf_seas) <span class="ot">&lt;-</span> new_colnames</span>
+<span id="cb68-27"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-28"><a aria-hidden="true" tabindex="-1"></a>  <span class="co"># Reshape to long</span></span>
+<span id="cb68-29"><a aria-hidden="true" tabindex="-1"></a>  tdf_seas <span class="sc">|&gt;</span></span>
+<span id="cb68-30"><a aria-hidden="true" tabindex="-1"></a>    tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(</span>
+<span id="cb68-31"><a aria-hidden="true" tabindex="-1"></a>      <span class="sc">-</span>sea,</span>
+<span id="cb68-32"><a aria-hidden="true" tabindex="-1"></a>      <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"measure"</span>, <span class="st">"date"</span>),</span>
+<span id="cb68-33"><a aria-hidden="true" tabindex="-1"></a>      <span class="at">values_to =</span> <span class="st">"value"</span>,</span>
+<span id="cb68-34"><a aria-hidden="true" tabindex="-1"></a>      <span class="at">names_pattern =</span> <span class="st">"(.*)_(.*)"</span></span>
+<span id="cb68-35"><a aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb68-36"><a aria-hidden="true" tabindex="-1"></a>    tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(<span class="at">names_from =</span> measure, <span class="at">values_from =</span> value)</span>
+<span id="cb68-37"><a aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="noaa-temperature-data-15" class="slide level2">
+<section id="noaa-temperature-data-17" class="slide level2">
 <h2>NOAA Temperature Data</h2>
 <p>Try it on one record:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb64" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">process_raster_zonal</span>(all_fnames[<span class="dv">10000</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb69" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">process_raster_zonal</span>(all_fnames[<span class="dv">10000</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code># A tibble: 101 × 3
-   ID                     date         sst_wt_mean
-   &lt;chr&gt;                  &lt;chr&gt;              &lt;dbl&gt;
- 1 Adriatic Sea           d_2009-01-20       13.5 
- 2 Aegean Sea             d_2009-01-20       15.9 
- 3 Alboran Sea            d_2009-01-20       14.8 
- 4 Andaman or Burma Sea   d_2009-01-20       27.1 
- 5 Arabian Sea            d_2009-01-20       26.6 
- 6 Arafura Sea            d_2009-01-20       29.6 
- 7 Arctic Ocean           d_2009-01-20       -1.74
- 8 Baffin Bay             d_2009-01-20       -1.58
- 9 Balearic (Iberian Sea) d_2009-01-20       14.0 
-10 Bali Sea               d_2009-01-20       28.7 
+<pre data-code-line-numbers=""><code># A tibble: 101 × 6
+   sea                    date          anom   err     ice   sst
+   &lt;chr&gt;                  &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+ 1 Adriatic Sea           2009-01-20  0.174  0.227 NaN     13.5 
+ 2 Aegean Sea             2009-01-20  0.796  0.146 NaN     15.9 
+ 3 Alboran Sea            2009-01-20 -0.692  0.168 NaN     14.8 
+ 4 Andaman or Burma Sea   2009-01-20 -0.548  0.124 NaN     27.1 
+ 5 Arabian Sea            2009-01-20  0.267  0.133 NaN     26.6 
+ 6 Arafura Sea            2009-01-20  0.112  0.293 NaN     29.6 
+ 7 Arctic Ocean           2009-01-20  0.0366 0.298   0.979 -1.74
+ 8 Baffin Bay             2009-01-20  0.130  0.279   0.953 -1.58
+ 9 Balearic (Iberian Sea) 2009-01-20  0.0595 0.130 NaN     14.0 
+10 Bali Sea               2009-01-20 -0.134  0.138 NaN     28.7 
 # ℹ 91 more rows</code></pre>
 </div>
 </div>
 <p>We’ll tidy the date later. You can see we get 101 summary records per day.</p>
 </section>
-<section id="noaa-temperature-data-16" class="slide level2">
+<section id="noaa-temperature-data-18" class="slide level2">
 <h2>NOAA Temperature Data</h2>
 <p>Try it on one <em>chunk</em> of records:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb66" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">process_raster_zonal</span>(chunked_fnames[[<span class="dv">1</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">process_raster_zonal</span>(chunked_fnames[[<span class="dv">1</span>]])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code># A tibble: 2,525 × 3
-   ID           date         sst_wt_mean
-   &lt;chr&gt;        &lt;chr&gt;              &lt;dbl&gt;
- 1 Adriatic Sea d_1981-09-01        23.0
- 2 Adriatic Sea d_1981-09-02        23.1
- 3 Adriatic Sea d_1981-09-03        22.9
- 4 Adriatic Sea d_1981-09-04        22.9
- 5 Adriatic Sea d_1981-09-05        22.5
- 6 Adriatic Sea d_1981-09-06        22.4
- 7 Adriatic Sea d_1981-09-07        22.4
- 8 Adriatic Sea d_1981-09-08        22.5
- 9 Adriatic Sea d_1981-09-09        22.6
-10 Adriatic Sea d_1981-09-10        22.5
+<pre data-code-line-numbers=""><code># A tibble: 2,525 × 6
+   sea          date         anom   err   ice   sst
+   &lt;chr&gt;        &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1 Adriatic Sea 1981-09-01 -0.737 0.167   NaN  23.0
+ 2 Adriatic Sea 1981-09-02 -0.645 0.176   NaN  23.1
+ 3 Adriatic Sea 1981-09-03 -0.698 0.176   NaN  22.9
+ 4 Adriatic Sea 1981-09-04 -0.708 0.248   NaN  22.9
+ 5 Adriatic Sea 1981-09-05 -1.05  0.189   NaN  22.5
+ 6 Adriatic Sea 1981-09-06 -1.02  0.147   NaN  22.4
+ 7 Adriatic Sea 1981-09-07 -0.920 0.141   NaN  22.4
+ 8 Adriatic Sea 1981-09-08 -0.832 0.140   NaN  22.5
+ 9 Adriatic Sea 1981-09-09 -0.665 0.162   NaN  22.6
+10 Adriatic Sea 1981-09-10 -0.637 0.268   NaN  22.5
 # ℹ 2,515 more rows</code></pre>
 </div>
 </div>
 </section>
-<section id="noaa-temperature-data-17" class="slide level2">
+<section id="noaa-temperature-data-19" class="slide level2">
 <h2>NOAA Temperature Data</h2>
-<p>Now <code>future_map()</code> it:</p>
+<p>Now parallelize it:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb68" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a aria-hidden="true" tabindex="-1"></a>tictoc<span class="sc">::</span><span class="fu">tic</span>(<span class="st">"Big op"</span>)</span>
-<span id="cb68-2"><a aria-hidden="true" tabindex="-1"></a>seameans_df <span class="ot">&lt;-</span> <span class="fu">future_map</span>(chunked_fnames, process_raster_zonal) <span class="sc">|&gt;</span></span>
-<span id="cb68-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">list_rbind</span>() <span class="sc">|&gt;</span></span>
-<span id="cb68-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">date =</span> <span class="fu">str_remove</span>(date, <span class="st">"d_"</span>),</span>
-<span id="cb68-5"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">date =</span> <span class="fu">ymd</span>(date),</span>
-<span id="cb68-6"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">year =</span> lubridate<span class="sc">::</span><span class="fu">year</span>(date),</span>
-<span id="cb68-7"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">month =</span> lubridate<span class="sc">::</span><span class="fu">month</span>(date),</span>
-<span id="cb68-8"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">day =</span> lubridate<span class="sc">::</span><span class="fu">day</span>(date),</span>
-<span id="cb68-9"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">yrday =</span> lubridate<span class="sc">::</span><span class="fu">yday</span>(date),</span>
-<span id="cb68-10"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">season =</span> <span class="fu">season</span>(date)) <span class="sc">|&gt;</span></span>
-<span id="cb68-11"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">sea =</span> ID)</span>
-<span id="cb68-12"><a aria-hidden="true" tabindex="-1"></a>tictoc<span class="sc">::</span><span class="fu">toc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a aria-hidden="true" tabindex="-1"></a>tictoc<span class="sc">::</span><span class="fu">tic</span>(<span class="st">"Big op"</span>)</span>
+<span id="cb73-2"><a aria-hidden="true" tabindex="-1"></a>seameans_df <span class="ot">&lt;-</span> chunked_fnames <span class="sc">|&gt;</span></span>
+<span id="cb73-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="fu">in_parallel</span>(</span>
+<span id="cb73-4"><a aria-hidden="true" tabindex="-1"></a>    \(x) <span class="fu">process_raster_zonal</span>(x),</span>
+<span id="cb73-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">process_raster_zonal =</span> process_raster_zonal,</span>
+<span id="cb73-6"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">seas_zonal_wrapped =</span> seas_zonal_wrapped</span>
+<span id="cb73-7"><a aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">|&gt;</span></span>
+<span id="cb73-8"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">list_rbind</span>() <span class="sc">|&gt;</span></span>
+<span id="cb73-9"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb73-10"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">date =</span> <span class="fu">ymd</span>(date),</span>
+<span id="cb73-11"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">year =</span> lubridate<span class="sc">::</span><span class="fu">year</span>(date),</span>
+<span id="cb73-12"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">month =</span> lubridate<span class="sc">::</span><span class="fu">month</span>(date),</span>
+<span id="cb73-13"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">day =</span> lubridate<span class="sc">::</span><span class="fu">day</span>(date),</span>
+<span id="cb73-14"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">yrday =</span> lubridate<span class="sc">::</span><span class="fu">yday</span>(date),</span>
+<span id="cb73-15"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">season =</span> <span class="fu">season</span>(date)</span>
+<span id="cb73-16"><a aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb73-17"><a aria-hidden="true" tabindex="-1"></a>tictoc<span class="sc">::</span><span class="fu">toc</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code>Big op: 48.553 sec elapsed</code></pre>
+<pre data-code-line-numbers=""><code>Big op: 141.848 sec elapsed</code></pre>
 </div>
 </div>
 </section>
-<section id="noaa-temperature-data-18" class="slide level2">
+<section id="noaa-temperature-data-20" class="slide level2">
 <h2>NOAA Temperature Data</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb70" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a aria-hidden="true" tabindex="-1"></a>seameans_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb75" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a aria-hidden="true" tabindex="-1"></a>seameans_df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code># A tibble: 1,570,449 × 8
-   sea          date       sst_wt_mean  year month   day yrday season
-   &lt;chr&gt;        &lt;date&gt;           &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;fct&gt; 
- 1 Adriatic Sea 1981-09-01        23.0  1981     9     1   244 Summer
- 2 Adriatic Sea 1981-09-02        23.1  1981     9     2   245 Autumn
- 3 Adriatic Sea 1981-09-03        22.9  1981     9     3   246 Autumn
- 4 Adriatic Sea 1981-09-04        22.9  1981     9     4   247 Autumn
- 5 Adriatic Sea 1981-09-05        22.5  1981     9     5   248 Autumn
- 6 Adriatic Sea 1981-09-06        22.4  1981     9     6   249 Autumn
- 7 Adriatic Sea 1981-09-07        22.4  1981     9     7   250 Autumn
- 8 Adriatic Sea 1981-09-08        22.5  1981     9     8   251 Autumn
- 9 Adriatic Sea 1981-09-09        22.6  1981     9     9   252 Autumn
-10 Adriatic Sea 1981-09-10        22.5  1981     9    10   253 Autumn
-# ℹ 1,570,439 more rows</code></pre>
+<pre data-code-line-numbers=""><code># A tibble: 1,622,565 × 11
+   sea        date         anom   err   ice   sst  year month   day yrday season
+   &lt;chr&gt;      &lt;date&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;fct&gt; 
+ 1 Adriatic … 1981-09-01 -0.737 0.167   NaN  23.0  1981     9     1   244 Summer
+ 2 Adriatic … 1981-09-02 -0.645 0.176   NaN  23.1  1981     9     2   245 Autumn
+ 3 Adriatic … 1981-09-03 -0.698 0.176   NaN  22.9  1981     9     3   246 Autumn
+ 4 Adriatic … 1981-09-04 -0.708 0.248   NaN  22.9  1981     9     4   247 Autumn
+ 5 Adriatic … 1981-09-05 -1.05  0.189   NaN  22.5  1981     9     5   248 Autumn
+ 6 Adriatic … 1981-09-06 -1.02  0.147   NaN  22.4  1981     9     6   249 Autumn
+ 7 Adriatic … 1981-09-07 -0.920 0.141   NaN  22.4  1981     9     7   250 Autumn
+ 8 Adriatic … 1981-09-08 -0.832 0.140   NaN  22.5  1981     9     8   251 Autumn
+ 9 Adriatic … 1981-09-09 -0.665 0.162   NaN  22.6  1981     9     9   252 Autumn
+10 Adriatic … 1981-09-10 -0.637 0.268   NaN  22.5  1981     9    10   253 Autumn
+# ℹ 1,622,555 more rows</code></pre>
 </div>
 </div>
 </section>
 <section id="noaa-thats-more-like-it" class="slide level2">
 <h2>NOAA that’s more like it</h2>
 
-<img data-src="img/08_taxed_cpu.png" class="r-stretch"></section>
+<img data-src="img/10_taxed_cpu.png" class="r-stretch"></section>
 <section class="slide level2">
 
 
-<img data-src="img/08_north_atlantic.png" class="r-stretch"></section>
+<img data-src="img/10_north_atlantic.png" class="r-stretch"></section>
 <section class="slide level2">
 
 
-<img data-src="img/08_four_oceans.png" class="r-stretch"></section>
+<img data-src="img/10_global_mean.png" class="r-stretch"></section>
 <section class="slide level2">
 
 
 
 
-<img data-src="img/08_all_seas.png" class="r-stretch"></section></section>
+<img data-src="img/10_all_seas.png" class="r-stretch"></section></section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
@@ -1289,7 +1480,7 @@ Geodetic CRS:  WGS 84
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -1354,190 +1545,173 @@ Geodetic CRS:  WGS 84
     </script>
 
     <script id="quarto-html-after-body" type="application/javascript">
-    window.document.addEventListener("DOMContentLoaded", function (event) {
-      const toggleBodyColorMode = (bsSheetEl) => {
-        const mode = bsSheetEl.getAttribute("data-mode");
-        const bodyEl = window.document.querySelector("body");
-        if (mode === "dark") {
-          bodyEl.classList.add("quarto-dark");
-          bodyEl.classList.remove("quarto-light");
-        } else {
-          bodyEl.classList.add("quarto-light");
-          bodyEl.classList.remove("quarto-dark");
-        }
-      }
-      const toggleBodyColorPrimary = () => {
-        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-        if (bsSheetEl) {
-          toggleBodyColorMode(bsSheetEl);
-        }
-      }
-      toggleBodyColorPrimary();  
-      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
-      tabsets.forEach(function(tabset) {
-        const tabby = new Tabby('#' + tabset.id);
-      });
-      const isCodeAnnotation = (el) => {
-        for (const clz of el.classList) {
-          if (clz.startsWith('code-annotation-')) {                     
-            return true;
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
           }
+          return false;
         }
-        return false;
-      }
-      const onCopySuccess = function(e) {
-        // button target
-        const button = e.trigger;
-        // don't keep focus
-        button.blur();
-        // flash "checked"
-        button.classList.add('code-copy-button-checked');
-        var currentTitle = button.getAttribute("title");
-        button.setAttribute("title", "Copied!");
-        let tooltip;
-        if (window.bootstrap) {
-          button.setAttribute("data-bs-toggle", "tooltip");
-          button.setAttribute("data-bs-placement", "left");
-          button.setAttribute("data-bs-title", "Copied!");
-          tooltip = new bootstrap.Tooltip(button, 
-            { trigger: "manual", 
-              customClass: "code-copy-button-tooltip",
-              offset: [0, -8]});
-          tooltip.show();    
-        }
-        setTimeout(function() {
-          if (tooltip) {
-            tooltip.hide();
-            button.removeAttribute("data-bs-title");
-            button.removeAttribute("data-bs-toggle");
-            button.removeAttribute("data-bs-placement");
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
           }
-          button.setAttribute("title", currentTitle);
-          button.classList.remove('code-copy-button-checked');
-        }, 1000);
-        // clear code selection
-        e.clearSelection();
-      }
-      const getTextToCopy = function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
           for (const childEl of codeEl.children) {
             if (isCodeAnnotation(childEl)) {
               childEl.remove();
             }
           }
           return codeEl.innerText;
-      }
-      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-        text: getTextToCopy
-      });
-      clipboard.on('success', onCopySuccess);
-      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-          text: getTextToCopy,
-          container: window.document.getElementById('quarto-embedded-source-code-modal')
-        });
-        clipboardModal.on('success', onCopySuccess);
-      }
-        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-        var mailtoRegex = new RegExp(/^mailto:/);
-          var filterRegex = new RegExp("https:\/\/kjhealy\.github\.io\/data_wrangling");
-        var isInternal = (href) => {
-            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
         }
-        // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-        for (var i=0; i<links.length; i++) {
-          const link = links[i];
-          if (!isInternal(link.href)) {
-            // undo the damage that might have been done by quarto-nav.js in the case of
-            // links that we want to consider external
-            if (link.dataset.originalHref !== undefined) {
-              link.href = link.dataset.originalHref;
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp("https:\/\/kjhealy\.github\.io\/data_wrangling");
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
             }
           }
-        }
-      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-        const config = {
-          allowHTML: true,
-          maxWidth: 500,
-          delay: 100,
-          arrow: false,
-          appendTo: function(el) {
-              return el.closest('section.slide') || el.parentElement;
-          },
-          interactive: true,
-          interactiveBorder: 10,
-          theme: 'light-border',
-          placement: 'bottom-start',
-        };
-        if (contentFn) {
-          config.content = contentFn;
-        }
-        if (onTriggerFn) {
-          config.onTrigger = onTriggerFn;
-        }
-        if (onUntriggerFn) {
-          config.onUntrigger = onUntriggerFn;
-        }
-          config['offset'] = [0,0];
-          config['maxWidth'] = 700;
-        window.tippy(el, config); 
-      }
-      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-      for (var i=0; i<noterefs.length; i++) {
-        const ref = noterefs[i];
-        tippyHover(ref, function() {
-          // use id or data attribute instead here
-          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-          try { href = new URL(href).hash; } catch {}
-          const id = href.replace(/^#\/?/, "");
-          const note = window.document.getElementById(id);
-          if (note) {
-            return note.innerHTML;
-          } else {
-            return "";
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
           }
-        });
-      }
-      const findCites = (el) => {
-        const parentEl = el.parentElement;
-        if (parentEl) {
-          const cites = parentEl.dataset.cites;
-          if (cites) {
-            return {
-              el,
-              cites: cites.split(' ')
-            };
-          } else {
-            return findCites(el.parentElement)
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
           }
-        } else {
-          return undefined;
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
         }
-      };
-      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-      for (var i=0; i<bibliorefs.length; i++) {
-        const ref = bibliorefs[i];
-        const citeInfo = findCites(ref);
-        if (citeInfo) {
-          tippyHover(citeInfo.el, function() {
-            var popup = window.document.createElement('div');
-            citeInfo.cites.forEach(function(cite) {
-              var citeDiv = window.document.createElement('div');
-              citeDiv.classList.add('hanging-indent');
-              citeDiv.classList.add('csl-entry');
-              var biblioDiv = window.document.getElementById('ref-' + cite);
-              if (biblioDiv) {
-                citeDiv.innerHTML = biblioDiv.innerHTML;
-              }
-              popup.appendChild(citeDiv);
-            });
-            return popup.innerHTML;
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
           });
         }
-      }
-    });
-    </script>
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
     
 
 <script src="../site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.js" defer="true"></script>
