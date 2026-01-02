@@ -97,7 +97,7 @@
     code span.vs { color: #ed8796; } /* VerbatimString */
     code span.wa { color: #f5a97f; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-a3041996942c967027168b1379f3528e.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-94b1535a398ed3ca0b6df451281aabad.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -209,7 +209,7 @@ Kieran Healy
     </div>
 </div>
 
-  <p class="date">December 2025</p>
+  <p class="date">January 2026</p>
 </section>
 <section>
 <section id="tidy-data-with-tidyr" class="title-slide slide level1 inv-title center" data-background-color="#252F3E">
@@ -349,110 +349,145 @@ Kieran Healy
 <span id="cb7-2"><a aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
 <span id="cb7-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species, island, year) <span class="sc">|&gt;</span> </span>
 <span id="cb7-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">bill =</span> <span class="fu">round</span>(<span class="fu">mean</span>(bill_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),<span class="dv">2</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb7-5"><a aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb7-5"><a aria-hidden="true" tabindex="-1"></a>  tinytable<span class="sc">::</span><span class="fu">tt</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: left;">species</th>
-<th style="text-align: left;">island</th>
-<th style="text-align: right;">year</th>
-<th style="text-align: right;">bill</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Adelie</td>
-<td style="text-align: left;">Biscoe</td>
-<td style="text-align: right;">2007</td>
-<td style="text-align: right;">38.32</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Adelie</td>
-<td style="text-align: left;">Biscoe</td>
-<td style="text-align: right;">2008</td>
-<td style="text-align: right;">38.70</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Adelie</td>
-<td style="text-align: left;">Biscoe</td>
-<td style="text-align: right;">2009</td>
-<td style="text-align: right;">39.69</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Adelie</td>
-<td style="text-align: left;">Dream</td>
-<td style="text-align: right;">2007</td>
-<td style="text-align: right;">39.10</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Adelie</td>
-<td style="text-align: left;">Dream</td>
-<td style="text-align: right;">2008</td>
-<td style="text-align: right;">38.19</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Adelie</td>
-<td style="text-align: left;">Dream</td>
-<td style="text-align: right;">2009</td>
-<td style="text-align: right;">38.15</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Adelie</td>
-<td style="text-align: left;">Torgersen</td>
-<td style="text-align: right;">2007</td>
-<td style="text-align: right;">38.80</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Adelie</td>
-<td style="text-align: left;">Torgersen</td>
-<td style="text-align: right;">2008</td>
-<td style="text-align: right;">38.77</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Adelie</td>
-<td style="text-align: left;">Torgersen</td>
-<td style="text-align: right;">2009</td>
-<td style="text-align: right;">39.31</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Chinstrap</td>
-<td style="text-align: left;">Dream</td>
-<td style="text-align: right;">2007</td>
-<td style="text-align: right;">48.72</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Chinstrap</td>
-<td style="text-align: left;">Dream</td>
-<td style="text-align: right;">2008</td>
-<td style="text-align: right;">48.70</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Chinstrap</td>
-<td style="text-align: left;">Dream</td>
-<td style="text-align: right;">2009</td>
-<td style="text-align: right;">49.05</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Gentoo</td>
-<td style="text-align: left;">Biscoe</td>
-<td style="text-align: right;">2007</td>
-<td style="text-align: right;">47.01</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Gentoo</td>
-<td style="text-align: left;">Biscoe</td>
-<td style="text-align: right;">2008</td>
-<td style="text-align: right;">46.94</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Gentoo</td>
-<td style="text-align: left;">Biscoe</td>
-<td style="text-align: right;">2009</td>
-<td style="text-align: right;">48.50</td>
-</tr>
-</tbody>
-</table>
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_62hzkizbgwg8ecohnbym = TinyTable.createTableFunctions("tinytable_62hzkizbgwg8ecohnbym");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '15', j: 1 }, { i: '15', j: 2 }, { i: '15', j: 3 }, { i: '15', j: 4 } ], css_id: 'tinytable_css_zx66hvw83fcp4s67htmr',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 } ], css_id: 'tinytable_css_ncg21uomb1t3sg3ax2yu',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_62hzkizbgwg8ecohnbym.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+    <style>
+    /* tinytable css entries after */
+    #tinytable_62hzkizbgwg8ecohnbym td.tinytable_css_zx66hvw83fcp4s67htmr, #tinytable_62hzkizbgwg8ecohnbym th.tinytable_css_zx66hvw83fcp4s67htmr {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_62hzkizbgwg8ecohnbym td.tinytable_css_ncg21uomb1t3sg3ax2yu, #tinytable_62hzkizbgwg8ecohnbym th.tinytable_css_ncg21uomb1t3sg3ax2yu {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    </style>
+    <div class="container">
+      <table class="tinytable" id="tinytable_62hzkizbgwg8ecohnbym" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        
+        <thead>
+              <tr>
+                <th scope="col" data-row="0" data-col="1">species</th>
+                <th scope="col" data-row="0" data-col="2">island</th>
+                <th scope="col" data-row="0" data-col="3">year</th>
+                <th scope="col" data-row="0" data-col="4">bill</th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td data-row="1" data-col="1">Adelie</td>
+                  <td data-row="1" data-col="2">Biscoe</td>
+                  <td data-row="1" data-col="3">2007</td>
+                  <td data-row="1" data-col="4">38.32</td>
+                </tr>
+                <tr>
+                  <td data-row="2" data-col="1">Adelie</td>
+                  <td data-row="2" data-col="2">Biscoe</td>
+                  <td data-row="2" data-col="3">2008</td>
+                  <td data-row="2" data-col="4">38.70</td>
+                </tr>
+                <tr>
+                  <td data-row="3" data-col="1">Adelie</td>
+                  <td data-row="3" data-col="2">Biscoe</td>
+                  <td data-row="3" data-col="3">2009</td>
+                  <td data-row="3" data-col="4">39.69</td>
+                </tr>
+                <tr>
+                  <td data-row="4" data-col="1">Adelie</td>
+                  <td data-row="4" data-col="2">Dream</td>
+                  <td data-row="4" data-col="3">2007</td>
+                  <td data-row="4" data-col="4">39.10</td>
+                </tr>
+                <tr>
+                  <td data-row="5" data-col="1">Adelie</td>
+                  <td data-row="5" data-col="2">Dream</td>
+                  <td data-row="5" data-col="3">2008</td>
+                  <td data-row="5" data-col="4">38.19</td>
+                </tr>
+                <tr>
+                  <td data-row="6" data-col="1">Adelie</td>
+                  <td data-row="6" data-col="2">Dream</td>
+                  <td data-row="6" data-col="3">2009</td>
+                  <td data-row="6" data-col="4">38.15</td>
+                </tr>
+                <tr>
+                  <td data-row="7" data-col="1">Adelie</td>
+                  <td data-row="7" data-col="2">Torgersen</td>
+                  <td data-row="7" data-col="3">2007</td>
+                  <td data-row="7" data-col="4">38.80</td>
+                </tr>
+                <tr>
+                  <td data-row="8" data-col="1">Adelie</td>
+                  <td data-row="8" data-col="2">Torgersen</td>
+                  <td data-row="8" data-col="3">2008</td>
+                  <td data-row="8" data-col="4">38.77</td>
+                </tr>
+                <tr>
+                  <td data-row="9" data-col="1">Adelie</td>
+                  <td data-row="9" data-col="2">Torgersen</td>
+                  <td data-row="9" data-col="3">2009</td>
+                  <td data-row="9" data-col="4">39.31</td>
+                </tr>
+                <tr>
+                  <td data-row="10" data-col="1">Chinstrap</td>
+                  <td data-row="10" data-col="2">Dream</td>
+                  <td data-row="10" data-col="3">2007</td>
+                  <td data-row="10" data-col="4">48.72</td>
+                </tr>
+                <tr>
+                  <td data-row="11" data-col="1">Chinstrap</td>
+                  <td data-row="11" data-col="2">Dream</td>
+                  <td data-row="11" data-col="3">2008</td>
+                  <td data-row="11" data-col="4">48.70</td>
+                </tr>
+                <tr>
+                  <td data-row="12" data-col="1">Chinstrap</td>
+                  <td data-row="12" data-col="2">Dream</td>
+                  <td data-row="12" data-col="3">2009</td>
+                  <td data-row="12" data-col="4">49.05</td>
+                </tr>
+                <tr>
+                  <td data-row="13" data-col="1">Gentoo</td>
+                  <td data-row="13" data-col="2">Biscoe</td>
+                  <td data-row="13" data-col="3">2007</td>
+                  <td data-row="13" data-col="4">47.01</td>
+                </tr>
+                <tr>
+                  <td data-row="14" data-col="1">Gentoo</td>
+                  <td data-row="14" data-col="2">Biscoe</td>
+                  <td data-row="14" data-col="3">2008</td>
+                  <td data-row="14" data-col="4">46.94</td>
+                </tr>
+                <tr>
+                  <td data-row="15" data-col="1">Gentoo</td>
+                  <td data-row="15" data-col="2">Biscoe</td>
+                  <td data-row="15" data-col="3">2009</td>
+                  <td data-row="15" data-col="4">48.50</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
 </div>
 </div>
 </section>
@@ -464,56 +499,91 @@ Kieran Healy
 <span id="cb8-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species, island, year) <span class="sc">|&gt;</span> </span>
 <span id="cb8-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">bill =</span> <span class="fu">round</span>(<span class="fu">mean</span>(bill_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">2</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb8-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> year, <span class="at">values_from =</span> bill) <span class="sc">|&gt;</span> </span>
-<span id="cb8-5"><a aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb8-5"><a aria-hidden="true" tabindex="-1"></a>  tinytable<span class="sc">::</span><span class="fu">tt</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: left;">species</th>
-<th style="text-align: left;">island</th>
-<th style="text-align: right;">2007</th>
-<th style="text-align: right;">2008</th>
-<th style="text-align: right;">2009</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Adelie</td>
-<td style="text-align: left;">Biscoe</td>
-<td style="text-align: right;">38.32</td>
-<td style="text-align: right;">38.70</td>
-<td style="text-align: right;">39.69</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Adelie</td>
-<td style="text-align: left;">Dream</td>
-<td style="text-align: right;">39.10</td>
-<td style="text-align: right;">38.19</td>
-<td style="text-align: right;">38.15</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Adelie</td>
-<td style="text-align: left;">Torgersen</td>
-<td style="text-align: right;">38.80</td>
-<td style="text-align: right;">38.77</td>
-<td style="text-align: right;">39.31</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Chinstrap</td>
-<td style="text-align: left;">Dream</td>
-<td style="text-align: right;">48.72</td>
-<td style="text-align: right;">48.70</td>
-<td style="text-align: right;">49.05</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Gentoo</td>
-<td style="text-align: left;">Biscoe</td>
-<td style="text-align: right;">47.01</td>
-<td style="text-align: right;">46.94</td>
-<td style="text-align: right;">48.50</td>
-</tr>
-</tbody>
-</table>
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_shzp9ctrx2hsnwcu03wn = TinyTable.createTableFunctions("tinytable_shzp9ctrx2hsnwcu03wn");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '5', j: 1 }, { i: '5', j: 2 }, { i: '5', j: 3 }, { i: '5', j: 4 }, { i: '5', j: 5 } ], css_id: 'tinytable_css_5hb2s5ciyguz1hrdnh4z',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 } ], css_id: 'tinytable_css_n3gxk19n9caye4peim23',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_shzp9ctrx2hsnwcu03wn.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+    <style>
+    /* tinytable css entries after */
+    #tinytable_shzp9ctrx2hsnwcu03wn td.tinytable_css_5hb2s5ciyguz1hrdnh4z, #tinytable_shzp9ctrx2hsnwcu03wn th.tinytable_css_5hb2s5ciyguz1hrdnh4z {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_shzp9ctrx2hsnwcu03wn td.tinytable_css_n3gxk19n9caye4peim23, #tinytable_shzp9ctrx2hsnwcu03wn th.tinytable_css_n3gxk19n9caye4peim23 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    </style>
+    <div class="container">
+      <table class="tinytable" id="tinytable_shzp9ctrx2hsnwcu03wn" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        
+        <thead>
+              <tr>
+                <th scope="col" data-row="0" data-col="1">species</th>
+                <th scope="col" data-row="0" data-col="2">island</th>
+                <th scope="col" data-row="0" data-col="3">2007</th>
+                <th scope="col" data-row="0" data-col="4">2008</th>
+                <th scope="col" data-row="0" data-col="5">2009</th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td data-row="1" data-col="1">Adelie</td>
+                  <td data-row="1" data-col="2">Biscoe</td>
+                  <td data-row="1" data-col="3">38.32</td>
+                  <td data-row="1" data-col="4">38.70</td>
+                  <td data-row="1" data-col="5">39.69</td>
+                </tr>
+                <tr>
+                  <td data-row="2" data-col="1">Adelie</td>
+                  <td data-row="2" data-col="2">Dream</td>
+                  <td data-row="2" data-col="3">39.10</td>
+                  <td data-row="2" data-col="4">38.19</td>
+                  <td data-row="2" data-col="5">38.15</td>
+                </tr>
+                <tr>
+                  <td data-row="3" data-col="1">Adelie</td>
+                  <td data-row="3" data-col="2">Torgersen</td>
+                  <td data-row="3" data-col="3">38.80</td>
+                  <td data-row="3" data-col="4">38.77</td>
+                  <td data-row="3" data-col="5">39.31</td>
+                </tr>
+                <tr>
+                  <td data-row="4" data-col="1">Chinstrap</td>
+                  <td data-row="4" data-col="2">Dream</td>
+                  <td data-row="4" data-col="3">48.72</td>
+                  <td data-row="4" data-col="4">48.70</td>
+                  <td data-row="4" data-col="5">49.05</td>
+                </tr>
+                <tr>
+                  <td data-row="5" data-col="1">Gentoo</td>
+                  <td data-row="5" data-col="2">Biscoe</td>
+                  <td data-row="5" data-col="3">47.01</td>
+                  <td data-row="5" data-col="4">46.94</td>
+                  <td data-row="5" data-col="5">48.50</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
 </div>
 </div>
 
@@ -665,14 +735,18 @@ Kieran Healy
 </div>
 </section>
 <section id="lets-recode-it-while-were-here" class="slide level2">
-<h2>Let’s <span class="fg-green">recode()</span> it while we’re here</h2>
+<h2>Let’s recode it while we’re here</h2>
+<p>We use <span class="fg-green"><strong><code>case_match()</code></strong></span> for simple recoding:</p>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a aria-hidden="true" tabindex="-1"></a>edu <span class="sc">|&gt;</span> </span>
 <span id="cb15-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(elem4<span class="sc">:</span>coll4, <span class="at">names_to =</span> <span class="st">"education"</span>, <span class="at">values_to =</span> <span class="st">"n"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb15-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">education =</span> <span class="fu">recode</span>(education, </span>
-<span id="cb15-4"><a aria-hidden="true" tabindex="-1"></a>                            <span class="at">elem4 =</span> <span class="st">"Elementary 4"</span>, <span class="at">elem8 =</span> <span class="st">"Elementary 8"</span>, </span>
-<span id="cb15-5"><a aria-hidden="true" tabindex="-1"></a>                            <span class="at">hs3 =</span> <span class="st">"High School 3"</span>, <span class="at">hs4 =</span> <span class="st">"High School 4"</span>,</span>
-<span id="cb15-6"><a aria-hidden="true" tabindex="-1"></a>                            <span class="at">coll3 =</span> <span class="st">"College 3"</span>, <span class="at">coll4 =</span> <span class="st">"College 4"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb15-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">education =</span> <span class="fu">case_match</span>(education, </span>
+<span id="cb15-4"><a aria-hidden="true" tabindex="-1"></a>                                <span class="st">"elem4"</span> <span class="sc">~</span> <span class="st">"Elementary 4"</span>,</span>
+<span id="cb15-5"><a aria-hidden="true" tabindex="-1"></a>                                <span class="st">"elem8"</span> <span class="sc">~</span> <span class="st">"Elementary 8"</span>, </span>
+<span id="cb15-6"><a aria-hidden="true" tabindex="-1"></a>                                <span class="st">"hs3"</span> <span class="sc">~</span> <span class="st">"High School 3"</span>, </span>
+<span id="cb15-7"><a aria-hidden="true" tabindex="-1"></a>                                <span class="st">"hs4"</span> <span class="sc">~</span> <span class="st">"High School 4"</span>, </span>
+<span id="cb15-8"><a aria-hidden="true" tabindex="-1"></a>                                <span class="st">"coll3"</span> <span class="sc">~</span> <span class="st">"College 3"</span>, </span>
+<span id="cb15-9"><a aria-hidden="true" tabindex="-1"></a>                                <span class="st">"coll4"</span> <span class="sc">~</span> <span class="st">"College 4"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 2,196 × 7
    age   sex    year total median education         n
@@ -690,14 +764,123 @@ Kieran Healy
 # ℹ 2,186 more rows</code></pre>
 </div>
 </div>
-<ul>
-<li>The argument order of <span class="fg-green"><strong><code>recode()</code></strong></span> is inconsistent with other tidyverse functions and it may be superceded in the future.</li>
-</ul>
+</section>
+<section id="case_match-to-collapse-values" class="slide level2">
+<h2><code>case_match()</code> to collapse values</h2>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a aria-hidden="true" tabindex="-1"></a>edu <span class="sc">|&gt;</span> </span>
+<span id="cb17-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(elem4<span class="sc">:</span>coll4, <span class="at">names_to =</span> <span class="st">"education"</span>, <span class="at">values_to =</span> <span class="st">"n"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb17-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">education =</span> <span class="fu">case_match</span>(education, </span>
+<span id="cb17-4"><a aria-hidden="true" tabindex="-1"></a>                                <span class="fu">c</span>(<span class="st">"elem4"</span>, <span class="st">"elem8"</span>) <span class="sc">~</span> <span class="st">"Elementary"</span>,</span>
+<span id="cb17-5"><a aria-hidden="true" tabindex="-1"></a>                                <span class="fu">c</span>(<span class="st">"hs3"</span>, <span class="st">"hs4"</span>) <span class="sc">~</span> <span class="st">"High School"</span>, </span>
+<span id="cb17-6"><a aria-hidden="true" tabindex="-1"></a>                                <span class="fu">c</span>(<span class="st">"coll3"</span>, <span class="st">"coll4"</span>) <span class="sc">~</span> <span class="st">"College"</span>)) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code># A tibble: 2,196 × 7
+   age   sex    year total median education       n
+   &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt;  &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt;
+ 1 25-34 Male   2016 21845     NA Elementary    116
+ 2 25-34 Male   2016 21845     NA Elementary    468
+ 3 25-34 Male   2016 21845     NA High School  1427
+ 4 25-34 Male   2016 21845     NA High School  6386
+ 5 25-34 Male   2016 21845     NA College      6015
+ 6 25-34 Male   2016 21845     NA College      7432
+ 7 25-34 Male   2015 21427     NA Elementary    166
+ 8 25-34 Male   2015 21427     NA Elementary    488
+ 9 25-34 Male   2015 21427     NA High School  1584
+10 25-34 Male   2015 21427     NA High School  6198
+# ℹ 2,186 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="case_match-to-collapse-values-1" class="slide level2">
+<h2><code>case_match()</code> to collapse values</h2>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a aria-hidden="true" tabindex="-1"></a>edu <span class="sc">|&gt;</span> </span>
+<span id="cb19-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(elem4<span class="sc">:</span>coll4, <span class="at">names_to =</span> <span class="st">"education"</span>, <span class="at">values_to =</span> <span class="st">"n"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb19-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">education =</span> <span class="fu">case_match</span>(education, </span>
+<span id="cb19-4"><a aria-hidden="true" tabindex="-1"></a>                                <span class="fu">c</span>(<span class="st">"elem4"</span>, <span class="st">"elem8"</span>) <span class="sc">~</span> <span class="st">"Elementary"</span>,</span>
+<span id="cb19-5"><a aria-hidden="true" tabindex="-1"></a>                                <span class="fu">c</span>(<span class="st">"hs3"</span>, <span class="st">"hs4"</span>) <span class="sc">~</span> <span class="st">"High School"</span>, </span>
+<span id="cb19-6"><a aria-hidden="true" tabindex="-1"></a>                                <span class="fu">c</span>(<span class="st">"coll3"</span>, <span class="st">"coll4"</span>) <span class="sc">~</span> <span class="st">"College"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb19-7"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(age,sex,year, education) <span class="sc">|&gt;</span> </span>
+<span id="cb19-8"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">sum</span>(n)) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code># A tibble: 1,098 × 5
+# Groups:   age, sex, year [366]
+   age   sex     year education       n
+   &lt;chr&gt; &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;       &lt;dbl&gt;
+ 1 25-34 Female  1940 College      1406
+ 2 25-34 Female  1940 Elementary   4342
+ 3 25-34 Female  1940 High School  4986
+ 4 25-34 Female  1947 College      1555
+ 5 25-34 Female  1947 Elementary   3329
+ 6 25-34 Female  1947 High School  6796
+ 7 25-34 Female  1950 College      1795
+ 8 25-34 Female  1950 Elementary   3119
+ 9 25-34 Female  1950 High School  7034
+10 25-34 Female  1952 College      1886
+# ℹ 1,088 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="case_match-and-.default" class="slide level2">
+<h2><code>case_match()</code> and <code>.default</code></h2>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a aria-hidden="true" tabindex="-1"></a>edu <span class="sc">|&gt;</span> </span>
+<span id="cb21-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(elem4<span class="sc">:</span>coll4, <span class="at">names_to =</span> <span class="st">"education"</span>, <span class="at">values_to =</span> <span class="st">"n"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb21-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">education =</span> <span class="fu">case_match</span>(education, </span>
+<span id="cb21-4"><a aria-hidden="true" tabindex="-1"></a>                                <span class="fu">c</span>(<span class="st">"elem4"</span>, <span class="st">"elem8"</span>) <span class="sc">~</span> <span class="st">"Elementary"</span>,</span>
+<span id="cb21-5"><a aria-hidden="true" tabindex="-1"></a>                                <span class="at">.default =</span> <span class="st">"Other"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code># A tibble: 2,196 × 7
+   age   sex    year total median education      n
+   &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt;  &lt;dbl&gt; &lt;chr&gt;      &lt;dbl&gt;
+ 1 25-34 Male   2016 21845     NA Elementary   116
+ 2 25-34 Male   2016 21845     NA Elementary   468
+ 3 25-34 Male   2016 21845     NA Other       1427
+ 4 25-34 Male   2016 21845     NA Other       6386
+ 5 25-34 Male   2016 21845     NA Other       6015
+ 6 25-34 Male   2016 21845     NA Other       7432
+ 7 25-34 Male   2015 21427     NA Elementary   166
+ 8 25-34 Male   2015 21427     NA Elementary   488
+ 9 25-34 Male   2015 21427     NA Other       1584
+10 25-34 Male   2015 21427     NA Other       6198
+# ℹ 2,186 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="case_when-for-more-complex-criteria" class="slide level2">
+<h2><code>case_when()</code> for more complex criteria</h2>
+<p><code>case_match()</code> replaces values with values. <code>case_when()</code> is more general and can create or recode variables based on criteria from other variables.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a aria-hidden="true" tabindex="-1"></a>edu <span class="sc">|&gt;</span> </span>
+<span id="cb23-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(elem4<span class="sc">:</span>coll4, <span class="at">names_to =</span> <span class="st">"education"</span>, <span class="at">values_to =</span> <span class="st">"n"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb23-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb23-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">weird_group =</span> <span class="fu">case_when</span>(</span>
+<span id="cb23-5"><a aria-hidden="true" tabindex="-1"></a>      age <span class="sc">==</span> <span class="st">"25-34"</span> <span class="sc">&amp;</span> year <span class="sc">&gt;</span> <span class="dv">1980</span> <span class="sc">&amp;</span> (education <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"elem4"</span>, <span class="st">"elem8"</span>)) <span class="sc">~</span> <span class="st">"Group 1"</span>, </span>
+<span id="cb23-6"><a aria-hidden="true" tabindex="-1"></a>      age <span class="sc">==</span> <span class="st">"25-34"</span> <span class="sc">&amp;</span> (year <span class="sc">==</span> <span class="dv">2016</span> <span class="sc">|</span> education <span class="sc">==</span> <span class="st">"hs3"</span>)  <span class="sc">~</span> <span class="st">"Group 2"</span>,</span>
+<span id="cb23-7"><a aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> <span class="st">"Group 3"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code># A tibble: 2,196 × 8
+   age   sex    year total median education     n weird_group
+   &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt;  &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;      
+ 1 25-34 Male   2016 21845     NA elem4       116 Group 1    
+ 2 25-34 Male   2016 21845     NA elem8       468 Group 1    
+ 3 25-34 Male   2016 21845     NA hs3        1427 Group 2    
+ 4 25-34 Male   2016 21845     NA hs4        6386 Group 2    
+ 5 25-34 Male   2016 21845     NA coll3      6015 Group 2    
+ 6 25-34 Male   2016 21845     NA coll4      7432 Group 2    
+ 7 25-34 Male   2015 21427     NA elem4       166 Group 1    
+ 8 25-34 Male   2015 21427     NA elem8       488 Group 1    
+ 9 25-34 Male   2015 21427     NA hs3        1584 Group 2    
+10 25-34 Male   2015 21427     NA hs4        6198 Group 3    
+# ℹ 2,186 more rows</code></pre>
+</div>
+</div>
 </section>
 <section id="pivot_longer-implies-pivot_wider" class="slide level2">
 <h2><span class="fg-green">pivot_longer()</span> implies <span class="fg-green">pivot_wider()</span></h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a aria-hidden="true" tabindex="-1"></a>gapminder</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a aria-hidden="true" tabindex="-1"></a>gapminder</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 1,704 × 6
    country     continent  year lifeExp      pop gdpPercap
@@ -720,9 +903,9 @@ Kieran Healy
 <section id="pivot_longer-implies-pivot_wider-1" class="slide level2">
 <h2><span class="fg-green">pivot_longer()</span> implies <span class="fg-green">pivot_wider()</span></h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19" data-source-line-numbers="nil" data-code-line-numbers="3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">|&gt;</span> </span>
-<span id="cb19-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(country, continent, year, lifeExp) <span class="sc">|&gt;</span> </span>
-<span id="cb19-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> year, <span class="at">values_from =</span> lifeExp) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27" data-source-line-numbers="nil" data-code-line-numbers="3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">|&gt;</span> </span>
+<span id="cb27-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(country, continent, year, lifeExp) <span class="sc">|&gt;</span> </span>
+<span id="cb27-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> year, <span class="at">values_from =</span> lifeExp) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 142 × 14
    country     continent `1952` `1957` `1962` `1967` `1972` `1977` `1982` `1987`
@@ -748,8 +931,8 @@ Kieran Healy
 <li>This is a pretty common problem. A first thought (“Just don’t mention the other columns”) isn’t it:</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">|&gt;</span> </span>
-<span id="cb21-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> year, <span class="at">values_from =</span> lifeExp) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">|&gt;</span> </span>
+<span id="cb29-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> year, <span class="at">values_from =</span> lifeExp) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 1,704 × 16
    country  continent    pop gdpPercap `1952` `1957` `1962` `1967` `1972` `1977`
@@ -778,9 +961,9 @@ Kieran Healy
 <div class="smallcode">
 <p>We need to specify that we want values from more than one column.</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23" data-source-line-numbers="nil" data-code-line-numbers="3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">|&gt;</span> </span>
-<span id="cb23-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(country, continent, year, lifeExp, gdpPercap) <span class="sc">|&gt;</span> </span>
-<span id="cb23-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> year, <span class="at">values_from =</span> <span class="fu">c</span>(lifeExp, gdpPercap)) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31" data-source-line-numbers="nil" data-code-line-numbers="3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">|&gt;</span> </span>
+<span id="cb31-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(country, continent, year, lifeExp, gdpPercap) <span class="sc">|&gt;</span> </span>
+<span id="cb31-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> year, <span class="at">values_from =</span> <span class="fu">c</span>(lifeExp, gdpPercap)) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 142 × 26
    country     continent lifeExp_1952 lifeExp_1957 lifeExp_1962 lifeExp_1967
@@ -812,9 +995,9 @@ Kieran Healy
 <section id="pivot-wider-while-summarizing" class="slide level2">
 <h2>Pivot wider while summarizing</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># Some made-up data</span></span>
-<span id="cb25-2"><a aria-hidden="true" tabindex="-1"></a>dfstrat <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"dfstrat.csv"</span>))</span>
-<span id="cb25-3"><a aria-hidden="true" tabindex="-1"></a>dfstrat </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># Some made-up data</span></span>
+<span id="cb33-2"><a aria-hidden="true" tabindex="-1"></a>dfstrat <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"dfstrat.csv"</span>))</span>
+<span id="cb33-3"><a aria-hidden="true" tabindex="-1"></a>dfstrat </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 1,000 × 5
    stratum sex   race  educ  income
@@ -851,7 +1034,7 @@ Kieran Healy
 <div class="columns smallcode">
 <div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a aria-hidden="true" tabindex="-1"></a>dfstrat <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"dfstrat.csv"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a aria-hidden="true" tabindex="-1"></a>dfstrat <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"dfstrat.csv"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:50%;">
 
@@ -862,8 +1045,8 @@ Kieran Healy
 <div class="columns smallcode">
 <div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a aria-hidden="true" tabindex="-1"></a>dfstrat <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"dfstrat.csv"</span>))</span>
-<span id="cb28-2"><a aria-hidden="true" tabindex="-1"></a>dfstrat</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a aria-hidden="true" tabindex="-1"></a>dfstrat <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"dfstrat.csv"</span>))</span>
+<span id="cb36-2"><a aria-hidden="true" tabindex="-1"></a>dfstrat</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
@@ -891,9 +1074,9 @@ Kieran Healy
 <div class="columns smallcode">
 <div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a aria-hidden="true" tabindex="-1"></a>dfstrat <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"dfstrat.csv"</span>))</span>
-<span id="cb30-2"><a aria-hidden="true" tabindex="-1"></a>dfstrat <span class="sc">|&gt;</span></span>
-<span id="cb30-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(sex, race, stratum, educ)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a aria-hidden="true" tabindex="-1"></a>dfstrat <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"dfstrat.csv"</span>))</span>
+<span id="cb38-2"><a aria-hidden="true" tabindex="-1"></a>dfstrat <span class="sc">|&gt;</span></span>
+<span id="cb38-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(sex, race, stratum, educ)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
@@ -922,11 +1105,11 @@ Kieran Healy
 <div class="columns smallcode">
 <div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a aria-hidden="true" tabindex="-1"></a>dfstrat <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"dfstrat.csv"</span>))</span>
-<span id="cb32-2"><a aria-hidden="true" tabindex="-1"></a>dfstrat <span class="sc">|&gt;</span></span>
-<span id="cb32-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(sex, race, stratum, educ) <span class="sc">|&gt;</span></span>
-<span id="cb32-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">mean_inc =</span> <span class="fu">mean</span>(income),</span>
-<span id="cb32-5"><a aria-hidden="true" tabindex="-1"></a>              <span class="at">n =</span> <span class="fu">n</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a aria-hidden="true" tabindex="-1"></a>dfstrat <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"dfstrat.csv"</span>))</span>
+<span id="cb40-2"><a aria-hidden="true" tabindex="-1"></a>dfstrat <span class="sc">|&gt;</span></span>
+<span id="cb40-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(sex, race, stratum, educ) <span class="sc">|&gt;</span></span>
+<span id="cb40-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">mean_inc =</span> <span class="fu">mean</span>(income),</span>
+<span id="cb40-5"><a aria-hidden="true" tabindex="-1"></a>              <span class="at">n =</span> <span class="fu">n</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
@@ -955,13 +1138,13 @@ Kieran Healy
 <div class="columns smallcode">
 <div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a aria-hidden="true" tabindex="-1"></a>dfstrat <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"dfstrat.csv"</span>))</span>
-<span id="cb34-2"><a aria-hidden="true" tabindex="-1"></a>dfstrat <span class="sc">|&gt;</span></span>
-<span id="cb34-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(sex, race, stratum, educ) <span class="sc">|&gt;</span></span>
-<span id="cb34-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">mean_inc =</span> <span class="fu">mean</span>(income),</span>
-<span id="cb34-5"><a aria-hidden="true" tabindex="-1"></a>              <span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span></span>
-<span id="cb34-6"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> (educ),</span>
-<span id="cb34-7"><a aria-hidden="true" tabindex="-1"></a>                <span class="at">values_from =</span> <span class="fu">c</span>(mean_inc, n))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a aria-hidden="true" tabindex="-1"></a>dfstrat <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"dfstrat.csv"</span>))</span>
+<span id="cb42-2"><a aria-hidden="true" tabindex="-1"></a>dfstrat <span class="sc">|&gt;</span></span>
+<span id="cb42-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(sex, race, stratum, educ) <span class="sc">|&gt;</span></span>
+<span id="cb42-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">mean_inc =</span> <span class="fu">mean</span>(income),</span>
+<span id="cb42-5"><a aria-hidden="true" tabindex="-1"></a>              <span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb42-6"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> (educ),</span>
+<span id="cb42-7"><a aria-hidden="true" tabindex="-1"></a>                <span class="at">values_from =</span> <span class="fu">c</span>(mean_inc, n))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
@@ -990,14 +1173,14 @@ Kieran Healy
 <div class="columns smallcode">
 <div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a aria-hidden="true" tabindex="-1"></a>dfstrat <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"dfstrat.csv"</span>))</span>
-<span id="cb36-2"><a aria-hidden="true" tabindex="-1"></a>dfstrat <span class="sc">|&gt;</span></span>
-<span id="cb36-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(sex, race, stratum, educ) <span class="sc">|&gt;</span></span>
-<span id="cb36-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">mean_inc =</span> <span class="fu">mean</span>(income),</span>
-<span id="cb36-5"><a aria-hidden="true" tabindex="-1"></a>              <span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span></span>
-<span id="cb36-6"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> (educ),</span>
-<span id="cb36-7"><a aria-hidden="true" tabindex="-1"></a>                <span class="at">values_from =</span> <span class="fu">c</span>(mean_inc, n)) <span class="sc">|&gt;</span></span>
-<span id="cb36-8"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a aria-hidden="true" tabindex="-1"></a>dfstrat <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"dfstrat.csv"</span>))</span>
+<span id="cb44-2"><a aria-hidden="true" tabindex="-1"></a>dfstrat <span class="sc">|&gt;</span></span>
+<span id="cb44-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(sex, race, stratum, educ) <span class="sc">|&gt;</span></span>
+<span id="cb44-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">mean_inc =</span> <span class="fu">mean</span>(income),</span>
+<span id="cb44-5"><a aria-hidden="true" tabindex="-1"></a>              <span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb44-6"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> (educ),</span>
+<span id="cb44-7"><a aria-hidden="true" tabindex="-1"></a>                <span class="at">values_from =</span> <span class="fu">c</span>(mean_inc, n)) <span class="sc">|&gt;</span></span>
+<span id="cb44-8"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
@@ -1029,16 +1212,16 @@ Kieran Healy
 <section id="separate-and-unite-columns" class="slide level2">
 <h2><span class="fg-green">separate()</span> and <span class="fg-green">unite()</span> columns</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a aria-hidden="true" tabindex="-1"></a><span class="do">## tribble() lets you make tibbles by hand</span></span>
-<span id="cb38-2"><a aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb38-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>name, <span class="sc">~</span>occupation,</span>
-<span id="cb38-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="st">"Nero.Wolfe"</span>, <span class="st">"Private Detective"</span>,</span>
-<span id="cb38-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="st">"Archie.Goodwin"</span>, <span class="st">"Personal Assistant"</span>,</span>
-<span id="cb38-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="st">"Fritz.Brenner"</span>, <span class="st">"Cook and Butler"</span>,</span>
-<span id="cb38-7"><a aria-hidden="true" tabindex="-1"></a>  <span class="st">"Theodore.Horstmann"</span>, <span class="st">"Orchid Expert"</span></span>
-<span id="cb38-8"><a aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb38-9"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-10"><a aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a aria-hidden="true" tabindex="-1"></a><span class="do">## tribble() lets you make tibbles by hand</span></span>
+<span id="cb46-2"><a aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb46-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>name, <span class="sc">~</span>occupation,</span>
+<span id="cb46-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="st">"Nero.Wolfe"</span>, <span class="st">"Private Detective"</span>,</span>
+<span id="cb46-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="st">"Archie.Goodwin"</span>, <span class="st">"Personal Assistant"</span>,</span>
+<span id="cb46-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="st">"Fritz.Brenner"</span>, <span class="st">"Cook and Butler"</span>,</span>
+<span id="cb46-7"><a aria-hidden="true" tabindex="-1"></a>  <span class="st">"Theodore.Horstmann"</span>, <span class="st">"Orchid Expert"</span></span>
+<span id="cb46-8"><a aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb46-9"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-10"><a aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 4 × 2
   name               occupation        
@@ -1053,16 +1236,16 @@ Kieran Healy
 <section id="separate-and-unite-columns-1" class="slide level2">
 <h2><span class="fg-green">separate()</span> and <span class="fg-green">unite()</span> columns</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a aria-hidden="true" tabindex="-1"></a><span class="do">## tribble() lets you make tibbles by hand</span></span>
-<span id="cb40-2"><a aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb40-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>name, <span class="sc">~</span>occupation,</span>
-<span id="cb40-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="st">"Nero.Wolfe"</span>, <span class="st">"Private Detective"</span>,</span>
-<span id="cb40-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="st">"Archie.Goodwin"</span>, <span class="st">"Personal Assistant"</span>,</span>
-<span id="cb40-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="st">"Fritz.Brenner"</span>, <span class="st">"Cook and Butler"</span>,</span>
-<span id="cb40-7"><a aria-hidden="true" tabindex="-1"></a>  <span class="st">"Theodore.Horstmann"</span>, <span class="st">"Orchid Expert"</span></span>
-<span id="cb40-8"><a aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb40-9"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-10"><a aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a aria-hidden="true" tabindex="-1"></a><span class="do">## tribble() lets you make tibbles by hand</span></span>
+<span id="cb48-2"><a aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb48-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>name, <span class="sc">~</span>occupation,</span>
+<span id="cb48-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="st">"Nero.Wolfe"</span>, <span class="st">"Private Detective"</span>,</span>
+<span id="cb48-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="st">"Archie.Goodwin"</span>, <span class="st">"Personal Assistant"</span>,</span>
+<span id="cb48-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="st">"Fritz.Brenner"</span>, <span class="st">"Cook and Butler"</span>,</span>
+<span id="cb48-7"><a aria-hidden="true" tabindex="-1"></a>  <span class="st">"Theodore.Horstmann"</span>, <span class="st">"Orchid Expert"</span></span>
+<span id="cb48-8"><a aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb48-9"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-10"><a aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 4 × 2
   name               occupation        
@@ -1079,7 +1262,7 @@ Kieran Healy
 <div class="columns smallcode">
 <div class="column" style="width:40%;">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:60%;">
 <div class="cell" data-layout-align="center">
@@ -1100,8 +1283,8 @@ Kieran Healy
 <div class="columns smallcode">
 <div class="column" style="width:40%;">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
-<span id="cb44-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(name, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"first"</span>, <span class="st">"last"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb52-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(name, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"first"</span>, <span class="st">"last"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:60%;">
 <div class="cell" data-layout-align="center">
@@ -1122,9 +1305,9 @@ Kieran Healy
 <div class="columns smallcode">
 <div class="column" style="width:40%;">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
-<span id="cb46-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(name, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"first"</span>, <span class="st">"last"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb46-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(<span class="st">"full_name"</span>, first<span class="sc">:</span>last, <span class="at">sep =</span> <span class="st">" "</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb54-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(name, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"first"</span>, <span class="st">"last"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb54-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(<span class="st">"full_name"</span>, first<span class="sc">:</span>last, <span class="at">sep =</span> <span class="st">" "</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:60%;">
 <div class="cell" data-layout-align="center">
@@ -1145,11 +1328,11 @@ Kieran Healy
 <div class="columns smallcode">
 <div class="column" style="width:40%;">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
-<span id="cb48-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(name, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"first"</span>, <span class="st">"last"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb48-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(<span class="st">"full_name"</span>, first<span class="sc">:</span>last, <span class="at">sep =</span> <span class="st">" "</span>) <span class="sc">|&gt;</span></span>
-<span id="cb48-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(<span class="st">"both_together"</span>, full_name<span class="sc">:</span>occupation,</span>
-<span id="cb48-5"><a aria-hidden="true" tabindex="-1"></a>        <span class="at">sep =</span> <span class="st">", "</span>, <span class="at">remove =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb56-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(name, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"first"</span>, <span class="st">"last"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb56-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(<span class="st">"full_name"</span>, first<span class="sc">:</span>last, <span class="at">sep =</span> <span class="st">" "</span>) <span class="sc">|&gt;</span></span>
+<span id="cb56-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(<span class="st">"both_together"</span>, full_name<span class="sc">:</span>occupation,</span>
+<span id="cb56-5"><a aria-hidden="true" tabindex="-1"></a>        <span class="at">sep =</span> <span class="st">", "</span>, <span class="at">remove =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:60%;">
 <div class="cell" data-layout-align="center">
@@ -1170,11 +1353,11 @@ Kieran Healy
 <div class="columns smallcode">
 <div class="column" style="width:40%;">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
-<span id="cb50-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(name, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"first"</span>, <span class="st">"last"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb50-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(<span class="st">"full_name"</span>, first<span class="sc">:</span>last, <span class="at">sep =</span> <span class="st">" "</span>) <span class="sc">|&gt;</span></span>
-<span id="cb50-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(<span class="st">"both_together"</span>, full_name<span class="sc">:</span>occupation,</span>
-<span id="cb50-5"><a aria-hidden="true" tabindex="-1"></a>        <span class="at">sep =</span> <span class="st">", "</span>, <span class="at">remove =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb58-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(name, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"first"</span>, <span class="st">"last"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb58-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(<span class="st">"full_name"</span>, first<span class="sc">:</span>last, <span class="at">sep =</span> <span class="st">" "</span>) <span class="sc">|&gt;</span></span>
+<span id="cb58-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(<span class="st">"both_together"</span>, full_name<span class="sc">:</span>occupation,</span>
+<span id="cb58-5"><a aria-hidden="true" tabindex="-1"></a>        <span class="at">sep =</span> <span class="st">", "</span>, <span class="at">remove =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:60%;">
 <div class="cell" data-layout-align="center">
@@ -1195,7 +1378,7 @@ Kieran Healy
 <div class="columns smallcode">
 <div class="column" style="width:40%;">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:60%;">
 <div class="cell" data-layout-align="center">
@@ -1216,8 +1399,8 @@ Kieran Healy
 <div class="columns smallcode">
 <div class="column" style="width:40%;">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
-<span id="cb54-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(name, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"first"</span>, <span class="st">"last"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb62-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(name, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"first"</span>, <span class="st">"last"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:60%;">
 <div class="cell" data-layout-align="center">
@@ -1238,9 +1421,9 @@ Kieran Healy
 <div class="columns smallcode">
 <div class="column" style="width:40%;">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
-<span id="cb56-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(name, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"first"</span>, <span class="st">"last"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb56-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(<span class="st">"full_name"</span>, first<span class="sc">:</span>last)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb64-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(name, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"first"</span>, <span class="st">"last"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb64-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(<span class="st">"full_name"</span>, first<span class="sc">:</span>last)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:60%;">
 <div class="cell" data-layout-align="center">
@@ -1261,10 +1444,10 @@ Kieran Healy
 <div class="columns smallcode">
 <div class="column" style="width:40%;">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
-<span id="cb58-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(name, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"first"</span>, <span class="st">"last"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb58-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(<span class="st">"full_name"</span>, first<span class="sc">:</span>last) <span class="sc">|&gt;</span></span>
-<span id="cb58-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(full_name, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"first"</span>, <span class="st">"last"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb66-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(name, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"first"</span>, <span class="st">"last"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb66-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(<span class="st">"full_name"</span>, first<span class="sc">:</span>last) <span class="sc">|&gt;</span></span>
+<span id="cb66-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(full_name, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"first"</span>, <span class="st">"last"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:60%;">
 <div class="cell" data-layout-align="center">
@@ -1285,10 +1468,10 @@ Kieran Healy
 <div class="columns smallcode">
 <div class="column" style="width:40%;">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
-<span id="cb60-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(name, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"first"</span>, <span class="st">"last"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb60-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(<span class="st">"full_name"</span>, first<span class="sc">:</span>last) <span class="sc">|&gt;</span></span>
-<span id="cb60-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(full_name, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"first"</span>, <span class="st">"last"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb68-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(name, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"first"</span>, <span class="st">"last"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb68-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(<span class="st">"full_name"</span>, first<span class="sc">:</span>last) <span class="sc">|&gt;</span></span>
+<span id="cb68-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(full_name, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"first"</span>, <span class="st">"last"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:60%;">
 <div class="cell" data-layout-align="center">
@@ -1303,16 +1486,14 @@ Kieran Healy
 </div>
 </div>
 </div></div>
-</section>
-<section id="the-underscore-_-is-the-default-uniting-character." class="slide level2">
-<h2>The underscore, <code>_</code>, is the default uniting character.</h2>
+<p>The underscore, <code>_</code>, is the default uniting character.</p>
 </section>
 <section id="separate-and-unite-11" class="slide level2">
 <h2>Separate and unite</h2>
 <div class="columns smallcode">
 <div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a aria-hidden="true" tabindex="-1"></a>gss_sm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a aria-hidden="true" tabindex="-1"></a>gss_sm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
@@ -1345,8 +1526,8 @@ Kieran Healy
 <div class="columns smallcode">
 <div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a aria-hidden="true" tabindex="-1"></a>gss_sm <span class="sc">|&gt;</span></span>
-<span id="cb64-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(race, degree)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a aria-hidden="true" tabindex="-1"></a>gss_sm <span class="sc">|&gt;</span></span>
+<span id="cb72-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(race, degree)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
@@ -1374,9 +1555,9 @@ Kieran Healy
 <div class="columns smallcode">
 <div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a aria-hidden="true" tabindex="-1"></a>gss_sm <span class="sc">|&gt;</span></span>
-<span id="cb66-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(race, degree) <span class="sc">|&gt;</span></span>
-<span id="cb66-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">racedeg =</span> <span class="fu">interaction</span>(race, degree))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a aria-hidden="true" tabindex="-1"></a>gss_sm <span class="sc">|&gt;</span></span>
+<span id="cb74-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(race, degree) <span class="sc">|&gt;</span></span>
+<span id="cb74-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">racedeg =</span> <span class="fu">interaction</span>(race, degree))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
@@ -1404,10 +1585,10 @@ Kieran Healy
 <div class="columns smallcode">
 <div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a aria-hidden="true" tabindex="-1"></a>gss_sm <span class="sc">|&gt;</span></span>
-<span id="cb68-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(race, degree) <span class="sc">|&gt;</span></span>
-<span id="cb68-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">racedeg =</span> <span class="fu">interaction</span>(race, degree)) <span class="sc">|&gt;</span></span>
-<span id="cb68-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(racedeg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a aria-hidden="true" tabindex="-1"></a>gss_sm <span class="sc">|&gt;</span></span>
+<span id="cb76-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(race, degree) <span class="sc">|&gt;</span></span>
+<span id="cb76-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">racedeg =</span> <span class="fu">interaction</span>(race, degree)) <span class="sc">|&gt;</span></span>
+<span id="cb76-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(racedeg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
@@ -1436,11 +1617,11 @@ Kieran Healy
 <div class="columns smallcode">
 <div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a aria-hidden="true" tabindex="-1"></a>gss_sm <span class="sc">|&gt;</span></span>
-<span id="cb70-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(race, degree) <span class="sc">|&gt;</span></span>
-<span id="cb70-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">racedeg =</span> <span class="fu">interaction</span>(race, degree)) <span class="sc">|&gt;</span></span>
-<span id="cb70-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(racedeg) <span class="sc">|&gt;</span></span>
-<span id="cb70-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">tally</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb78" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a aria-hidden="true" tabindex="-1"></a>gss_sm <span class="sc">|&gt;</span></span>
+<span id="cb78-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(race, degree) <span class="sc">|&gt;</span></span>
+<span id="cb78-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">racedeg =</span> <span class="fu">interaction</span>(race, degree)) <span class="sc">|&gt;</span></span>
+<span id="cb78-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(racedeg) <span class="sc">|&gt;</span></span>
+<span id="cb78-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">tally</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
@@ -1473,12 +1654,12 @@ Kieran Healy
 <div class="columns smallcode">
 <div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a aria-hidden="true" tabindex="-1"></a>gss_sm <span class="sc">|&gt;</span></span>
-<span id="cb72-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(race, degree) <span class="sc">|&gt;</span></span>
-<span id="cb72-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">racedeg =</span> <span class="fu">interaction</span>(race, degree)) <span class="sc">|&gt;</span></span>
-<span id="cb72-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(racedeg) <span class="sc">|&gt;</span></span>
-<span id="cb72-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">tally</span>() <span class="sc">|&gt;</span></span>
-<span id="cb72-6"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">separate</span>(racedeg, <span class="at">sep =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">."</span>, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"race"</span>, <span class="st">"degree"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb80" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a aria-hidden="true" tabindex="-1"></a>gss_sm <span class="sc">|&gt;</span></span>
+<span id="cb80-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(race, degree) <span class="sc">|&gt;</span></span>
+<span id="cb80-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">racedeg =</span> <span class="fu">interaction</span>(race, degree)) <span class="sc">|&gt;</span></span>
+<span id="cb80-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(racedeg) <span class="sc">|&gt;</span></span>
+<span id="cb80-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">tally</span>() <span class="sc">|&gt;</span></span>
+<span id="cb80-6"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">separate</span>(racedeg, <span class="at">sep =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">."</span>, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"race"</span>, <span class="st">"degree"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
@@ -1516,7 +1697,7 @@ Kieran Healy
 <section id="example-tidy-selectors" class="slide level2">
 <h2>Example: tidy selectors</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a aria-hidden="true" tabindex="-1"></a>billboard</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb82" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a aria-hidden="true" tabindex="-1"></a>billboard</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 317 × 79
    artist     track date.entered   wk1   wk2   wk3   wk4   wk5   wk6   wk7   wk8
@@ -1544,13 +1725,13 @@ Kieran Healy
 <section id="example-tidy-selectors-1" class="slide level2">
 <h2>Example: tidy selectors</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a aria-hidden="true" tabindex="-1"></a>billboard <span class="sc">|&gt;</span>  </span>
-<span id="cb76-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb76-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"wk"</span>), </span>
-<span id="cb76-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"week"</span>, </span>
-<span id="cb76-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"rank"</span>,</span>
-<span id="cb76-6"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">values_drop_na =</span> <span class="cn">TRUE</span></span>
-<span id="cb76-7"><a aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb84" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a aria-hidden="true" tabindex="-1"></a>billboard <span class="sc">|&gt;</span>  </span>
+<span id="cb84-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb84-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"wk"</span>), </span>
+<span id="cb84-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"week"</span>, </span>
+<span id="cb84-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"rank"</span>,</span>
+<span id="cb84-6"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">values_drop_na =</span> <span class="cn">TRUE</span></span>
+<span id="cb84-7"><a aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 5,307 × 5
    artist  track                   date.entered week   rank
@@ -1569,17 +1750,17 @@ Kieran Healy
 </div>
 </div>
 </section>
-<section id="example-parse-fns" class="slide level2">
-<h2>Example: parse fns</h2>
+<section id="example-parse-functions" class="slide level2">
+<h2>Example: parse functions</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb78" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a aria-hidden="true" tabindex="-1"></a>billboard  <span class="sc">|&gt;</span>  </span>
-<span id="cb78-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb78-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"wk"</span>), </span>
-<span id="cb78-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"week"</span>, </span>
-<span id="cb78-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">names_transform =</span> readr<span class="sc">::</span>parse_number,</span>
-<span id="cb78-6"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"rank"</span>,</span>
-<span id="cb78-7"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">values_drop_na =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb78-8"><a aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb86" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a aria-hidden="true" tabindex="-1"></a>billboard  <span class="sc">|&gt;</span>  </span>
+<span id="cb86-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb86-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"wk"</span>), </span>
+<span id="cb86-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"week"</span>, </span>
+<span id="cb86-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">names_transform =</span> readr<span class="sc">::</span>parse_number,</span>
+<span id="cb86-6"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"rank"</span>,</span>
+<span id="cb86-7"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">values_drop_na =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb86-8"><a aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 5,307 × 5
    artist  track                   date.entered  week  rank
@@ -1601,7 +1782,7 @@ Kieran Healy
 <section id="example-many-vars-in-cols" class="slide level2">
 <h2>Example: many vars in cols</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb80" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a aria-hidden="true" tabindex="-1"></a>who</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb88" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a aria-hidden="true" tabindex="-1"></a>who</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 7,240 × 60
    country  iso2  iso3   year new_sp_m014 new_sp_m1524 new_sp_m2534 new_sp_m3544
@@ -1629,13 +1810,13 @@ Kieran Healy
 <section id="example-many-vars-in-cols-1" class="slide level2">
 <h2>Example: many vars in cols</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb82" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a aria-hidden="true" tabindex="-1"></a>who  <span class="sc">|&gt;</span>  </span>
-<span id="cb82-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb82-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> new_sp_m014<span class="sc">:</span>newrel_f65,</span>
-<span id="cb82-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"diagnosis"</span>, <span class="st">"gender"</span>, <span class="st">"age"</span>), </span>
-<span id="cb82-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">names_pattern =</span> <span class="st">"new_?(.*)_(.)(.*)"</span>,</span>
-<span id="cb82-6"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"count"</span></span>
-<span id="cb82-7"><a aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb90" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a aria-hidden="true" tabindex="-1"></a>who  <span class="sc">|&gt;</span>  </span>
+<span id="cb90-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb90-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> new_sp_m014<span class="sc">:</span>newrel_f65,</span>
+<span id="cb90-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"diagnosis"</span>, <span class="st">"gender"</span>, <span class="st">"age"</span>), </span>
+<span id="cb90-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">names_pattern =</span> <span class="st">"new_?(.*)_(.)(.*)"</span>,</span>
+<span id="cb90-6"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"count"</span></span>
+<span id="cb90-7"><a aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 405,440 × 8
    country     iso2  iso3   year diagnosis gender age   count
@@ -1658,21 +1839,21 @@ Kieran Healy
 <h2>Example: many vars in cols</h2>
 <div class="smallcode">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb84" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a aria-hidden="true" tabindex="-1"></a>who <span class="sc">|&gt;</span>  </span>
-<span id="cb84-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb84-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> new_sp_m014<span class="sc">:</span>newrel_f65,</span>
-<span id="cb84-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"diagnosis"</span>, <span class="st">"gender"</span>, <span class="st">"age"</span>), </span>
-<span id="cb84-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">names_pattern =</span> <span class="st">"new_?(.*)_(.)(.*)"</span>,</span>
-<span id="cb84-6"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">names_transform =</span> <span class="fu">list</span>(</span>
-<span id="cb84-7"><a aria-hidden="true" tabindex="-1"></a>      <span class="at">gender =</span> <span class="sc">~</span> readr<span class="sc">::</span><span class="fu">parse_factor</span>(.x, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"f"</span>, <span class="st">"m"</span>)),</span>
-<span id="cb84-8"><a aria-hidden="true" tabindex="-1"></a>      <span class="at">age =</span> <span class="sc">~</span> readr<span class="sc">::</span><span class="fu">parse_factor</span>(</span>
-<span id="cb84-9"><a aria-hidden="true" tabindex="-1"></a>        .x,</span>
-<span id="cb84-10"><a aria-hidden="true" tabindex="-1"></a>        <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"014"</span>, <span class="st">"1524"</span>, <span class="st">"2534"</span>, <span class="st">"3544"</span>, <span class="st">"4554"</span>, <span class="st">"5564"</span>, <span class="st">"65"</span>), </span>
-<span id="cb84-11"><a aria-hidden="true" tabindex="-1"></a>        <span class="at">ordered =</span> <span class="cn">TRUE</span></span>
-<span id="cb84-12"><a aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb84-13"><a aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb84-14"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"count"</span></span>
-<span id="cb84-15"><a aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb92" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a aria-hidden="true" tabindex="-1"></a>who <span class="sc">|&gt;</span>  </span>
+<span id="cb92-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb92-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> new_sp_m014<span class="sc">:</span>newrel_f65,</span>
+<span id="cb92-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"diagnosis"</span>, <span class="st">"gender"</span>, <span class="st">"age"</span>), </span>
+<span id="cb92-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">names_pattern =</span> <span class="st">"new_?(.*)_(.)(.*)"</span>,</span>
+<span id="cb92-6"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">names_transform =</span> <span class="fu">list</span>(</span>
+<span id="cb92-7"><a aria-hidden="true" tabindex="-1"></a>      <span class="at">gender =</span> <span class="sc">~</span> readr<span class="sc">::</span><span class="fu">parse_factor</span>(.x, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"f"</span>, <span class="st">"m"</span>)),</span>
+<span id="cb92-8"><a aria-hidden="true" tabindex="-1"></a>      <span class="at">age =</span> <span class="sc">~</span> readr<span class="sc">::</span><span class="fu">parse_factor</span>(</span>
+<span id="cb92-9"><a aria-hidden="true" tabindex="-1"></a>        .x,</span>
+<span id="cb92-10"><a aria-hidden="true" tabindex="-1"></a>        <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"014"</span>, <span class="st">"1524"</span>, <span class="st">"2534"</span>, <span class="st">"3544"</span>, <span class="st">"4554"</span>, <span class="st">"5564"</span>, <span class="st">"65"</span>), </span>
+<span id="cb92-11"><a aria-hidden="true" tabindex="-1"></a>        <span class="at">ordered =</span> <span class="cn">TRUE</span></span>
+<span id="cb92-12"><a aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb92-13"><a aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb92-14"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"count"</span></span>
+<span id="cb92-15"><a aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 405,440 × 8
    country     iso2  iso3   year diagnosis gender age   count
@@ -1695,12 +1876,12 @@ Kieran Healy
 <section id="example-long-to-wide" class="slide level2">
 <h2>Example: long to wide</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb86" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a aria-hidden="true" tabindex="-1"></a><span class="do">## Get the data and normalize the column names</span></span>
-<span id="cb86-2"><a aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"http://kjhealy.co/MVOtestdata.csv"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb86-3"><a aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>()</span>
-<span id="cb86-4"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb86-5"><a aria-hidden="true" tabindex="-1"></a><span class="do">## Starting point</span></span>
-<span id="cb86-6"><a aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb94" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a aria-hidden="true" tabindex="-1"></a><span class="do">## Get the data and normalize the column names</span></span>
+<span id="cb94-2"><a aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"http://kjhealy.co/MVOtestdata.csv"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb94-3"><a aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>()</span>
+<span id="cb94-4"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb94-5"><a aria-hidden="true" tabindex="-1"></a><span class="do">## Starting point</span></span>
+<span id="cb94-6"><a aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 26 × 11
         id date       wheelies right_shoe_color right_shoe_size left_shoe_color
@@ -1724,7 +1905,7 @@ Kieran Healy
 <section id="example-long-to-wide-1" class="slide level2">
 <h2>Example: long to wide</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb88" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb96" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code> [1] "id"                "date"              "wheelies"         
  [4] "right_shoe_color"  "right_shoe_size"   "left_shoe_color"  
@@ -1737,12 +1918,12 @@ Kieran Healy
 <h2>Example: there &amp; back</h2>
 <p>More fully lengthen by making side, item, color, and size into variables (ie columns)</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb90" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a aria-hidden="true" tabindex="-1"></a>df_lon <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
-<span id="cb90-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(right_shoe_color<span class="sc">:</span>left_glove_size,</span>
-<span id="cb90-3"><a aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"side"</span>, <span class="st">"item"</span>, <span class="st">".value"</span>),</span>
-<span id="cb90-4"><a aria-hidden="true" tabindex="-1"></a>               <span class="at">names_pattern =</span> <span class="st">"(.*)_(.*)_(.*)"</span>)</span>
-<span id="cb90-5"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-6"><a aria-hidden="true" tabindex="-1"></a>df_lon</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb98" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a aria-hidden="true" tabindex="-1"></a>df_lon <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb98-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(right_shoe_color<span class="sc">:</span>left_glove_size,</span>
+<span id="cb98-3"><a aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"side"</span>, <span class="st">"item"</span>, <span class="st">".value"</span>),</span>
+<span id="cb98-4"><a aria-hidden="true" tabindex="-1"></a>               <span class="at">names_pattern =</span> <span class="st">"(.*)_(.*)_(.*)"</span>)</span>
+<span id="cb98-5"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-6"><a aria-hidden="true" tabindex="-1"></a>df_lon</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 104 × 7
         id date      wheelies side  item  color  size
@@ -1764,20 +1945,20 @@ Kieran Healy
 <section id="example-there-back-1" class="slide level2">
 <h2>Example: there &amp; back</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb92" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a aria-hidden="true" tabindex="-1"></a>df_superwide <span class="ot">&lt;-</span> df_lon <span class="sc">|&gt;</span></span>
-<span id="cb92-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(id, date) <span class="sc">|&gt;</span></span>
-<span id="cb92-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="fu">as.character</span>(id),</span>
-<span id="cb92-4"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">date =</span> lubridate<span class="sc">::</span><span class="fu">mdy</span>(date),</span>
-<span id="cb92-5"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">seq_id =</span> <span class="fu">cur_group_rows</span>()) <span class="sc">|&gt;</span></span>
-<span id="cb92-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(seq_id, <span class="at">.after =</span> id) <span class="sc">|&gt;</span></span>
-<span id="cb92-7"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
-<span id="cb92-8"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> seq_id, <span class="at">values_from =</span>  date<span class="sc">:</span>size)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb100" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a aria-hidden="true" tabindex="-1"></a>df_superwide <span class="ot">&lt;-</span> df_lon <span class="sc">|&gt;</span></span>
+<span id="cb100-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(id, date) <span class="sc">|&gt;</span></span>
+<span id="cb100-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="fu">as.character</span>(id),</span>
+<span id="cb100-4"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">date =</span> lubridate<span class="sc">::</span><span class="fu">mdy</span>(date),</span>
+<span id="cb100-5"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">seq_id =</span> <span class="fu">cur_group_rows</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb100-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(seq_id, <span class="at">.after =</span> id) <span class="sc">|&gt;</span></span>
+<span id="cb100-7"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
+<span id="cb100-8"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> seq_id, <span class="at">values_from =</span>  date<span class="sc">:</span>size)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="example-there-back-2" class="slide level2">
 <h2>Example: there &amp; back</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb93" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a aria-hidden="true" tabindex="-1"></a>df_superwide</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb101" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a aria-hidden="true" tabindex="-1"></a>df_superwide</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 3 × 625
   id      date_1     date_2     date_3     date_4     date_5     date_6    
@@ -1793,8 +1974,8 @@ Kieran Healy
 #   date_26 &lt;date&gt;, date_27 &lt;date&gt;, date_28 &lt;date&gt;, date_29 &lt;date&gt;,
 #   date_30 &lt;date&gt;, date_31 &lt;date&gt;, date_32 &lt;date&gt;, date_33 &lt;date&gt;, …</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb95" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># Sheer madness</span></span>
-<span id="cb95-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(df_superwide)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb103" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># Sheer madness</span></span>
+<span id="cb103-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(df_superwide)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>  [1] "id"      "date_1"  "date_2"  "date_3"  "date_4"  "date_5"  "date_6" 
   [8] "date_7"  "date_8"  "date_9"  "date_10" "date_11" "date_12" "date_13"
@@ -1823,12 +2004,12 @@ Kieran Healy
 <section id="example-1-from-the-tidyr-vignette" class="slide level2">
 <h2>Example 1: from the <code>tidyr</code> Vignette</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb97" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a aria-hidden="true" tabindex="-1"></a><span class="do">## Examples of recursive lists and nested/split data frames</span></span>
-<span id="cb97-2"><a aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("repurrsive")</span></span>
-<span id="cb97-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(repurrrsive)</span>
-<span id="cb97-4"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-5"><a aria-hidden="true" tabindex="-1"></a>chars <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">char =</span> got_chars)</span>
-<span id="cb97-6"><a aria-hidden="true" tabindex="-1"></a>chars</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb105" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a aria-hidden="true" tabindex="-1"></a><span class="do">## Examples of recursive lists and nested/split data frames</span></span>
+<span id="cb105-2"><a aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("repurrsive")</span></span>
+<span id="cb105-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(repurrrsive)</span>
+<span id="cb105-4"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb105-5"><a aria-hidden="true" tabindex="-1"></a>chars <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">char =</span> got_chars)</span>
+<span id="cb105-6"><a aria-hidden="true" tabindex="-1"></a>chars</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 30 × 1
    char             
@@ -1850,10 +2031,10 @@ Kieran Healy
 <section id="example-1-from-the-tidyr-vignette-1" class="slide level2">
 <h2>Example 1: from the <code>tidyr</code> Vignette</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb99" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a aria-hidden="true" tabindex="-1"></a>chars2 <span class="ot">&lt;-</span> chars <span class="sc">|&gt;</span> </span>
-<span id="cb99-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(char)</span>
-<span id="cb99-3"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb99-4"><a aria-hidden="true" tabindex="-1"></a>chars2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb107" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a aria-hidden="true" tabindex="-1"></a>chars2 <span class="ot">&lt;-</span> chars <span class="sc">|&gt;</span> </span>
+<span id="cb107-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(char)</span>
+<span id="cb107-3"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb107-4"><a aria-hidden="true" tabindex="-1"></a>chars2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 30 × 18
    url           id name  gender culture born  died  alive titles aliases father
@@ -1877,8 +2058,8 @@ Kieran Healy
 <section id="example-1-from-the-tidyr-vignette-2" class="slide level2">
 <h2>Example 1: from the <code>tidyr</code> Vignette</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb101" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a aria-hidden="true" tabindex="-1"></a>chars2 <span class="sc">|&gt;</span> </span>
-<span id="cb101-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">where</span>(is.list))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb109" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a aria-hidden="true" tabindex="-1"></a>chars2 <span class="sc">|&gt;</span> </span>
+<span id="cb109-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">where</span>(is.list))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 30 × 7
    titles    aliases    allegiances books     povBooks  tvSeries  playedBy 
@@ -1901,7 +2082,7 @@ Kieran Healy
 <h2>Example 1: from the <code>tidyr</code> Vignette</h2>
 <p>A row for every book and TV series that the character appears in:</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb103" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a aria-hidden="true" tabindex="-1"></a>chars2 </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb111" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a aria-hidden="true" tabindex="-1"></a>chars2 </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 30 × 18
    url           id name  gender culture born  died  alive titles aliases father
@@ -1927,7 +2108,7 @@ Kieran Healy
 <div class="columns smallcode">
 <div class="column" style="width:40%;">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb105" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a aria-hidden="true" tabindex="-1"></a>chars2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb113" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a aria-hidden="true" tabindex="-1"></a>chars2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:60%;">
 <div class="cell" data-layout-align="center">
@@ -1957,8 +2138,8 @@ Kieran Healy
 <div class="columns smallcode">
 <div class="column" style="width:40%;">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb107" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a aria-hidden="true" tabindex="-1"></a>chars2  <span class="sc">|&gt;</span></span>
-<span id="cb107-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name, books, tvSeries)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb115" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a aria-hidden="true" tabindex="-1"></a>chars2  <span class="sc">|&gt;</span></span>
+<span id="cb115-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name, books, tvSeries)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:60%;">
 <div class="cell" data-layout-align="center">
@@ -1986,11 +2167,11 @@ Kieran Healy
 <div class="columns smallcode">
 <div class="column" style="width:40%;">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb109" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a aria-hidden="true" tabindex="-1"></a>chars2  <span class="sc">|&gt;</span></span>
-<span id="cb109-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name, books, tvSeries) <span class="sc">|&gt;</span></span>
-<span id="cb109-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">c</span>(books, tvSeries),</span>
-<span id="cb109-4"><a aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"media"</span>,</span>
-<span id="cb109-5"><a aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"value"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb117" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a aria-hidden="true" tabindex="-1"></a>chars2  <span class="sc">|&gt;</span></span>
+<span id="cb117-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name, books, tvSeries) <span class="sc">|&gt;</span></span>
+<span id="cb117-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">c</span>(books, tvSeries),</span>
+<span id="cb117-4"><a aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"media"</span>,</span>
+<span id="cb117-5"><a aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"value"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:60%;">
 <div class="cell" data-layout-align="center">
@@ -2018,12 +2199,12 @@ Kieran Healy
 <div class="columns smallcode">
 <div class="column" style="width:40%;">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb111" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a aria-hidden="true" tabindex="-1"></a>chars2  <span class="sc">|&gt;</span></span>
-<span id="cb111-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name, books, tvSeries) <span class="sc">|&gt;</span></span>
-<span id="cb111-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">c</span>(books, tvSeries),</span>
-<span id="cb111-4"><a aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"media"</span>,</span>
-<span id="cb111-5"><a aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"value"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb111-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_longer</span>(value)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb119" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a aria-hidden="true" tabindex="-1"></a>chars2  <span class="sc">|&gt;</span></span>
+<span id="cb119-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name, books, tvSeries) <span class="sc">|&gt;</span></span>
+<span id="cb119-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">c</span>(books, tvSeries),</span>
+<span id="cb119-4"><a aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"media"</span>,</span>
+<span id="cb119-5"><a aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"value"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb119-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_longer</span>(value)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:60%;">
 <div class="cell" data-layout-align="center">
@@ -2050,9 +2231,9 @@ Kieran Healy
 <h2>Example 2: GitHub</h2>
 <p>The <code>fromJSON()</code> function in <code>{jsonlite}</code> does its best to simplify what the API returns into a table, which you can convert to a tibble.</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb113" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("jsonlite")</span></span>
-<span id="cb113-2"><a aria-hidden="true" tabindex="-1"></a>jsonlite<span class="sc">::</span><span class="fu">fromJSON</span>(<span class="st">"https://api.github.com/users/kjhealy/repos"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb113-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb121" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb121-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("jsonlite")</span></span>
+<span id="cb121-2"><a aria-hidden="true" tabindex="-1"></a>jsonlite<span class="sc">::</span><span class="fu">fromJSON</span>(<span class="st">"https://api.github.com/users/kjhealy/repos"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb121-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 30 × 79
        id node_id name  full_name private owner$login html_url description fork 
@@ -2081,11 +2262,11 @@ Kieran Healy
 <h2>Example 2: GitHub</h2>
 <p>The <code>read_json()</code> function in <code>{jsonlite}</code> gives you a list of the JSON the API returns, which you won’t be able to immediately convert.</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb115" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a aria-hidden="true" tabindex="-1"></a>gh_raw <span class="ot">&lt;-</span> jsonlite<span class="sc">::</span><span class="fu">read_json</span>(<span class="st">"https://api.github.com/users/kjhealy/repos"</span>) </span>
-<span id="cb115-2"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb115-3"><a aria-hidden="true" tabindex="-1"></a>gh_tb <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">gh =</span> gh_raw)</span>
-<span id="cb115-4"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb115-5"><a aria-hidden="true" tabindex="-1"></a>gh_tb</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb123" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb123-1"><a aria-hidden="true" tabindex="-1"></a>gh_raw <span class="ot">&lt;-</span> jsonlite<span class="sc">::</span><span class="fu">read_json</span>(<span class="st">"https://api.github.com/users/kjhealy/repos"</span>) </span>
+<span id="cb123-2"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb123-3"><a aria-hidden="true" tabindex="-1"></a>gh_tb <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">gh =</span> gh_raw)</span>
+<span id="cb123-4"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb123-5"><a aria-hidden="true" tabindex="-1"></a>gh_tb</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 30 × 1
    gh               
@@ -2108,8 +2289,8 @@ Kieran Healy
 <h2>Example 2: GitHub</h2>
 <p>This is what the <code>unnest_wider()</code> function is for:</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb117" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a aria-hidden="true" tabindex="-1"></a>gh_tb <span class="sc">|&gt;</span> </span>
-<span id="cb117-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(gh)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb125" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb125-1"><a aria-hidden="true" tabindex="-1"></a>gh_tb <span class="sc">|&gt;</span> </span>
+<span id="cb125-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(gh)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 30 × 79
            id node_id  name  full_name private owner        html_url description
@@ -2138,9 +2319,9 @@ Kieran Healy
 <h2>Example 2: GitHub</h2>
 <p>By default we only get the first 30 items back. (The API is paginated.)</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb119" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a aria-hidden="true" tabindex="-1"></a>gh_tb <span class="sc">|&gt;</span> </span>
-<span id="cb119-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(gh) <span class="sc">|&gt;</span></span>
-<span id="cb119-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(name)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb127" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb127-1"><a aria-hidden="true" tabindex="-1"></a>gh_tb <span class="sc">|&gt;</span> </span>
+<span id="cb127-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(gh) <span class="sc">|&gt;</span></span>
+<span id="cb127-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(name)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code> [1] ".doom.d"           "2016-03-wapo-uber" "5by5-figures"     
  [4] "abortion_gss"      "advent24"          "advent25"         
@@ -2158,10 +2339,10 @@ Kieran Healy
 <section id="example-2-github-4" class="slide level2">
 <h2>Example 2: GitHub</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb121" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb121-1"><a aria-hidden="true" tabindex="-1"></a>gh_tb <span class="sc">|&gt;</span> </span>
-<span id="cb121-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(gh) <span class="sc">|&gt;</span></span>
-<span id="cb121-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id, name, <span class="fu">ends_with</span>(<span class="st">"count"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb121-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(watchers_count))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb129" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb129-1"><a aria-hidden="true" tabindex="-1"></a>gh_tb <span class="sc">|&gt;</span> </span>
+<span id="cb129-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(gh) <span class="sc">|&gt;</span></span>
+<span id="cb129-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id, name, <span class="fu">ends_with</span>(<span class="st">"count"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb129-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(watchers_count))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 30 × 6
           id name  stargazers_count watchers_count forks_count open_issues_count
@@ -2183,107 +2364,107 @@ Kieran Healy
 <section id="example-3-citibike-nyc" class="slide level2">
 <h2>Example 3: Citibike NYC</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb123" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb123-1"><a aria-hidden="true" tabindex="-1"></a>bikes <span class="ot">&lt;-</span> jsonlite<span class="sc">::</span><span class="fu">read_json</span>(<span class="st">"https://gbfs.citibikenyc.com/gbfs/2.3/gbfs.json"</span>)</span>
-<span id="cb123-2"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb123-3"><a aria-hidden="true" tabindex="-1"></a>bikes</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb131" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb131-1"><a aria-hidden="true" tabindex="-1"></a>bikes <span class="ot">&lt;-</span> jsonlite<span class="sc">::</span><span class="fu">read_json</span>(<span class="st">"https://gbfs.citibikenyc.com/gbfs/2.3/gbfs.json"</span>)</span>
+<span id="cb131-2"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb131-3"><a aria-hidden="true" tabindex="-1"></a>bikes</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>$data
 $data$en
 $data$en$feeds
 $data$en$feeds[[1]]
-$data$en$feeds[[1]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/gbfs.json"
-
 $data$en$feeds[[1]]$name
 [1] "gbfs"
 
+$data$en$feeds[[1]]$url
+[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/gbfs.json"
+
 
 $data$en$feeds[[2]]
-$data$en$feeds[[2]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/en/system_information.json"
-
 $data$en$feeds[[2]]$name
 [1] "system_information"
 
+$data$en$feeds[[2]]$url
+[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/en/system_information.json"
+
 
 $data$en$feeds[[3]]
-$data$en$feeds[[3]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/en/station_information.json"
-
 $data$en$feeds[[3]]$name
 [1] "station_information"
 
+$data$en$feeds[[3]]$url
+[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/en/station_information.json"
+
 
 $data$en$feeds[[4]]
-$data$en$feeds[[4]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/en/station_status.json"
-
 $data$en$feeds[[4]]$name
 [1] "station_status"
 
+$data$en$feeds[[4]]$url
+[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/en/station_status.json"
+
 
 $data$en$feeds[[5]]
-$data$en$feeds[[5]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/en/free_bike_status.json"
-
 $data$en$feeds[[5]]$name
 [1] "free_bike_status"
 
+$data$en$feeds[[5]]$url
+[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/en/free_bike_status.json"
+
 
 $data$en$feeds[[6]]
-$data$en$feeds[[6]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/en/system_hours.json"
-
 $data$en$feeds[[6]]$name
 [1] "system_hours"
 
+$data$en$feeds[[6]]$url
+[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/en/system_hours.json"
+
 
 $data$en$feeds[[7]]
-$data$en$feeds[[7]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/en/system_calendar.json"
-
 $data$en$feeds[[7]]$name
 [1] "system_calendar"
 
+$data$en$feeds[[7]]$url
+[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/en/system_calendar.json"
+
 
 $data$en$feeds[[8]]
-$data$en$feeds[[8]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/en/system_regions.json"
-
 $data$en$feeds[[8]]$name
 [1] "system_regions"
 
+$data$en$feeds[[8]]$url
+[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/en/system_regions.json"
+
 
 $data$en$feeds[[9]]
-$data$en$feeds[[9]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/en/system_pricing_plans.json"
-
 $data$en$feeds[[9]]$name
 [1] "system_pricing_plans"
 
+$data$en$feeds[[9]]$url
+[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/en/system_pricing_plans.json"
+
 
 $data$en$feeds[[10]]
-$data$en$feeds[[10]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/en/system_alerts.json"
-
 $data$en$feeds[[10]]$name
 [1] "system_alerts"
 
+$data$en$feeds[[10]]$url
+[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/en/system_alerts.json"
+
 
 $data$en$feeds[[11]]
-$data$en$feeds[[11]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/en/gbfs_versions.json"
-
 $data$en$feeds[[11]]$name
 [1] "gbfs_versions"
 
+$data$en$feeds[[11]]$url
+[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/en/gbfs_versions.json"
+
 
 $data$en$feeds[[12]]
-$data$en$feeds[[12]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/en/vehicle_types.json"
-
 $data$en$feeds[[12]]$name
 [1] "vehicle_types"
+
+$data$en$feeds[[12]]$url
+[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/en/vehicle_types.json"
 
 
 
@@ -2291,99 +2472,99 @@ $data$en$feeds[[12]]$name
 $data$fr
 $data$fr$feeds
 $data$fr$feeds[[1]]
-$data$fr$feeds[[1]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/gbfs.json"
-
 $data$fr$feeds[[1]]$name
 [1] "gbfs"
 
+$data$fr$feeds[[1]]$url
+[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/gbfs.json"
+
 
 $data$fr$feeds[[2]]
-$data$fr$feeds[[2]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/fr/system_information.json"
-
 $data$fr$feeds[[2]]$name
 [1] "system_information"
 
+$data$fr$feeds[[2]]$url
+[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/fr/system_information.json"
+
 
 $data$fr$feeds[[3]]
-$data$fr$feeds[[3]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/fr/station_information.json"
-
 $data$fr$feeds[[3]]$name
 [1] "station_information"
 
+$data$fr$feeds[[3]]$url
+[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/fr/station_information.json"
+
 
 $data$fr$feeds[[4]]
-$data$fr$feeds[[4]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/fr/station_status.json"
-
 $data$fr$feeds[[4]]$name
 [1] "station_status"
 
+$data$fr$feeds[[4]]$url
+[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/fr/station_status.json"
+
 
 $data$fr$feeds[[5]]
-$data$fr$feeds[[5]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/fr/free_bike_status.json"
-
 $data$fr$feeds[[5]]$name
 [1] "free_bike_status"
 
+$data$fr$feeds[[5]]$url
+[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/fr/free_bike_status.json"
+
 
 $data$fr$feeds[[6]]
-$data$fr$feeds[[6]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/fr/system_hours.json"
-
 $data$fr$feeds[[6]]$name
 [1] "system_hours"
 
+$data$fr$feeds[[6]]$url
+[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/fr/system_hours.json"
+
 
 $data$fr$feeds[[7]]
-$data$fr$feeds[[7]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/fr/system_calendar.json"
-
 $data$fr$feeds[[7]]$name
 [1] "system_calendar"
 
+$data$fr$feeds[[7]]$url
+[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/fr/system_calendar.json"
+
 
 $data$fr$feeds[[8]]
-$data$fr$feeds[[8]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/fr/system_regions.json"
-
 $data$fr$feeds[[8]]$name
 [1] "system_regions"
 
+$data$fr$feeds[[8]]$url
+[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/fr/system_regions.json"
+
 
 $data$fr$feeds[[9]]
-$data$fr$feeds[[9]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/fr/system_pricing_plans.json"
-
 $data$fr$feeds[[9]]$name
 [1] "system_pricing_plans"
 
+$data$fr$feeds[[9]]$url
+[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/fr/system_pricing_plans.json"
+
 
 $data$fr$feeds[[10]]
-$data$fr$feeds[[10]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/fr/system_alerts.json"
-
 $data$fr$feeds[[10]]$name
 [1] "system_alerts"
 
+$data$fr$feeds[[10]]$url
+[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/fr/system_alerts.json"
+
 
 $data$fr$feeds[[11]]
-$data$fr$feeds[[11]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/fr/gbfs_versions.json"
-
 $data$fr$feeds[[11]]$name
 [1] "gbfs_versions"
 
+$data$fr$feeds[[11]]$url
+[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/fr/gbfs_versions.json"
+
 
 $data$fr$feeds[[12]]
-$data$fr$feeds[[12]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/fr/vehicle_types.json"
-
 $data$fr$feeds[[12]]$name
 [1] "vehicle_types"
+
+$data$fr$feeds[[12]]$url
+[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/fr/vehicle_types.json"
 
 
 
@@ -2391,106 +2572,106 @@ $data$fr$feeds[[12]]$name
 $data$es
 $data$es$feeds
 $data$es$feeds[[1]]
-$data$es$feeds[[1]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/gbfs.json"
-
 $data$es$feeds[[1]]$name
 [1] "gbfs"
 
+$data$es$feeds[[1]]$url
+[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/gbfs.json"
+
 
 $data$es$feeds[[2]]
-$data$es$feeds[[2]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/es/system_information.json"
-
 $data$es$feeds[[2]]$name
 [1] "system_information"
 
+$data$es$feeds[[2]]$url
+[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/es/system_information.json"
+
 
 $data$es$feeds[[3]]
-$data$es$feeds[[3]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/es/station_information.json"
-
 $data$es$feeds[[3]]$name
 [1] "station_information"
 
+$data$es$feeds[[3]]$url
+[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/es/station_information.json"
+
 
 $data$es$feeds[[4]]
-$data$es$feeds[[4]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/es/station_status.json"
-
 $data$es$feeds[[4]]$name
 [1] "station_status"
 
+$data$es$feeds[[4]]$url
+[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/es/station_status.json"
+
 
 $data$es$feeds[[5]]
-$data$es$feeds[[5]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/es/free_bike_status.json"
-
 $data$es$feeds[[5]]$name
 [1] "free_bike_status"
 
+$data$es$feeds[[5]]$url
+[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/es/free_bike_status.json"
+
 
 $data$es$feeds[[6]]
-$data$es$feeds[[6]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/es/system_hours.json"
-
 $data$es$feeds[[6]]$name
 [1] "system_hours"
 
+$data$es$feeds[[6]]$url
+[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/es/system_hours.json"
+
 
 $data$es$feeds[[7]]
-$data$es$feeds[[7]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/es/system_calendar.json"
-
 $data$es$feeds[[7]]$name
 [1] "system_calendar"
 
+$data$es$feeds[[7]]$url
+[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/es/system_calendar.json"
+
 
 $data$es$feeds[[8]]
-$data$es$feeds[[8]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/es/system_regions.json"
-
 $data$es$feeds[[8]]$name
 [1] "system_regions"
 
+$data$es$feeds[[8]]$url
+[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/es/system_regions.json"
+
 
 $data$es$feeds[[9]]
-$data$es$feeds[[9]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/es/system_pricing_plans.json"
-
 $data$es$feeds[[9]]$name
 [1] "system_pricing_plans"
 
+$data$es$feeds[[9]]$url
+[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/es/system_pricing_plans.json"
+
 
 $data$es$feeds[[10]]
-$data$es$feeds[[10]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/es/system_alerts.json"
-
 $data$es$feeds[[10]]$name
 [1] "system_alerts"
 
+$data$es$feeds[[10]]$url
+[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/es/system_alerts.json"
+
 
 $data$es$feeds[[11]]
-$data$es$feeds[[11]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/es/gbfs_versions.json"
-
 $data$es$feeds[[11]]$name
 [1] "gbfs_versions"
 
+$data$es$feeds[[11]]$url
+[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/es/gbfs_versions.json"
+
 
 $data$es$feeds[[12]]
-$data$es$feeds[[12]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/es/vehicle_types.json"
-
 $data$es$feeds[[12]]$name
 [1] "vehicle_types"
+
+$data$es$feeds[[12]]$url
+[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/es/vehicle_types.json"
 
 
 
 
 
 $last_updated
-[1] 1766587756
+[1] 1767368451
 
 $ttl
 [1] 60
@@ -2504,14 +2685,14 @@ $version
 <h2>Example 3: Citibike NYC</h2>
 <p>A slightly messier case:</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb125" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb125-1"><a aria-hidden="true" tabindex="-1"></a>bikes_tib <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">bikes =</span> bikes<span class="sc">$</span>data<span class="sc">$</span>en<span class="sc">$</span>feeds) <span class="sc">|&gt;</span> </span>
-<span id="cb125-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(bikes)</span>
-<span id="cb125-3"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb125-4"><a aria-hidden="true" tabindex="-1"></a>bikevec <span class="ot">&lt;-</span> bikes_tib<span class="sc">$</span>url <span class="sc">|&gt;</span> </span>
-<span id="cb125-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_names</span>(bikes_tib<span class="sc">$</span>name)</span>
-<span id="cb125-6"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb125-7"><a aria-hidden="true" tabindex="-1"></a><span class="do">## Available feeds</span></span>
-<span id="cb125-8"><a aria-hidden="true" tabindex="-1"></a>bikevec</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb133" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb133-1"><a aria-hidden="true" tabindex="-1"></a>bikes_tib <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">bikes =</span> bikes<span class="sc">$</span>data<span class="sc">$</span>en<span class="sc">$</span>feeds) <span class="sc">|&gt;</span> </span>
+<span id="cb133-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(bikes)</span>
+<span id="cb133-3"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb133-4"><a aria-hidden="true" tabindex="-1"></a>bikevec <span class="ot">&lt;-</span> bikes_tib<span class="sc">$</span>url <span class="sc">|&gt;</span> </span>
+<span id="cb133-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_names</span>(bikes_tib<span class="sc">$</span>name)</span>
+<span id="cb133-6"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb133-7"><a aria-hidden="true" tabindex="-1"></a><span class="do">## Available feeds</span></span>
+<span id="cb133-8"><a aria-hidden="true" tabindex="-1"></a>bikevec</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>                                                             gbfs 
                    "https://gbfs.lyft.com/gbfs/2.3/bkn/gbfs.json" 
@@ -2543,10 +2724,10 @@ $version
 <section id="example-3-citibike-nyc-2" class="slide level2">
 <h2>Example 3: Citibike NYC</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb127" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb127-1"><a aria-hidden="true" tabindex="-1"></a><span class="do">## Q: Why do we write it like this?</span></span>
-<span id="cb127-2"><a aria-hidden="true" tabindex="-1"></a>nyc_stations <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">stations =</span> jsonlite<span class="sc">::</span><span class="fu">read_json</span>(bikevec[<span class="st">"station_status"</span>])<span class="sc">$</span>data) </span>
-<span id="cb127-3"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb127-4"><a aria-hidden="true" tabindex="-1"></a>nyc_stations</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb135" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb135-1"><a aria-hidden="true" tabindex="-1"></a><span class="do">## Q: Why do we write it like this?</span></span>
+<span id="cb135-2"><a aria-hidden="true" tabindex="-1"></a>nyc_stations <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">stations =</span> jsonlite<span class="sc">::</span><span class="fu">read_json</span>(bikevec[<span class="st">"station_status"</span>])<span class="sc">$</span>data) </span>
+<span id="cb135-3"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb135-4"><a aria-hidden="true" tabindex="-1"></a>nyc_stations</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 1 × 1
   stations      
@@ -2558,9 +2739,9 @@ $version
 <section id="example-3-citibike-nyc-3" class="slide level2">
 <h2>Example 3: Citibike NYC</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb129" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb129-1"><a aria-hidden="true" tabindex="-1"></a><span class="do">## Live! (At the time of rendering)</span></span>
-<span id="cb129-2"><a aria-hidden="true" tabindex="-1"></a>nyc_stations <span class="sc">|&gt;</span> </span>
-<span id="cb129-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(stations, <span class="at">names_sep =</span> <span class="st">"_"</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb137" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb137-1"><a aria-hidden="true" tabindex="-1"></a><span class="do">## Live! (At the time of rendering)</span></span>
+<span id="cb137-2"><a aria-hidden="true" tabindex="-1"></a>nyc_stations <span class="sc">|&gt;</span> </span>
+<span id="cb137-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(stations, <span class="at">names_sep =</span> <span class="st">"_"</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 1 × 2,322
   stations_1   stations_2   stations_3   stations_4   stations_5   stations_6  
@@ -2579,9 +2760,9 @@ $version
 <section id="example-3-citibike-nyc-4" class="slide level2">
 <h2>Example 3: Citibike NYC</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb131" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb131-1"><a aria-hidden="true" tabindex="-1"></a>nyc_stations <span class="sc">|&gt;</span> </span>
-<span id="cb131-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(stations, <span class="at">names_sep =</span> <span class="st">"_"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb131-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"stations"</span>)) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb139" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb139-1"><a aria-hidden="true" tabindex="-1"></a>nyc_stations <span class="sc">|&gt;</span> </span>
+<span id="cb139-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(stations, <span class="at">names_sep =</span> <span class="st">"_"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb139-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"stations"</span>)) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 2,322 × 2
    name        value            
@@ -2590,8 +2771,8 @@ $version
  2 stations_2  &lt;named list [11]&gt;
  3 stations_3  &lt;named list [11]&gt;
  4 stations_4  &lt;named list [11]&gt;
- 5 stations_5  &lt;named list [11]&gt;
- 6 stations_6  &lt;named list [13]&gt;
+ 5 stations_5  &lt;named list [13]&gt;
+ 6 stations_6  &lt;named list [11]&gt;
  7 stations_7  &lt;named list [11]&gt;
  8 stations_8  &lt;named list [11]&gt;
  9 stations_9  &lt;named list [13]&gt;
@@ -2603,29 +2784,29 @@ $version
 <section id="example-3-citibike-nyc-5" class="slide level2">
 <h2>Example 3: Citibike NYC</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb133" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb133-1"><a aria-hidden="true" tabindex="-1"></a>nyc_stations <span class="sc">|&gt;</span> </span>
-<span id="cb133-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(stations, <span class="at">names_sep =</span> <span class="st">"_"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb133-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"stations"</span>)) <span class="sc">|&gt;</span>   </span>
-<span id="cb133-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(value)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb141" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb141-1"><a aria-hidden="true" tabindex="-1"></a>nyc_stations <span class="sc">|&gt;</span> </span>
+<span id="cb141-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(stations, <span class="at">names_sep =</span> <span class="st">"_"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb141-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"stations"</span>)) <span class="sc">|&gt;</span>   </span>
+<span id="cb141-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(value)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 2,322 × 14
-   name  num_docks_disabled num_bikes_available num_docks_available is_returning
-   &lt;chr&gt;              &lt;int&gt;               &lt;int&gt;               &lt;int&gt;        &lt;int&gt;
- 1 stat…                  0                   0                   0            0
- 2 stat…                  0                   0                   0            0
- 3 stat…                  0                   0                   0            0
- 4 stat…                  0                   0                   0            0
- 5 stat…                  0                   0                   0            0
- 6 stat…                  0                   0                   0            0
- 7 stat…                  0                   0                   0            0
- 8 stat…                  0                   0                   0            0
- 9 stat…                  0                   0                  24            1
-10 stat…                  0                   8                   3            1
+   name        num_bikes_available num_docks_available station_id  last_reported
+   &lt;chr&gt;                     &lt;int&gt;               &lt;int&gt; &lt;chr&gt;               &lt;int&gt;
+ 1 stations_1                    0                   0 41495491-5…         86400
+ 2 stations_2                    0                   0 1905837242…         86400
+ 3 stations_3                    0                   0 a47f77a2-9…         86400
+ 4 stations_4                    0                   0 66dc7ba2-0…         86400
+ 5 stations_5                    0                   0 b9720921-8…         86400
+ 6 stations_6                    0                   0 66db3687-0…         86400
+ 7 stations_7                    0                   0 64f0f28c-b…    1767032075
+ 8 stations_8                    0                   0 498d7e8e-5…    1759761514
+ 9 stations_9                    7                  11 1d3a8670-0…    1767368334
+10 stations_10                  56                  14 66db3053-0…    1767368335
 # ℹ 2,312 more rows
-# ℹ 9 more variables: is_installed &lt;int&gt;, is_renting &lt;int&gt;,
-#   last_reported &lt;int&gt;, vehicle_types_available &lt;list&gt;,
-#   num_ebikes_available &lt;int&gt;, num_bikes_disabled &lt;int&gt;, station_id &lt;chr&gt;,
-#   num_scooters_available &lt;int&gt;, num_scooters_unavailable &lt;int&gt;</code></pre>
+# ℹ 9 more variables: vehicle_types_available &lt;list&gt;,
+#   num_ebikes_available &lt;int&gt;, num_bikes_disabled &lt;int&gt;, is_returning &lt;int&gt;,
+#   num_docks_disabled &lt;int&gt;, is_renting &lt;int&gt;, is_installed &lt;int&gt;,
+#   num_scooters_unavailable &lt;int&gt;, num_scooters_available &lt;int&gt;</code></pre>
 </div>
 </div>
 </section>
@@ -2633,25 +2814,25 @@ $version
 <h2>Example 3: Citibike NYC</h2>
 <p>Extra info on the stations:</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb135" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb135-1"><a aria-hidden="true" tabindex="-1"></a><span class="do">## Q: Why do we write it like this?</span></span>
-<span id="cb135-2"><a aria-hidden="true" tabindex="-1"></a>nyc_stations_info <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">stations =</span> jsonlite<span class="sc">::</span><span class="fu">read_json</span>(bikevec[<span class="st">"station_information"</span>])<span class="sc">$</span>data[[<span class="dv">1</span>]])</span>
-<span id="cb135-3"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb135-4"><a aria-hidden="true" tabindex="-1"></a>nyc_stations_info <span class="sc">|&gt;</span></span>
-<span id="cb135-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(stations)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb143" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb143-1"><a aria-hidden="true" tabindex="-1"></a><span class="do">## Q: Why do we write it like this?</span></span>
+<span id="cb143-2"><a aria-hidden="true" tabindex="-1"></a>nyc_stations_info <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">stations =</span> jsonlite<span class="sc">::</span><span class="fu">read_json</span>(bikevec[<span class="st">"station_information"</span>])<span class="sc">$</span>data[[<span class="dv">1</span>]])</span>
+<span id="cb143-3"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb143-4"><a aria-hidden="true" tabindex="-1"></a>nyc_stations_info <span class="sc">|&gt;</span></span>
+<span id="cb143-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(stations)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 2,322 × 8
-   short_name name        region_id capacity rental_uris  station_id   lat   lon
-   &lt;chr&gt;      &lt;chr&gt;       &lt;chr&gt;        &lt;int&gt; &lt;list&gt;       &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt;
- 1 5736.09    E 14 St &amp; … 71              43 &lt;named list&gt; 66dc7ba2-…  40.7 -74.0
- 2 5043.06    Suydam St … 71              17 &lt;named list&gt; 498d7e8e-…  40.7 -73.9
- 3 6789.20    31 St &amp; Br… 71              35 &lt;named list&gt; 190583724…  40.8 -73.9
- 4 6569.08    W 35 St &amp; … 71              41 &lt;named list&gt; a47f77a2-…  40.8 -74.0
- 5 6325.01    43 St &amp; Sk… 71              19 &lt;named list&gt; 41495491-…  40.7 -73.9
- 6 7323.09    5 Ave &amp; E … 71              39 &lt;named list&gt; b9720921-…  40.8 -74.0
- 7 4829.01    Columbia H… 71              37 &lt;named list&gt; 66db3687-…  40.7 -74.0
- 8 4214.03    Macon St &amp;… 71              24 &lt;named list&gt; 66dc1687-…  40.7 -74.0
- 9 8387.03    Crotona Av… 71              25 &lt;named list&gt; 186018932…  40.9 -73.9
-10 2312.02    Colonial R… 71              12 &lt;named list&gt; 212403725…  40.6 -74.0
+   station_id       short_name   lat name  capacity rental_uris  region_id   lon
+   &lt;chr&gt;            &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;    &lt;int&gt; &lt;list&gt;       &lt;chr&gt;     &lt;dbl&gt;
+ 1 41495491-5d89-4… 6325.01     40.7 43 S…       19 &lt;named list&gt; 71        -73.9
+ 2 190583724274050… 6789.20     40.8 31 S…       35 &lt;named list&gt; 71        -73.9
+ 3 a47f77a2-9008-4… 6569.08     40.8 W 35…       41 &lt;named list&gt; 71        -74.0
+ 4 66dc7ba2-0aca-1… 5736.09     40.7 E 14…       43 &lt;named list&gt; 71        -74.0
+ 5 b9720921-8170-4… 7323.09     40.8 5 Av…       39 &lt;named list&gt; 71        -74.0
+ 6 66db3687-0aca-1… 4829.01     40.7 Colu…       37 &lt;named list&gt; 71        -74.0
+ 7 64f0f28c-bedc-4… 6708.04     40.8 Broa…      103 &lt;named list&gt; 71        -74.0
+ 8 498d7e8e-5164-4… 5043.06     40.7 Suyd…       17 &lt;named list&gt; 71        -73.9
+ 9 66dc8db1-0aca-1… 4936.01     40.7 Fron…       57 &lt;named list&gt; 71        -74.0
+10 4568f854-1268-4… 4096.08     40.7 Dean…       21 &lt;named list&gt; 71        -73.9
 # ℹ 2,312 more rows</code></pre>
 </div>
 </div>

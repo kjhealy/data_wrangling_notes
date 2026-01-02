@@ -2,62 +2,62 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://kjhealy.github.io/data_wrangling/course_notes.html</loc>
-    <lastmod>2025-04-25T17:33:00.446Z</lastmod>
+    <lastmod>2025-12-24T15:36:18.646Z</lastmod>
   </url>
   <url>
     <loc>https://kjhealy.github.io/data_wrangling/slides/03a-dplyr-basics.html</loc>
-    <lastmod>2025-12-24T14:12:22.212Z</lastmod>
+    <lastmod>2026-01-02T15:28:53.952Z</lastmod>
   </url>
   <url>
     <loc>https://kjhealy.github.io/data_wrangling/slides/08-making-tidy-easier.html</loc>
-    <lastmod>2025-12-24T15:01:15.694Z</lastmod>
+    <lastmod>2025-12-24T15:36:18.863Z</lastmod>
   </url>
   <url>
     <loc>https://kjhealy.github.io/data_wrangling/slides/02-about-r.html</loc>
-    <lastmod>2025-12-24T14:12:22.209Z</lastmod>
+    <lastmod>2026-01-02T14:25:42.452Z</lastmod>
   </url>
   <url>
     <loc>https://kjhealy.github.io/data_wrangling/slides/04-tidy-data.html</loc>
-    <lastmod>2025-12-24T14:12:22.208Z</lastmod>
+    <lastmod>2026-01-02T15:40:42.712Z</lastmod>
   </url>
   <url>
     <loc>https://kjhealy.github.io/data_wrangling/slides/07-iterating-on-data.html</loc>
-    <lastmod>2025-12-24T14:12:22.207Z</lastmod>
+    <lastmod>2025-12-24T15:36:18.863Z</lastmod>
   </url>
   <url>
     <loc>https://kjhealy.github.io/data_wrangling/slides/03b-dplyr-basics.html</loc>
-    <lastmod>2025-12-24T14:12:22.206Z</lastmod>
+    <lastmod>2026-01-02T14:39:57.061Z</lastmod>
   </url>
   <url>
     <loc>https://kjhealy.github.io/data_wrangling/scratch.html</loc>
-    <lastmod>2025-04-25T17:33:00.727Z</lastmod>
+    <lastmod>2025-12-24T15:36:18.862Z</lastmod>
   </url>
   <url>
     <loc>https://kjhealy.github.io/data_wrangling/index.html</loc>
-    <lastmod>2025-04-25T17:33:00.617Z</lastmod>
+    <lastmod>2025-12-24T15:36:18.760Z</lastmod>
   </url>
   <url>
     <loc>https://kjhealy.github.io/data_wrangling/slides/07d-parallelism.html</loc>
-    <lastmod>2025-12-24T14:41:34.176Z</lastmod>
+    <lastmod>2025-12-24T15:36:18.863Z</lastmod>
   </url>
   <url>
     <loc>https://kjhealy.github.io/data_wrangling/slides/01-overview.html</loc>
-    <lastmod>2025-12-24T14:12:22.207Z</lastmod>
+    <lastmod>2025-12-24T15:36:18.862Z</lastmod>
   </url>
   <url>
     <loc>https://kjhealy.github.io/data_wrangling/slides/07c-databases.html</loc>
-    <lastmod>2025-12-24T14:12:22.209Z</lastmod>
+    <lastmod>2025-12-24T15:36:18.863Z</lastmod>
   </url>
   <url>
     <loc>https://kjhealy.github.io/data_wrangling/slides/07b-iterating-safely.html</loc>
-    <lastmod>2025-12-24T14:12:22.210Z</lastmod>
+    <lastmod>2025-12-24T15:36:18.863Z</lastmod>
   </url>
   <url>
     <loc>https://kjhealy.github.io/data_wrangling/slides/05-regular-expressions.html</loc>
-    <lastmod>2025-12-24T14:12:22.211Z</lastmod>
+    <lastmod>2025-12-24T15:36:18.863Z</lastmod>
   </url>
   <url>
     <loc>https://kjhealy.github.io/data_wrangling/slides/06-getting-data-in.html</loc>
-    <lastmod>2025-12-24T14:12:22.212Z</lastmod>
+    <lastmod>2026-01-02T15:21:33.692Z</lastmod>
   </url>
 </urlset>

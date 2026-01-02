@@ -97,7 +97,7 @@
     code span.vs { color: #ed8796; } /* VerbatimString */
     code span.wa { color: #f5a97f; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-a3041996942c967027168b1379f3528e.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-94b1535a398ed3ca0b6df451281aabad.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -209,7 +209,7 @@ Kieran Healy
     </div>
 </div>
 
-  <p class="date">December 2025</p>
+  <p class="date">January 2026</p>
 </section>
 <section>
 <section id="dplyr-is-your-toolkit-for-tabular-data" class="title-slide slide level1 inv-title center" data-background-color="#252F3E">
@@ -368,8 +368,8 @@ Kieran Healy
 <ul>
 <li>Here’s what we’re going to do:</li>
 </ul>
-<p><img data-src="img/dplyr-pipe-example.png">]</p>
-</section>
+
+<img data-src="img/dplyr-pipe-example.png" class="r-stretch"></section>
 <section id="summarizing-a-table-1" class="slide level2">
 <h2>Summarizing a Table</h2>
 <div class="cell" data-layout-align="center">
@@ -951,69 +951,104 @@ Kieran Healy
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40" data-source-line-numbers="nil" data-code-line-numbers="3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a aria-hidden="true" tabindex="-1"></a>gss_sm <span class="sc">|&gt;</span> </span>
 <span id="cb40-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(bigregion, religion) <span class="sc">|&gt;</span> </span>
 <span id="cb40-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> bigregion, <span class="at">values_from =</span> n) <span class="sc">|&gt;</span>  </span>
-<span id="cb40-4"><a aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()  </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb40-4"><a aria-hidden="true" tabindex="-1"></a>  tinytable<span class="sc">::</span><span class="fu">tt</span>()  </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: left;">religion</th>
-<th style="text-align: right;">Northeast</th>
-<th style="text-align: right;">Midwest</th>
-<th style="text-align: right;">South</th>
-<th style="text-align: right;">West</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Protestant</td>
-<td style="text-align: right;">158</td>
-<td style="text-align: right;">325</td>
-<td style="text-align: right;">650</td>
-<td style="text-align: right;">238</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Catholic</td>
-<td style="text-align: right;">162</td>
-<td style="text-align: right;">172</td>
-<td style="text-align: right;">160</td>
-<td style="text-align: right;">155</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Jewish</td>
-<td style="text-align: right;">27</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">11</td>
-<td style="text-align: right;">10</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">None</td>
-<td style="text-align: right;">112</td>
-<td style="text-align: right;">157</td>
-<td style="text-align: right;">170</td>
-<td style="text-align: right;">180</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Other</td>
-<td style="text-align: right;">28</td>
-<td style="text-align: right;">33</td>
-<td style="text-align: right;">50</td>
-<td style="text-align: right;">48</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">NA</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">11</td>
-<td style="text-align: right;">1</td>
-</tr>
-</tbody>
-</table>
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_dwz49vnzh22f0nfwztyu = TinyTable.createTableFunctions("tinytable_dwz49vnzh22f0nfwztyu");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '6', j: 1 }, { i: '6', j: 2 }, { i: '6', j: 3 }, { i: '6', j: 4 }, { i: '6', j: 5 } ], css_id: 'tinytable_css_tvhjftevubkdrc5yc53o',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 } ], css_id: 'tinytable_css_srr5mgmfqbf86qbvbtqv',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_dwz49vnzh22f0nfwztyu.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+    <style>
+    /* tinytable css entries after */
+    #tinytable_dwz49vnzh22f0nfwztyu td.tinytable_css_tvhjftevubkdrc5yc53o, #tinytable_dwz49vnzh22f0nfwztyu th.tinytable_css_tvhjftevubkdrc5yc53o {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_dwz49vnzh22f0nfwztyu td.tinytable_css_srr5mgmfqbf86qbvbtqv, #tinytable_dwz49vnzh22f0nfwztyu th.tinytable_css_srr5mgmfqbf86qbvbtqv {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    </style>
+    <div class="container">
+      <table class="tinytable" id="tinytable_dwz49vnzh22f0nfwztyu" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        
+        <thead>
+              <tr>
+                <th scope="col" data-row="0" data-col="1">religion</th>
+                <th scope="col" data-row="0" data-col="2">Northeast</th>
+                <th scope="col" data-row="0" data-col="3">Midwest</th>
+                <th scope="col" data-row="0" data-col="4">South</th>
+                <th scope="col" data-row="0" data-col="5">West</th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td data-row="1" data-col="1">Protestant</td>
+                  <td data-row="1" data-col="2">158</td>
+                  <td data-row="1" data-col="3">325</td>
+                  <td data-row="1" data-col="4">650</td>
+                  <td data-row="1" data-col="5">238</td>
+                </tr>
+                <tr>
+                  <td data-row="2" data-col="1">Catholic</td>
+                  <td data-row="2" data-col="2">162</td>
+                  <td data-row="2" data-col="3">172</td>
+                  <td data-row="2" data-col="4">160</td>
+                  <td data-row="2" data-col="5">155</td>
+                </tr>
+                <tr>
+                  <td data-row="3" data-col="1">Jewish</td>
+                  <td data-row="3" data-col="2">27</td>
+                  <td data-row="3" data-col="3">3</td>
+                  <td data-row="3" data-col="4">11</td>
+                  <td data-row="3" data-col="5">10</td>
+                </tr>
+                <tr>
+                  <td data-row="4" data-col="1">None</td>
+                  <td data-row="4" data-col="2">112</td>
+                  <td data-row="4" data-col="3">157</td>
+                  <td data-row="4" data-col="4">170</td>
+                  <td data-row="4" data-col="5">180</td>
+                </tr>
+                <tr>
+                  <td data-row="5" data-col="1">Other</td>
+                  <td data-row="5" data-col="2">28</td>
+                  <td data-row="5" data-col="3">33</td>
+                  <td data-row="5" data-col="4">50</td>
+                  <td data-row="5" data-col="5">48</td>
+                </tr>
+                <tr>
+                  <td data-row="6" data-col="1">NA</td>
+                  <td data-row="6" data-col="2">1</td>
+                  <td data-row="6" data-col="3">5</td>
+                  <td data-row="6" data-col="4">11</td>
+                  <td data-row="6" data-col="5">1</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
 </div>
 </div>
 <ul>
-<li>More on <span class="fg-green"><strong><code>pivot_wider()</code></strong></span> and <span class="fg-green"><strong><code>kable()</code></strong></span> soon …</li>
+<li>More on <span class="fg-green"><strong><code>pivot_wider()</code></strong></span> soon …</li>
 </ul>
 </section>
 <section id="pass-results-on-to-a-graph" class="slide level2">
@@ -1824,7 +1859,7 @@ Kieran Healy
 #   consent_law &lt;chr&gt;, consent_practice &lt;chr&gt;, consistent &lt;chr&gt;, ccode &lt;chr&gt;</code></pre>
 </div>
 </div>
-<p>Also a bit awkward. There’s no built-in “Not in” operator.</p>
+<p>Also a bit awkward. There’s no built-in “Not in” operator. (Soon there will be!)</p>
 </section>
 <section id="a-custom-operator" class="slide level2">
 <h2>A custom operator</h2>
@@ -1938,8 +1973,8 @@ Kieran Healy
 <span id="cb104-4"><a aria-hidden="true" tabindex="-1"></a>organdata <span class="sc">|&gt;</span> </span>
 <span id="cb104-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(consent_law, country) <span class="sc">|&gt;</span></span>
 <span id="cb104-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="fu">all_of</span>(my_vars),           </span>
-<span id="cb104-7"><a aria-hidden="true" tabindex="-1"></a>                   <span class="fu">list</span>(<span class="at">avg =</span> \(x) <span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb104-8"><a aria-hidden="true" tabindex="-1"></a>                  )</span>
+<span id="cb104-7"><a aria-hidden="true" tabindex="-1"></a>                    <span class="fu">list</span>(<span class="at">avg =</span> \(x) <span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb104-8"><a aria-hidden="true" tabindex="-1"></a>                   )</span>
 <span id="cb104-9"><a aria-hidden="true" tabindex="-1"></a>           )     </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 17 × 5
@@ -2058,8 +2093,8 @@ Kieran Healy
 <span id="cb111-4"><a aria-hidden="true" tabindex="-1"></a>organdata <span class="sc">|&gt;</span></span>
 <span id="cb111-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(consent_law, country) <span class="sc">|&gt;</span></span>
 <span id="cb111-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="fu">all_of</span>(my_vars),</span>
-<span id="cb111-7"><a aria-hidden="true" tabindex="-1"></a>                   <span class="fu">list</span>(<span class="at">avg =</span> \(x) <span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb111-8"><a aria-hidden="true" tabindex="-1"></a>                  )</span>
+<span id="cb111-7"><a aria-hidden="true" tabindex="-1"></a>                    <span class="fu">list</span>(<span class="at">avg =</span> \(x) <span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb111-8"><a aria-hidden="true" tabindex="-1"></a>                   )</span>
 <span id="cb111-9"><a aria-hidden="true" tabindex="-1"></a>           )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:60%;">
@@ -2270,10 +2305,10 @@ Kieran Healy
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb123" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb123-1"><a aria-hidden="true" tabindex="-1"></a>organdata <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb123" data-source-line-numbers="nil" data-code-line-numbers="4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb123-1"><a aria-hidden="true" tabindex="-1"></a>organdata <span class="sc">|&gt;</span> </span>
 <span id="cb123-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(consent_law, country) <span class="sc">|&gt;</span></span>
 <span id="cb123-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">donors =</span> <span class="fu">mean</span>(donors, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb123-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(donors) <span class="sc">|&gt;</span> <span class="do">##&lt;</span></span>
+<span id="cb123-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(donors) <span class="sc">|&gt;</span> </span>
 <span id="cb123-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 17 × 3
@@ -2298,10 +2333,10 @@ Kieran Healy
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb125" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb125-1"><a aria-hidden="true" tabindex="-1"></a>organdata <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb125" data-source-line-numbers="nil" data-code-line-numbers="4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb125-1"><a aria-hidden="true" tabindex="-1"></a>organdata <span class="sc">|&gt;</span> </span>
 <span id="cb125-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(consent_law, country) <span class="sc">|&gt;</span></span>
 <span id="cb125-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">donors =</span> <span class="fu">mean</span>(donors, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb125-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(donors) <span class="sc">|&gt;</span> <span class="do">##&lt;</span></span>
+<span id="cb125-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(donors) <span class="sc">|&gt;</span> </span>
 <span id="cb125-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 17 × 3

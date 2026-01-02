@@ -97,7 +97,7 @@
     code span.vs { color: #ed8796; } /* VerbatimString */
     code span.wa { color: #f5a97f; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-a3041996942c967027168b1379f3528e.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-94b1535a398ed3ca0b6df451281aabad.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -209,7 +209,7 @@ Kieran Healy
     </div>
 </div>
 
-  <p class="date">December 2025</p>
+  <p class="date">January 2026</p>
 </section>
 <section>
 <section id="manipulating-tables-with-dplyr-contd" class="title-slide slide level1 inv-title center" data-background-color="#252F3E">
@@ -850,16 +850,16 @@ Kieran Healy
 <pre data-code-line-numbers=""><code># A tibble: 10 × 13
    cid     constituency electorate party_name candidate votes vote_share_percent
    &lt;chr&gt;   &lt;chr&gt;             &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;     &lt;int&gt;              &lt;dbl&gt;
- 1 E14000… Thanet South      73302 Liberal D… Martyn P…  2727                5.7
- 2 E14000… South Shiel…      62793 The Brexi… Glenn Th…  6446               17  
- 3 E14000… Normanton, …      84527 The Yorks… Laura Wa…  1762                3.7
- 4 E14000… Hastings &amp; …      80524 Independe… Paul Cro…   565                1  
- 5 S14000… Glasgow Nor…      57130 The Brexi… Dionne C…   320                0.9
- 6 E14000… Birmingham …      78295 Green      Jane McK…   328                0.7
- 7 E14000… St Albans         73721 Liberal D… Daisy Co… 28867               50.1
- 8 E14000… Broadland         78151 Labour     Jess Bar… 12073               21.2
- 9 E14001… Walsall Nor…      67177 Green      Mark Wil…   617                1.7
-10 E14000… Tatton            69018 Conservat… Esther M… 28277               57.7
+ 1 E14000… Norfolk Sou…      78455 Green      Pallavi …  1645                3.2
+ 2 E14000… Norfolk Sou…      78455 Liberal D… Josie Ra…  4166                8.1
+ 3 E14000… Stafford          72572 Conservat… Theo Cla… 29992               58.6
+ 4 E14001… Wycombe           78094 Green      Peter Si…  1454                2.7
+ 5 S14000… East Kilbri…      81224 UKIP       David Ma…   559                1  
+ 6 E14000… High Peak         74343 Green      Robert H…  1148                2.1
+ 7 E14000… Hammersmith       74759 Liberal D… Jessie V…  6947               13.4
+ 8 E14001… Wansbeck          63339 Liberal D… Stephen …  2539                6.3
+ 9 E14000… Bosworth          81537 Liberal D… Michael …  9096               16.1
+10 E14000… Crewe &amp; Nan…      80321 Labour     Laura Sm… 20196               37.4
 # ℹ 6 more variables: vote_share_change &lt;dbl&gt;, total_votes_cast &lt;int&gt;,
 #   vrank &lt;int&gt;, turnout &lt;dbl&gt;, fname &lt;chr&gt;, lname &lt;chr&gt;</code></pre>
 </div>
@@ -868,7 +868,7 @@ Kieran Healy
 <section id="example-uk-election-data-2" class="slide level2">
 <h2>Example: UK Election Data</h2>
 <ul>
-<li>A vector of unique constituency names</li>
+<li>A one-column tibble of unique constituency names</li>
 </ul>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a aria-hidden="true" tabindex="-1"></a>ukvote2019 <span class="sc">|&gt;</span> </span>
@@ -1468,15 +1468,15 @@ Kieran Healy
      pid start_year party      sex  
    &lt;dbl&gt; &lt;date&gt;     &lt;chr&gt;      &lt;chr&gt;
  1  3160 2013-01-03 Republican M    
- 2  3161 2013-01-03 Democrat   F    
- 3  3162 2013-01-03 Democrat   M    
+ 2  3161 2013-01-03 Democratic F    
+ 3  3162 2013-01-03 Democratic M    
  4  3163 2013-01-03 Republican M    
- 5  3164 2013-01-03 Democrat   M    
+ 5  3164 2013-01-03 Democratic M    
  6  3165 2013-01-03 Republican M    
  7  3166 2013-01-03 Republican M    
- 8  3167 2013-01-03 Democrat   F    
+ 8  3167 2013-01-03 Democratic F    
  9  3168 2013-01-03 Republican M    
-10  3169 2013-01-03 Democrat   M    
+10  3169 2013-01-03 Democratic M    
 # ℹ 270 more rows</code></pre>
 </div>
 </div>
@@ -1493,18 +1493,18 @@ Kieran Healy
 # Groups:   start_year, party [8]
    start_year party      sex       N   freq
    &lt;date&gt;     &lt;chr&gt;      &lt;chr&gt; &lt;int&gt;  &lt;dbl&gt;
- 1 2013-01-03 Democrat   F        21 0.362 
- 2 2013-01-03 Democrat   M        37 0.638 
+ 1 2013-01-03 Democratic F        21 0.362 
+ 2 2013-01-03 Democratic M        37 0.638 
  3 2013-01-03 Republican F         8 0.101 
  4 2013-01-03 Republican M        71 0.899 
- 5 2015-01-03 Democrat   M         1 1     
+ 5 2015-01-03 Democratic M         1 1     
  6 2015-01-03 Republican M         5 1     
- 7 2017-01-03 Democrat   F         6 0.24  
- 8 2017-01-03 Democrat   M        19 0.76  
+ 7 2017-01-03 Democratic F         6 0.24  
+ 8 2017-01-03 Democratic M        19 0.76  
  9 2017-01-03 Republican F         2 0.0667
 10 2017-01-03 Republican M        28 0.933 
-11 2019-01-03 Democrat   F        33 0.647 
-12 2019-01-03 Democrat   M        18 0.353 
+11 2019-01-03 Democratic F        33 0.647 
+12 2019-01-03 Democratic M        18 0.353 
 13 2019-01-03 Republican F         1 0.0323
 14 2019-01-03 Republican M        30 0.968 </code></pre>
 </div>
@@ -1573,15 +1573,15 @@ Kieran Healy
      pid start_year party      sex   party_f   
    &lt;dbl&gt; &lt;date&gt;     &lt;chr&gt;      &lt;chr&gt; &lt;fct&gt;     
  1  3160 2013-01-03 Republican M     Republican
- 2  3161 2013-01-03 Democrat   F     Democrat  
- 3  3162 2013-01-03 Democrat   M     Democrat  
+ 2  3161 2013-01-03 Democratic F     Democratic
+ 3  3162 2013-01-03 Democratic M     Democratic
  4  3163 2013-01-03 Republican M     Republican
- 5  3164 2013-01-03 Democrat   M     Democrat  
+ 5  3164 2013-01-03 Democratic M     Democratic
  6  3165 2013-01-03 Republican M     Republican
  7  3166 2013-01-03 Republican M     Republican
- 8  3167 2013-01-03 Democrat   F     Democrat  
+ 8  3167 2013-01-03 Democratic F     Democratic
  9  3168 2013-01-03 Republican M     Republican
-10  3169 2013-01-03 Democrat   M     Democrat  
+10  3169 2013-01-03 Democratic M     Democratic
 # ℹ 270 more rows</code></pre>
 </div>
 </div>
@@ -1596,7 +1596,7 @@ Kieran Healy
 <pre data-code-line-numbers=""><code># A tibble: 2 × 2
   party_f        n
   &lt;fct&gt;      &lt;int&gt;
-1 Democrat     135
+1 Democratic   135
 2 Republican   145</code></pre>
 </div>
 </div>
@@ -1608,7 +1608,7 @@ Kieran Healy
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb117" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(df_f<span class="sc">$</span>party_f)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code>[1] "Democrat"   "Republican"</code></pre>
+<pre data-code-line-numbers=""><code>[1] "Democratic" "Republican"</code></pre>
 </div>
 </div>
 </section>
@@ -1618,7 +1618,7 @@ Kieran Healy
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb119" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a aria-hidden="true" tabindex="-1"></a>df_f <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
 <span id="cb119-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">party_f =</span> <span class="fu">factor</span>(party, </span>
-<span id="cb119-3"><a aria-hidden="true" tabindex="-1"></a>                          <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Democrat"</span>, </span>
+<span id="cb119-3"><a aria-hidden="true" tabindex="-1"></a>                          <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Democratic"</span>, </span>
 <span id="cb119-4"><a aria-hidden="true" tabindex="-1"></a>                                     <span class="st">"Republican"</span>, </span>
 <span id="cb119-5"><a aria-hidden="true" tabindex="-1"></a>                                     <span class="st">"Libertarian"</span>)))</span>
 <span id="cb119-6"><a aria-hidden="true" tabindex="-1"></a>df_f <span class="sc">|&gt;</span> </span>
@@ -1628,12 +1628,12 @@ Kieran Healy
 <pre data-code-line-numbers=""><code># A tibble: 2 × 2
   party_f        n
   &lt;fct&gt;      &lt;int&gt;
-1 Democrat     135
+1 Democratic   135
 2 Republican   145</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb121" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb121-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(df_f<span class="sc">$</span>party_f)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code>[1] "Democrat"    "Republican"  "Libertarian"</code></pre>
+<pre data-code-line-numbers=""><code>[1] "Democratic"  "Republican"  "Libertarian"</code></pre>
 </div>
 </div>
 </section>
@@ -1653,18 +1653,18 @@ Kieran Healy
    &lt;date&gt;     &lt;fct&gt;      &lt;fct&gt; &lt;int&gt;  &lt;dbl&gt;
  1 2013-01-03 Republican M        71 0.899 
  2 2013-01-03 Republican F         8 0.101 
- 3 2013-01-03 Democrat   M        37 0.638 
- 4 2013-01-03 Democrat   F        21 0.362 
+ 3 2013-01-03 Democratic M        37 0.638 
+ 4 2013-01-03 Democratic F        21 0.362 
  5 2015-01-03 Republican M         5 1     
- 6 2015-01-03 Democrat   M         1 1     
+ 6 2015-01-03 Democratic M         1 1     
  7 2017-01-03 Republican M        28 0.933 
  8 2017-01-03 Republican F         2 0.0667
- 9 2017-01-03 Democrat   M        19 0.76  
-10 2017-01-03 Democrat   F         6 0.24  
+ 9 2017-01-03 Democratic M        19 0.76  
+10 2017-01-03 Democratic F         6 0.24  
 11 2019-01-03 Republican M        30 0.968 
 12 2019-01-03 Republican F         1 0.0323
-13 2019-01-03 Democrat   M        18 0.353 
-14 2019-01-03 Democrat   F        33 0.647 </code></pre>
+13 2019-01-03 Democratic M        18 0.353 
+14 2019-01-03 Democratic F        33 0.647 </code></pre>
 </div>
 </div>
 </section>
@@ -1684,20 +1684,20 @@ Kieran Healy
    &lt;date&gt;     &lt;fct&gt;      &lt;fct&gt; &lt;int&gt;  &lt;dbl&gt;
  1 2013-01-03 Republican M        71 0.899 
  2 2013-01-03 Republican F         8 0.101 
- 3 2013-01-03 Democrat   M        37 0.638 
- 4 2013-01-03 Democrat   F        21 0.362 
+ 3 2013-01-03 Democratic M        37 0.638 
+ 4 2013-01-03 Democratic F        21 0.362 
  5 2015-01-03 Republican M         5 1     
  6 2015-01-03 Republican F         0 0     
- 7 2015-01-03 Democrat   M         1 1     
- 8 2015-01-03 Democrat   F         0 0     
+ 7 2015-01-03 Democratic M         1 1     
+ 8 2015-01-03 Democratic F         0 0     
  9 2017-01-03 Republican M        28 0.933 
 10 2017-01-03 Republican F         2 0.0667
-11 2017-01-03 Democrat   M        19 0.76  
-12 2017-01-03 Democrat   F         6 0.24  
+11 2017-01-03 Democratic M        19 0.76  
+12 2017-01-03 Democratic F         6 0.24  
 13 2019-01-03 Republican M        30 0.968 
 14 2019-01-03 Republican F         1 0.0323
-15 2019-01-03 Democrat   M        18 0.353 
-16 2019-01-03 Democrat   F        33 0.647 </code></pre>
+15 2019-01-03 Democratic M        18 0.353 
+16 2019-01-03 Democratic F        33 0.647 </code></pre>
 </div>
 </div>
 </section>
@@ -1722,20 +1722,20 @@ Kieran Healy
 <pre data-code-line-numbers=""><code># A tibble: 16 × 5
    start_year party      sex       N   freq
    &lt;date&gt;     &lt;chr&gt;      &lt;chr&gt; &lt;int&gt;  &lt;dbl&gt;
- 1 2013-01-03 Democrat   F        21 0.362 
- 2 2013-01-03 Democrat   M        37 0.638 
+ 1 2013-01-03 Democratic F        21 0.362 
+ 2 2013-01-03 Democratic M        37 0.638 
  3 2013-01-03 Republican F         8 0.101 
  4 2013-01-03 Republican M        71 0.899 
- 5 2015-01-03 Democrat   F         0 0     
- 6 2015-01-03 Democrat   M         1 1     
+ 5 2015-01-03 Democratic F         0 0     
+ 6 2015-01-03 Democratic M         1 1     
  7 2015-01-03 Republican F         0 0     
  8 2015-01-03 Republican M         5 1     
- 9 2017-01-03 Democrat   F         6 0.24  
-10 2017-01-03 Democrat   M        19 0.76  
+ 9 2017-01-03 Democratic F         6 0.24  
+10 2017-01-03 Democratic M        19 0.76  
 11 2017-01-03 Republican F         2 0.0667
 12 2017-01-03 Republican M        28 0.933 
-13 2019-01-03 Democrat   F        33 0.647 
-14 2019-01-03 Democrat   M        18 0.353 
+13 2019-01-03 Democratic F        33 0.647 
+14 2019-01-03 Democratic M        18 0.353 
 15 2019-01-03 Republican F         1 0.0323
 16 2019-01-03 Republican M        30 0.968 </code></pre>
 </div>
