@@ -357,19 +357,19 @@ Kieran Healy
 
     <script>
       // Create table-specific functions using external factory
-      const tableFns_62hzkizbgwg8ecohnbym = TinyTable.createTableFunctions("tinytable_62hzkizbgwg8ecohnbym");
+      const tableFns_1kq4frntklknxf87sdbh = TinyTable.createTableFunctions("tinytable_1kq4frntklknxf87sdbh");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '15', j: 1 }, { i: '15', j: 2 }, { i: '15', j: 3 }, { i: '15', j: 4 } ], css_id: 'tinytable_css_zx66hvw83fcp4s67htmr',}, 
-          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 } ], css_id: 'tinytable_css_ncg21uomb1t3sg3ax2yu',}, 
+          { positions: [ { i: '15', j: 1 }, { i: '15', j: 2 }, { i: '15', j: 3 }, { i: '15', j: 4 } ], css_id: 'tinytable_css_cqtuv1ee7lkcx4shpbeb',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 } ], css_id: 'tinytable_css_4u0ioji9henz9tye38sx',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  tableFns_62hzkizbgwg8ecohnbym.styleCell(cell.i, cell.j, group.css_id);
+                  tableFns_1kq4frntklknxf87sdbh.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -378,11 +378,11 @@ Kieran Healy
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
     <style>
     /* tinytable css entries after */
-    #tinytable_62hzkizbgwg8ecohnbym td.tinytable_css_zx66hvw83fcp4s67htmr, #tinytable_62hzkizbgwg8ecohnbym th.tinytable_css_zx66hvw83fcp4s67htmr {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
-    #tinytable_62hzkizbgwg8ecohnbym td.tinytable_css_ncg21uomb1t3sg3ax2yu, #tinytable_62hzkizbgwg8ecohnbym th.tinytable_css_ncg21uomb1t3sg3ax2yu {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_1kq4frntklknxf87sdbh td.tinytable_css_cqtuv1ee7lkcx4shpbeb, #tinytable_1kq4frntklknxf87sdbh th.tinytable_css_cqtuv1ee7lkcx4shpbeb {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_1kq4frntklknxf87sdbh td.tinytable_css_4u0ioji9henz9tye38sx, #tinytable_1kq4frntklknxf87sdbh th.tinytable_css_4u0ioji9henz9tye38sx {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
     </style>
     <div class="container">
-      <table class="tinytable" id="tinytable_62hzkizbgwg8ecohnbym" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="tinytable" id="tinytable_1kq4frntklknxf87sdbh" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         
         <thead>
               <tr>
@@ -507,19 +507,19 @@ Kieran Healy
 
     <script>
       // Create table-specific functions using external factory
-      const tableFns_shzp9ctrx2hsnwcu03wn = TinyTable.createTableFunctions("tinytable_shzp9ctrx2hsnwcu03wn");
+      const tableFns_w92oj3qvrqu3xxa6tvuq = TinyTable.createTableFunctions("tinytable_w92oj3qvrqu3xxa6tvuq");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '5', j: 1 }, { i: '5', j: 2 }, { i: '5', j: 3 }, { i: '5', j: 4 }, { i: '5', j: 5 } ], css_id: 'tinytable_css_5hb2s5ciyguz1hrdnh4z',}, 
-          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 } ], css_id: 'tinytable_css_n3gxk19n9caye4peim23',}, 
+          { positions: [ { i: '5', j: 1 }, { i: '5', j: 2 }, { i: '5', j: 3 }, { i: '5', j: 4 }, { i: '5', j: 5 } ], css_id: 'tinytable_css_7a5gg17mrtok9uwsi5kv',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 } ], css_id: 'tinytable_css_9irb3hhb77wy2uichkl8',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  tableFns_shzp9ctrx2hsnwcu03wn.styleCell(cell.i, cell.j, group.css_id);
+                  tableFns_w92oj3qvrqu3xxa6tvuq.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -528,11 +528,11 @@ Kieran Healy
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
     <style>
     /* tinytable css entries after */
-    #tinytable_shzp9ctrx2hsnwcu03wn td.tinytable_css_5hb2s5ciyguz1hrdnh4z, #tinytable_shzp9ctrx2hsnwcu03wn th.tinytable_css_5hb2s5ciyguz1hrdnh4z {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
-    #tinytable_shzp9ctrx2hsnwcu03wn td.tinytable_css_n3gxk19n9caye4peim23, #tinytable_shzp9ctrx2hsnwcu03wn th.tinytable_css_n3gxk19n9caye4peim23 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_w92oj3qvrqu3xxa6tvuq td.tinytable_css_7a5gg17mrtok9uwsi5kv, #tinytable_w92oj3qvrqu3xxa6tvuq th.tinytable_css_7a5gg17mrtok9uwsi5kv {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_w92oj3qvrqu3xxa6tvuq td.tinytable_css_9irb3hhb77wy2uichkl8, #tinytable_w92oj3qvrqu3xxa6tvuq th.tinytable_css_9irb3hhb77wy2uichkl8 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
     </style>
     <div class="container">
-      <table class="tinytable" id="tinytable_shzp9ctrx2hsnwcu03wn" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="tinytable" id="tinytable_w92oj3qvrqu3xxa6tvuq" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         
         <thead>
               <tr>
@@ -2226,8 +2226,13 @@ Kieran Healy
 </div>
 </div>
 </div></div>
+</section></section>
+<section>
+<section id="example-2-github" class="title-slide slide level1 inv-title center" data-background-color="#252F3E">
+<h1>Example 2: GitHub</h1>
+
 </section>
-<section id="example-2-github" class="slide level2">
+<section id="example-2-github-1" class="slide level2">
 <h2>Example 2: GitHub</h2>
 <p>The <code>fromJSON()</code> function in <code>{jsonlite}</code> does its best to simplify what the API returns into a table, which you can convert to a tibble.</p>
 <div class="cell" data-layout-align="center">
@@ -2258,7 +2263,7 @@ Kieran Healy
 </div>
 </div>
 </section>
-<section id="example-2-github-1" class="slide level2">
+<section id="example-2-github-2" class="slide level2">
 <h2>Example 2: GitHub</h2>
 <p>The <code>read_json()</code> function in <code>{jsonlite}</code> gives you a list of the JSON the API returns, which you won’t be able to immediately convert.</p>
 <div class="cell" data-layout-align="center">
@@ -2285,7 +2290,7 @@ Kieran Healy
 </div>
 </div>
 </section>
-<section id="example-2-github-2" class="slide level2">
+<section id="example-2-github-3" class="slide level2">
 <h2>Example 2: GitHub</h2>
 <p>This is what the <code>unnest_wider()</code> function is for:</p>
 <div class="cell" data-layout-align="center">
@@ -2315,7 +2320,7 @@ Kieran Healy
 </div>
 </div>
 </section>
-<section id="example-2-github-3" class="slide level2">
+<section id="example-2-github-4" class="slide level2">
 <h2>Example 2: GitHub</h2>
 <p>By default we only get the first 30 items back. (The API is paginated.)</p>
 <div class="cell" data-layout-align="center">
@@ -2336,8 +2341,8 @@ Kieran Healy
 </div>
 </div>
 </section>
-<section id="example-2-github-4" class="slide level2">
-<h2>Example 2: GitHub</h2>
+<section id="github" class="slide level2">
+<h2>GitHub</h2>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb129" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb129-1"><a aria-hidden="true" tabindex="-1"></a>gh_tb <span class="sc">|&gt;</span> </span>
 <span id="cb129-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(gh) <span class="sc">|&gt;</span></span>
@@ -2360,483 +2365,623 @@ Kieran Healy
 # ℹ 20 more rows</code></pre>
 </div>
 </div>
+</section></section>
+<section>
+<section id="example-3-the-ny-citibike-api" class="title-slide slide level1 inv-title center" data-background-color="#252F3E">
+<h1>Example 3: the NY Citibike API</h1>
+
 </section>
-<section id="example-3-citibike-nyc" class="slide level2">
-<h2>Example 3: Citibike NYC</h2>
+<section id="nyc-citibikes" class="slide level2">
+<h2>NYC CitiBikes</h2>
+<p>Many cities have Bike Share programs. Many of those provide data according to the <a href="https://github.com/MobilityData/gbfs/blob/master/gbfs.md">GBFS specification</a>. A spec like this is a set of rules that says “If you adhere to this spec, you will provide data in the following consistent way”, where this includes rules about the data format and the endpoints or URLs where that data can be found.</p>
+</section>
+<section id="nyc-citibikes-1" class="slide level2">
+<h2>NYC CitiBikes</h2>
+<p>The spec has a rule saying “Provide a feed specifying the data available”.</p>
+<div class="smallcode">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb131" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb131-1"><a aria-hidden="true" tabindex="-1"></a>bikes <span class="ot">&lt;-</span> jsonlite<span class="sc">::</span><span class="fu">read_json</span>(<span class="st">"https://gbfs.citibikenyc.com/gbfs/2.3/gbfs.json"</span>)</span>
-<span id="cb131-2"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb131-3"><a aria-hidden="true" tabindex="-1"></a>bikes</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb131" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb131-1"><a aria-hidden="true" tabindex="-1"></a>gbfsurl <span class="ot">&lt;-</span> <span class="st">"https://gbfs.citibikenyc.com/gbfs/2.3/gbfs.json"</span></span>
+<span id="cb131-2"><a aria-hidden="true" tabindex="-1"></a>feeds <span class="ot">&lt;-</span> jsonlite<span class="sc">::</span><span class="fu">fromJSON</span>(gbfsurl)</span>
+<span id="cb131-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(feeds)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code>$data
-$data$en
-$data$en$feeds
-$data$en$feeds[[1]]
-$data$en$feeds[[1]]$name
-[1] "gbfs"
-
-$data$en$feeds[[1]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/gbfs.json"
-
-
-$data$en$feeds[[2]]
-$data$en$feeds[[2]]$name
-[1] "system_information"
-
-$data$en$feeds[[2]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/en/system_information.json"
-
-
-$data$en$feeds[[3]]
-$data$en$feeds[[3]]$name
-[1] "station_information"
-
-$data$en$feeds[[3]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/en/station_information.json"
-
-
-$data$en$feeds[[4]]
-$data$en$feeds[[4]]$name
-[1] "station_status"
-
-$data$en$feeds[[4]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/en/station_status.json"
-
-
-$data$en$feeds[[5]]
-$data$en$feeds[[5]]$name
-[1] "free_bike_status"
-
-$data$en$feeds[[5]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/en/free_bike_status.json"
-
-
-$data$en$feeds[[6]]
-$data$en$feeds[[6]]$name
-[1] "system_hours"
-
-$data$en$feeds[[6]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/en/system_hours.json"
-
-
-$data$en$feeds[[7]]
-$data$en$feeds[[7]]$name
-[1] "system_calendar"
-
-$data$en$feeds[[7]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/en/system_calendar.json"
-
-
-$data$en$feeds[[8]]
-$data$en$feeds[[8]]$name
-[1] "system_regions"
-
-$data$en$feeds[[8]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/en/system_regions.json"
-
-
-$data$en$feeds[[9]]
-$data$en$feeds[[9]]$name
-[1] "system_pricing_plans"
-
-$data$en$feeds[[9]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/en/system_pricing_plans.json"
-
-
-$data$en$feeds[[10]]
-$data$en$feeds[[10]]$name
-[1] "system_alerts"
-
-$data$en$feeds[[10]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/en/system_alerts.json"
-
-
-$data$en$feeds[[11]]
-$data$en$feeds[[11]]$name
-[1] "gbfs_versions"
-
-$data$en$feeds[[11]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/en/gbfs_versions.json"
-
-
-$data$en$feeds[[12]]
-$data$en$feeds[[12]]$name
-[1] "vehicle_types"
-
-$data$en$feeds[[12]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/en/vehicle_types.json"
-
-
-
-
-$data$fr
-$data$fr$feeds
-$data$fr$feeds[[1]]
-$data$fr$feeds[[1]]$name
-[1] "gbfs"
-
-$data$fr$feeds[[1]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/gbfs.json"
-
-
-$data$fr$feeds[[2]]
-$data$fr$feeds[[2]]$name
-[1] "system_information"
-
-$data$fr$feeds[[2]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/fr/system_information.json"
-
-
-$data$fr$feeds[[3]]
-$data$fr$feeds[[3]]$name
-[1] "station_information"
-
-$data$fr$feeds[[3]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/fr/station_information.json"
-
-
-$data$fr$feeds[[4]]
-$data$fr$feeds[[4]]$name
-[1] "station_status"
-
-$data$fr$feeds[[4]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/fr/station_status.json"
-
-
-$data$fr$feeds[[5]]
-$data$fr$feeds[[5]]$name
-[1] "free_bike_status"
-
-$data$fr$feeds[[5]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/fr/free_bike_status.json"
-
-
-$data$fr$feeds[[6]]
-$data$fr$feeds[[6]]$name
-[1] "system_hours"
-
-$data$fr$feeds[[6]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/fr/system_hours.json"
-
-
-$data$fr$feeds[[7]]
-$data$fr$feeds[[7]]$name
-[1] "system_calendar"
-
-$data$fr$feeds[[7]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/fr/system_calendar.json"
-
-
-$data$fr$feeds[[8]]
-$data$fr$feeds[[8]]$name
-[1] "system_regions"
-
-$data$fr$feeds[[8]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/fr/system_regions.json"
-
-
-$data$fr$feeds[[9]]
-$data$fr$feeds[[9]]$name
-[1] "system_pricing_plans"
-
-$data$fr$feeds[[9]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/fr/system_pricing_plans.json"
-
-
-$data$fr$feeds[[10]]
-$data$fr$feeds[[10]]$name
-[1] "system_alerts"
-
-$data$fr$feeds[[10]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/fr/system_alerts.json"
-
-
-$data$fr$feeds[[11]]
-$data$fr$feeds[[11]]$name
-[1] "gbfs_versions"
-
-$data$fr$feeds[[11]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/fr/gbfs_versions.json"
-
-
-$data$fr$feeds[[12]]
-$data$fr$feeds[[12]]$name
-[1] "vehicle_types"
-
-$data$fr$feeds[[12]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/fr/vehicle_types.json"
-
-
-
-
-$data$es
-$data$es$feeds
-$data$es$feeds[[1]]
-$data$es$feeds[[1]]$name
-[1] "gbfs"
-
-$data$es$feeds[[1]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/gbfs.json"
-
-
-$data$es$feeds[[2]]
-$data$es$feeds[[2]]$name
-[1] "system_information"
-
-$data$es$feeds[[2]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/es/system_information.json"
-
-
-$data$es$feeds[[3]]
-$data$es$feeds[[3]]$name
-[1] "station_information"
-
-$data$es$feeds[[3]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/es/station_information.json"
-
-
-$data$es$feeds[[4]]
-$data$es$feeds[[4]]$name
-[1] "station_status"
-
-$data$es$feeds[[4]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/es/station_status.json"
-
-
-$data$es$feeds[[5]]
-$data$es$feeds[[5]]$name
-[1] "free_bike_status"
-
-$data$es$feeds[[5]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/es/free_bike_status.json"
-
-
-$data$es$feeds[[6]]
-$data$es$feeds[[6]]$name
-[1] "system_hours"
-
-$data$es$feeds[[6]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/es/system_hours.json"
-
-
-$data$es$feeds[[7]]
-$data$es$feeds[[7]]$name
-[1] "system_calendar"
-
-$data$es$feeds[[7]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/es/system_calendar.json"
-
-
-$data$es$feeds[[8]]
-$data$es$feeds[[8]]$name
-[1] "system_regions"
-
-$data$es$feeds[[8]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/es/system_regions.json"
-
-
-$data$es$feeds[[9]]
-$data$es$feeds[[9]]$name
-[1] "system_pricing_plans"
-
-$data$es$feeds[[9]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/es/system_pricing_plans.json"
-
-
-$data$es$feeds[[10]]
-$data$es$feeds[[10]]$name
-[1] "system_alerts"
-
-$data$es$feeds[[10]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/es/system_alerts.json"
-
-
-$data$es$feeds[[11]]
-$data$es$feeds[[11]]$name
-[1] "gbfs_versions"
-
-$data$es$feeds[[11]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/es/gbfs_versions.json"
-
-
-$data$es$feeds[[12]]
-$data$es$feeds[[12]]$name
-[1] "vehicle_types"
-
-$data$es$feeds[[12]]$url
-[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/es/vehicle_types.json"
-
-
-
-
-
-$last_updated
-[1] 1767368451
-
-$ttl
-[1] 60
-
-$version
-[1] "2.3"</code></pre>
+<pre data-code-line-numbers=""><code>List of 4
+ $ data        :List of 3
+  ..$ en:List of 1
+  .. ..$ feeds:'data.frame':    12 obs. of  2 variables:
+  .. .. ..$ url : chr [1:12] "https://gbfs.lyft.com/gbfs/2.3/bkn/gbfs.json" "https://gbfs.lyft.com/gbfs/2.3/bkn/en/system_information.json" "https://gbfs.lyft.com/gbfs/2.3/bkn/en/station_information.json" "https://gbfs.lyft.com/gbfs/2.3/bkn/en/station_status.json" ...
+  .. .. ..$ name: chr [1:12] "gbfs" "system_information" "station_information" "station_status" ...
+  ..$ fr:List of 1
+  .. ..$ feeds:'data.frame':    12 obs. of  2 variables:
+  .. .. ..$ url : chr [1:12] "https://gbfs.lyft.com/gbfs/2.3/bkn/gbfs.json" "https://gbfs.lyft.com/gbfs/2.3/bkn/fr/system_information.json" "https://gbfs.lyft.com/gbfs/2.3/bkn/fr/station_information.json" "https://gbfs.lyft.com/gbfs/2.3/bkn/fr/station_status.json" ...
+  .. .. ..$ name: chr [1:12] "gbfs" "system_information" "station_information" "station_status" ...
+  ..$ es:List of 1
+  .. ..$ feeds:'data.frame':    12 obs. of  2 variables:
+  .. .. ..$ url : chr [1:12] "https://gbfs.lyft.com/gbfs/2.3/bkn/gbfs.json" "https://gbfs.lyft.com/gbfs/2.3/bkn/es/system_information.json" "https://gbfs.lyft.com/gbfs/2.3/bkn/es/station_information.json" "https://gbfs.lyft.com/gbfs/2.3/bkn/es/station_status.json" ...
+  .. .. ..$ name: chr [1:12] "gbfs" "system_information" "station_information" "station_status" ...
+ $ last_updated: int 1767724749
+ $ ttl         : int 60
+ $ version     : chr "2.3"</code></pre>
+</div>
+</div>
+<p>This comes in to us a <em>nested list</em>.</p>
+</div>
+</section>
+<section id="nyc-citibikes-2" class="slide level2">
+<h2>NYC CitiBikes</h2>
+<p>JSON data is typically nested. It can look really complex at first glance. This is one reason to read the spec. We can put the feed into a tibble if we like:</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb133" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb133-1"><a aria-hidden="true" tabindex="-1"></a>feeds_df <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(feeds)</span>
+<span id="cb133-2"><a aria-hidden="true" tabindex="-1"></a>feeds_df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code># A tibble: 3 × 4
+  data             last_updated   ttl version
+  &lt;named list&gt;            &lt;int&gt; &lt;int&gt; &lt;chr&gt;  
+1 &lt;named list [1]&gt;   1767724749    60 2.3    
+2 &lt;named list [1]&gt;   1767724749    60 2.3    
+3 &lt;named list [1]&gt;   1767724749    60 2.3    </code></pre>
+</div>
+</div>
+<p>RStudio’s object viewer is a good way to explore the hierarchical structure of unfamiliar lists.</p>
+</section>
+<section id="nyc-citibikes-3" class="slide level2">
+<h2>NYC CitiBikes</h2>
+<p>If we explore or look at the spec we see that each row provides the same feed information in English, Spanish, or French. We can slice out the English feed and look at what’s in it:</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb135" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb135-1"><a aria-hidden="true" tabindex="-1"></a>feeds_df <span class="sc">|&gt;</span></span>
+<span id="cb135-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb135-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(data) <span class="sc">|&gt;</span> <span class="co"># It's two levels down</span></span>
+<span id="cb135-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code># A tibble: 12 × 5
+   url                                          name  last_updated   ttl version
+   &lt;chr&gt;                                        &lt;chr&gt;        &lt;int&gt; &lt;int&gt; &lt;chr&gt;  
+ 1 https://gbfs.lyft.com/gbfs/2.3/bkn/gbfs.json gbfs    1767724749    60 2.3    
+ 2 https://gbfs.lyft.com/gbfs/2.3/bkn/en/syste… syst…   1767724749    60 2.3    
+ 3 https://gbfs.lyft.com/gbfs/2.3/bkn/en/stati… stat…   1767724749    60 2.3    
+ 4 https://gbfs.lyft.com/gbfs/2.3/bkn/en/stati… stat…   1767724749    60 2.3    
+ 5 https://gbfs.lyft.com/gbfs/2.3/bkn/en/free_… free…   1767724749    60 2.3    
+ 6 https://gbfs.lyft.com/gbfs/2.3/bkn/en/syste… syst…   1767724749    60 2.3    
+ 7 https://gbfs.lyft.com/gbfs/2.3/bkn/en/syste… syst…   1767724749    60 2.3    
+ 8 https://gbfs.lyft.com/gbfs/2.3/bkn/en/syste… syst…   1767724749    60 2.3    
+ 9 https://gbfs.lyft.com/gbfs/2.3/bkn/en/syste… syst…   1767724749    60 2.3    
+10 https://gbfs.lyft.com/gbfs/2.3/bkn/en/syste… syst…   1767724749    60 2.3    
+11 https://gbfs.lyft.com/gbfs/2.3/bkn/en/gbfs_… gbfs…   1767724749    60 2.3    
+12 https://gbfs.lyft.com/gbfs/2.3/bkn/en/vehic… vehi…   1767724749    60 2.3    </code></pre>
+</div>
+</div>
+<p>More urls! Let’s extract the station data feed.</p>
+</section>
+<section id="nyc-citibikes-4" class="slide level2">
+<h2>NYC CitiBikes</h2>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb137" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb137-1"><a aria-hidden="true" tabindex="-1"></a>nyc_stations_url <span class="ot">&lt;-</span> feeds_df <span class="sc">|&gt;</span></span>
+<span id="cb137-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">|&gt;</span> <span class="fu">unnest</span>(data) <span class="sc">|&gt;</span> <span class="fu">unnest</span>(data) <span class="sc">|&gt;</span></span>
+<span id="cb137-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">"station_information"</span>) <span class="sc">|&gt;</span> <span class="fu">pull</span>(url)</span>
+<span id="cb137-4"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb137-5"><a aria-hidden="true" tabindex="-1"></a>nyc_stations_url</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code>[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/en/station_information.json"</code></pre>
 </div>
 </div>
 </section>
-<section id="example-3-citibike-nyc-1" class="slide level2">
-<h2>Example 3: Citibike NYC</h2>
-<p>A slightly messier case:</p>
+<section id="nyc-citibikes-5" class="slide level2">
+<h2>NYC CitiBikes</h2>
+<p>That was tedious. If we know <em>precisely</em> what we’re after we can do it faster by plumbing down through the list:</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb133" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb133-1"><a aria-hidden="true" tabindex="-1"></a>bikes_tib <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">bikes =</span> bikes<span class="sc">$</span>data<span class="sc">$</span>en<span class="sc">$</span>feeds) <span class="sc">|&gt;</span> </span>
-<span id="cb133-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(bikes)</span>
-<span id="cb133-3"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb133-4"><a aria-hidden="true" tabindex="-1"></a>bikevec <span class="ot">&lt;-</span> bikes_tib<span class="sc">$</span>url <span class="sc">|&gt;</span> </span>
-<span id="cb133-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_names</span>(bikes_tib<span class="sc">$</span>name)</span>
-<span id="cb133-6"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb133-7"><a aria-hidden="true" tabindex="-1"></a><span class="do">## Available feeds</span></span>
-<span id="cb133-8"><a aria-hidden="true" tabindex="-1"></a>bikevec</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb139" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb139-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># Base R style</span></span>
+<span id="cb139-2"><a aria-hidden="true" tabindex="-1"></a>feeds_df[[<span class="dv">1</span>]]<span class="sc">$</span>en<span class="sc">$</span>feeds<span class="sc">$</span>url[<span class="dv">3</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code>                                                             gbfs 
-                   "https://gbfs.lyft.com/gbfs/2.3/bkn/gbfs.json" 
-                                               system_information 
-  "https://gbfs.lyft.com/gbfs/2.3/bkn/en/system_information.json" 
-                                              station_information 
- "https://gbfs.lyft.com/gbfs/2.3/bkn/en/station_information.json" 
-                                                   station_status 
-      "https://gbfs.lyft.com/gbfs/2.3/bkn/en/station_status.json" 
-                                                 free_bike_status 
-    "https://gbfs.lyft.com/gbfs/2.3/bkn/en/free_bike_status.json" 
-                                                     system_hours 
-        "https://gbfs.lyft.com/gbfs/2.3/bkn/en/system_hours.json" 
-                                                  system_calendar 
-     "https://gbfs.lyft.com/gbfs/2.3/bkn/en/system_calendar.json" 
-                                                   system_regions 
-      "https://gbfs.lyft.com/gbfs/2.3/bkn/en/system_regions.json" 
-                                             system_pricing_plans 
-"https://gbfs.lyft.com/gbfs/2.3/bkn/en/system_pricing_plans.json" 
-                                                    system_alerts 
-       "https://gbfs.lyft.com/gbfs/2.3/bkn/en/system_alerts.json" 
-                                                    gbfs_versions 
-       "https://gbfs.lyft.com/gbfs/2.3/bkn/en/gbfs_versions.json" 
-                                                    vehicle_types 
-       "https://gbfs.lyft.com/gbfs/2.3/bkn/en/vehicle_types.json" </code></pre>
+<pre data-code-line-numbers=""><code>[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/en/station_information.json"</code></pre>
+</div>
+</div>
+<p>Or with <code>pluck()</code>:</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb141" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb141-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># Pluck by element number or name</span></span>
+<span id="cb141-2"><a aria-hidden="true" tabindex="-1"></a>feeds_df <span class="sc">|&gt;</span> <span class="fu">pluck</span>(<span class="dv">1</span>,<span class="st">"en"</span>, <span class="st">"feeds"</span>, <span class="st">"url"</span>, <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code>[1] "https://gbfs.lyft.com/gbfs/2.3/bkn/en/station_information.json"</code></pre>
+</div>
+</div>
+<p>You can find these index locations via the Object Inspector.</p>
+</section>
+<section id="nyc-citibikes-6" class="slide level2">
+<h2>NYC CitiBikes</h2>
+<p>Or with some combination of methods:</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb143" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb143-1"><a aria-hidden="true" tabindex="-1"></a>feeds_df <span class="sc">|&gt;</span></span>
+<span id="cb143-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pluck</span>(<span class="dv">1</span>,<span class="st">"en"</span>, <span class="st">"feeds"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb143-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code># A tibble: 12 × 2
+   url                                                             name         
+   &lt;chr&gt;                                                           &lt;chr&gt;        
+ 1 https://gbfs.lyft.com/gbfs/2.3/bkn/gbfs.json                    gbfs         
+ 2 https://gbfs.lyft.com/gbfs/2.3/bkn/en/system_information.json   system_infor…
+ 3 https://gbfs.lyft.com/gbfs/2.3/bkn/en/station_information.json  station_info…
+ 4 https://gbfs.lyft.com/gbfs/2.3/bkn/en/station_status.json       station_stat…
+ 5 https://gbfs.lyft.com/gbfs/2.3/bkn/en/free_bike_status.json     free_bike_st…
+ 6 https://gbfs.lyft.com/gbfs/2.3/bkn/en/system_hours.json         system_hours 
+ 7 https://gbfs.lyft.com/gbfs/2.3/bkn/en/system_calendar.json      system_calen…
+ 8 https://gbfs.lyft.com/gbfs/2.3/bkn/en/system_regions.json       system_regio…
+ 9 https://gbfs.lyft.com/gbfs/2.3/bkn/en/system_pricing_plans.json system_prici…
+10 https://gbfs.lyft.com/gbfs/2.3/bkn/en/system_alerts.json        system_alerts
+11 https://gbfs.lyft.com/gbfs/2.3/bkn/en/gbfs_versions.json        gbfs_versions
+12 https://gbfs.lyft.com/gbfs/2.3/bkn/en/vehicle_types.json        vehicle_types</code></pre>
+</div>
+</div>
+<p>Then work as you would with a tibble.</p>
+</section>
+<section id="nyc-citibikes-7" class="slide level2">
+<h2>NYC CitiBikes</h2>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb145" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb145-1"><a aria-hidden="true" tabindex="-1"></a>station_status_url <span class="ot">&lt;-</span> feeds_df <span class="sc">|&gt;</span> <span class="fu">pluck</span>(<span class="dv">1</span>,<span class="st">"en"</span>, <span class="st">"feeds"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb145-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">"station_status"</span>) <span class="sc">|&gt;</span> <span class="fu">pull</span>(url)</span>
+<span id="cb145-3"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb145-4"><a aria-hidden="true" tabindex="-1"></a>station_status_df <span class="ot">&lt;-</span> jsonlite<span class="sc">::</span><span class="fu">fromJSON</span>(station_status_url)</span>
+<span id="cb145-5"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb145-6"><a aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(station_status_df) <span class="co"># Still a list</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code>List of 4
+ $ data        :List of 1
+  ..$ stations:'data.frame':    2321 obs. of  13 variables:
+  .. ..$ num_docks_available     : int [1:2321] 0 0 0 0 0 0 0 0 7 5 ...
+  .. ..$ is_returning            : int [1:2321] 0 0 0 0 0 0 0 0 0 1 ...
+  .. ..$ num_docks_disabled      : int [1:2321] 0 0 0 0 0 0 0 0 0 1 ...
+  .. ..$ last_reported           : int [1:2321] 1767032075 86400 86400 86400 86400 86400 86400 1759761514 1767611347 1767724493 ...
+  .. ..$ is_installed            : int [1:2321] 0 0 0 0 0 0 0 0 1 1 ...
+  .. ..$ vehicle_types_available :List of 2321
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 0 0
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 0 0
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 0 0
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 0 0
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 0 0
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 0 0
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 0 0
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 0 0
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 0 0
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 0 5
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 0 0
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 2 1
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 8 2
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 12 21
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 0 0
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 0 0
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 0 0
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 2 0
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 11 3
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 12 0
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 2 0
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 7 1
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 2 0
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 11 0
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 31 13
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 1 0
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 0 2
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 11 1
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 2 0
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 2 3
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 21 12
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 14 46
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 0 35
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 1 0
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 25 1
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 12 8
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 11 0
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 1 1
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 14 5
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 8 0
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 4 9
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 0 0
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 8 2
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 1 1
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 1 3
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 8 0
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 9 0
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 3 2
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 8 0
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 60 7
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 4 2
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 3 9
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 13 44
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 6 8
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 0 0
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 2 3
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 2 6
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 12 5
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 0 0
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 5 4
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 0 1
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 2 1
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 5 3
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 0 9
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 14 2
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 2 1
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 4 1
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 2 1
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 19 4
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 24 3
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 3 13
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 1 0
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 2 0
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 0 0
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 4 20
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 8 5
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 14 2
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 3 2
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 1 2
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 7 1
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 18 1
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 14 0
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 1 0
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 2 0
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 13 1
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 11 4
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 2 2
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 0 8
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 0 0
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 16 27
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 1 6
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 0 1
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 11 58
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 14 4
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 20 2
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 3 1
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 14 1
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 11 2
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. ..$ :'data.frame':  2 obs. of  2 variables:
+  .. .. .. ..$ count          : int [1:2] 4 11
+  .. .. .. ..$ vehicle_type_id: chr [1:2] "1" "2"
+  .. .. .. [list output truncated]
+  .. ..$ num_bikes_available     : int [1:2321] 0 0 0 0 0 0 0 0 0 5 ...
+  .. ..$ num_ebikes_available    : int [1:2321] 0 0 0 0 0 0 0 0 0 5 ...
+  .. ..$ station_id              : chr [1:2321] "64f0f28c-bedc-42d5-b107-ecdd48fc30cd" "41495491-5d89-4e14-aab9-c3db04aad399" "1905837242740508940" "a47f77a2-9008-4652-a4f1-b95eee723a1b" ...
+  .. ..$ is_renting              : int [1:2321] 0 0 0 0 0 0 0 0 0 1 ...
+  .. ..$ num_bikes_disabled      : int [1:2321] 0 0 0 0 0 1 0 0 14 1 ...
+  .. ..$ num_scooters_available  : int [1:2321] NA NA NA NA NA 0 NA NA 0 0 ...
+  .. ..$ num_scooters_unavailable: int [1:2321] NA NA NA NA NA 0 NA NA 0 0 ...
+ $ last_updated: int 1767724690
+ $ ttl         : int 60
+ $ version     : chr "2.3"</code></pre>
+</div>
+</div>
+<p>Like the overall feeds data, the station status data is a nested list with information on when it was last updated and the software version as well as the actual data, which is in <code>station_df$data$stations</code>. We can get it out.</p>
+</section>
+<section id="nyc-citibikes-8" class="slide level2">
+<h2>NYC CitiBikes</h2>
+<div class="smallcode">
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb147" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb147-1"><a aria-hidden="true" tabindex="-1"></a>station_status_df <span class="ot">&lt;-</span> station_status_df<span class="sc">$</span>data<span class="sc">$</span>stations <span class="sc">|&gt;</span></span>
+<span id="cb147-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span>
+<span id="cb147-3"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb147-4"><a aria-hidden="true" tabindex="-1"></a>station_status_df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code># A tibble: 2,321 × 13
+   num_docks_available is_returning num_docks_disabled last_reported
+                 &lt;int&gt;        &lt;int&gt;              &lt;int&gt;         &lt;int&gt;
+ 1                   0            0                  0    1767032075
+ 2                   0            0                  0         86400
+ 3                   0            0                  0         86400
+ 4                   0            0                  0         86400
+ 5                   0            0                  0         86400
+ 6                   0            0                  0         86400
+ 7                   0            0                  0         86400
+ 8                   0            0                  0    1759761514
+ 9                   7            0                  0    1767611347
+10                   5            1                  1    1767724493
+# ℹ 2,311 more rows
+# ℹ 9 more variables: is_installed &lt;int&gt;, vehicle_types_available &lt;list&gt;,
+#   num_bikes_available &lt;int&gt;, num_ebikes_available &lt;int&gt;, station_id &lt;chr&gt;,
+#   is_renting &lt;int&gt;, num_bikes_disabled &lt;int&gt;, num_scooters_available &lt;int&gt;,
+#   num_scooters_unavailable &lt;int&gt;</code></pre>
+</div>
+</div>
+</div>
+<p>As you can see there is more nested data in here too, in the column about the types of bike and scooter models available.</p>
+</section>
+<section id="nyc-citibikes-9" class="slide level2">
+<h2>NYC CitiBikes</h2>
+<p>Let’s do the same for the feed of static information about stations.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb149" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb149-1"><a aria-hidden="true" tabindex="-1"></a>station_info_url <span class="ot">&lt;-</span> feeds_df <span class="sc">|&gt;</span> <span class="fu">pluck</span>(<span class="dv">1</span>,<span class="st">"en"</span>, <span class="st">"feeds"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb149-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">"station_information"</span>) <span class="sc">|&gt;</span> <span class="fu">pull</span>(url)</span>
+<span id="cb149-3"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb149-4"><a aria-hidden="true" tabindex="-1"></a>station_info_df <span class="ot">&lt;-</span> station_info_url <span class="sc">|&gt;</span></span>
+<span id="cb149-5"><a aria-hidden="true" tabindex="-1"></a>  jsonlite<span class="sc">::</span><span class="fu">fromJSON</span>() <span class="sc">|&gt;</span></span>
+<span id="cb149-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pluck</span>(<span class="st">"data"</span>, <span class="st">"stations"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb149-7"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span>
+<span id="cb149-8"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb149-9"><a aria-hidden="true" tabindex="-1"></a>station_info_df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code># A tibble: 2,321 × 8
+     lon short_name rental_uris$android    $ios    lat name  capacity station_id
+   &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;                  &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;int&gt; &lt;chr&gt;     
+ 1 -73.9 5043.06    https://bkn.lft.to/la… http…  40.7 Suyd…       17 498d7e8e-…
+ 2 -74.0 5736.09    https://bkn.lft.to/la… http…  40.7 E 14…       43 66dc7ba2-…
+ 3 -73.9 6789.20    https://bkn.lft.to/la… http…  40.8 31 S…       35 190583724…
+ 4 -74.0 6569.08    https://bkn.lft.to/la… http…  40.8 W 35…       41 a47f77a2-…
+ 5 -73.9 6325.01    https://bkn.lft.to/la… http…  40.7 43 S…       19 41495491-…
+ 6 -74.0 7323.09    https://bkn.lft.to/la… http…  40.8 5 Av…       39 b9720921-…
+ 7 -74.0 4829.01    https://bkn.lft.to/la… http…  40.7 Colu…       37 66db3687-…
+ 8 -74.0 6708.04    https://bkn.lft.to/la… http…  40.8 Broa…      103 64f0f28c-…
+ 9 -74.0 3034.02    https://bkn.lft.to/la… http…  40.6 Matt…       21 182266303…
+10 -74.0 2009.04    https://bkn.lft.to/la… http…  40.6 Shor…       12 212442630…
+# ℹ 2,311 more rows
+# ℹ 1 more variable: region_id &lt;chr&gt;</code></pre>
 </div>
 </div>
 </section>
-<section id="example-3-citibike-nyc-2" class="slide level2">
-<h2>Example 3: Citibike NYC</h2>
+<section id="nyc-citybikes" class="slide level2">
+<h2>NYC CityBikes</h2>
+<p>We can join these by <code>station_id</code></p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb135" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb135-1"><a aria-hidden="true" tabindex="-1"></a><span class="do">## Q: Why do we write it like this?</span></span>
-<span id="cb135-2"><a aria-hidden="true" tabindex="-1"></a>nyc_stations <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">stations =</span> jsonlite<span class="sc">::</span><span class="fu">read_json</span>(bikevec[<span class="st">"station_status"</span>])<span class="sc">$</span>data) </span>
-<span id="cb135-3"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb135-4"><a aria-hidden="true" tabindex="-1"></a>nyc_stations</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb151" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb151-1"><a aria-hidden="true" tabindex="-1"></a>stations_df <span class="ot">&lt;-</span> station_status_df <span class="sc">|&gt;</span></span>
+<span id="cb151-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(station_info_df, <span class="at">by =</span> <span class="st">"station_id"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb151-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(name, capacity, num_bikes_available, lat, lon)</span>
+<span id="cb151-4"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb151-5"><a aria-hidden="true" tabindex="-1"></a>stations_df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code># A tibble: 1 × 1
-  stations      
-  &lt;named list&gt;  
-1 &lt;list [2,322]&gt;</code></pre>
+<pre data-code-line-numbers=""><code># A tibble: 2,321 × 20
+   name             capacity num_bikes_available   lat   lon num_docks_available
+   &lt;chr&gt;               &lt;int&gt;               &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;               &lt;int&gt;
+ 1 Broadway &amp; W 48…      103                   0  40.8 -74.0                   0
+ 2 43 St &amp; Skillma…       19                   0  40.7 -73.9                   0
+ 3 31 St &amp; Broadway       35                   0  40.8 -73.9                   0
+ 4 W 35 St &amp; Dyer …       41                   0  40.8 -74.0                   0
+ 5 E 14 St &amp; Ave B        43                   0  40.7 -74.0                   0
+ 6 5 Ave &amp; E 87 St        39                   0  40.8 -74.0                   0
+ 7 Columbia Height…       37                   0  40.7 -74.0                   0
+ 8 Suydam St &amp; St …       17                   0  40.7 -73.9                   0
+ 9 Matthews Ct &amp; C…       21                   0  40.6 -74.0                   7
+10 Shore Rd &amp; 4 Ave       12                   5  40.6 -74.0                   5
+# ℹ 2,311 more rows
+# ℹ 14 more variables: is_returning &lt;int&gt;, num_docks_disabled &lt;int&gt;,
+#   last_reported &lt;int&gt;, is_installed &lt;int&gt;, vehicle_types_available &lt;list&gt;,
+#   num_ebikes_available &lt;int&gt;, station_id &lt;chr&gt;, is_renting &lt;int&gt;,
+#   num_bikes_disabled &lt;int&gt;, num_scooters_available &lt;int&gt;,
+#   num_scooters_unavailable &lt;int&gt;, short_name &lt;chr&gt;, rental_uris &lt;df[,2]&gt;,
+#   region_id &lt;chr&gt;</code></pre>
 </div>
 </div>
 </section>
-<section id="example-3-citibike-nyc-3" class="slide level2">
-<h2>Example 3: Citibike NYC</h2>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb137" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb137-1"><a aria-hidden="true" tabindex="-1"></a><span class="do">## Live! (At the time of rendering)</span></span>
-<span id="cb137-2"><a aria-hidden="true" tabindex="-1"></a>nyc_stations <span class="sc">|&gt;</span> </span>
-<span id="cb137-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(stations, <span class="at">names_sep =</span> <span class="st">"_"</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code># A tibble: 1 × 2,322
-  stations_1   stations_2   stations_3   stations_4   stations_5   stations_6  
-  &lt;list&gt;       &lt;list&gt;       &lt;list&gt;       &lt;list&gt;       &lt;list&gt;       &lt;list&gt;      
-1 &lt;named list&gt; &lt;named list&gt; &lt;named list&gt; &lt;named list&gt; &lt;named list&gt; &lt;named list&gt;
-# ℹ 2,316 more variables: stations_7 &lt;list&gt;, stations_8 &lt;list&gt;,
-#   stations_9 &lt;list&gt;, stations_10 &lt;list&gt;, stations_11 &lt;list&gt;,
-#   stations_12 &lt;list&gt;, stations_13 &lt;list&gt;, stations_14 &lt;list&gt;,
-#   stations_15 &lt;list&gt;, stations_16 &lt;list&gt;, stations_17 &lt;list&gt;,
-#   stations_18 &lt;list&gt;, stations_19 &lt;list&gt;, stations_20 &lt;list&gt;,
-#   stations_21 &lt;list&gt;, stations_22 &lt;list&gt;, stations_23 &lt;list&gt;,
-#   stations_24 &lt;list&gt;, stations_25 &lt;list&gt;, stations_26 &lt;list&gt;, …</code></pre>
+<section id="nyc-citybikes-1" class="slide level2">
+<h2>NYC CityBikes</h2>
+<div class="smallcode">
+<div class="cell custom3070 columns column-output-location" data-layout-align="center">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb153" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb153-1"><a aria-hidden="true" tabindex="-1"></a>stations_df <span class="sc">|&gt;</span></span>
+<span id="cb153-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> lon,</span>
+<span id="cb153-3"><a aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> lat,</span>
+<span id="cb153-4"><a aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> num_bikes_available<span class="sc">/</span>capacity)) <span class="sc">+</span></span>
+<span id="cb153-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb153-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_c</span>(<span class="at">option =</span> <span class="st">"plasma"</span>,</span>
+<span id="cb153-7"><a aria-hidden="true" tabindex="-1"></a>                        <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">percent_format</span>()) <span class="sc">+</span></span>
+<span id="cb153-8"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>() <span class="sc">+</span></span>
+<span id="cb153-9"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">color =</span> <span class="st">"Availability"</span>,</span>
+<span id="cb153-10"><a aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"New York CitiBike Stations"</span>,</span>
+<span id="cb153-11"><a aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Current bike availability as a percentage of station capacity"</span>) <span class="sc">+</span></span>
+<span id="cb153-12"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="04-tidy-data_files/figure-revealjs/unnamed-chunk-32-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+</figure>
 </div>
 </div>
-</section>
-<section id="example-3-citibike-nyc-4" class="slide level2">
-<h2>Example 3: Citibike NYC</h2>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb139" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb139-1"><a aria-hidden="true" tabindex="-1"></a>nyc_stations <span class="sc">|&gt;</span> </span>
-<span id="cb139-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(stations, <span class="at">names_sep =</span> <span class="st">"_"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb139-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"stations"</span>)) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code># A tibble: 2,322 × 2
-   name        value            
-   &lt;chr&gt;       &lt;list&gt;           
- 1 stations_1  &lt;named list [11]&gt;
- 2 stations_2  &lt;named list [11]&gt;
- 3 stations_3  &lt;named list [11]&gt;
- 4 stations_4  &lt;named list [11]&gt;
- 5 stations_5  &lt;named list [13]&gt;
- 6 stations_6  &lt;named list [11]&gt;
- 7 stations_7  &lt;named list [11]&gt;
- 8 stations_8  &lt;named list [11]&gt;
- 9 stations_9  &lt;named list [13]&gt;
-10 stations_10 &lt;named list [13]&gt;
-# ℹ 2,312 more rows</code></pre>
-</div>
+</div></div>
 </div>
 </section>
-<section id="example-3-citibike-nyc-5" class="slide level2">
-<h2>Example 3: Citibike NYC</h2>
+<section id="nyc-citibikes-10" class="slide level2">
+<h2>NYC CitiBikes</h2>
+<p>Finally, the “last updated” tag is a good old Unix time number expressed in seconds since 1970:</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb141" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb141-1"><a aria-hidden="true" tabindex="-1"></a>nyc_stations <span class="sc">|&gt;</span> </span>
-<span id="cb141-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(stations, <span class="at">names_sep =</span> <span class="st">"_"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb141-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"stations"</span>)) <span class="sc">|&gt;</span>   </span>
-<span id="cb141-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(value)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb154" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb154-1"><a aria-hidden="true" tabindex="-1"></a>feeds_df<span class="sc">$</span>last_updated[<span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code># A tibble: 2,322 × 14
-   name        num_bikes_available num_docks_available station_id  last_reported
-   &lt;chr&gt;                     &lt;int&gt;               &lt;int&gt; &lt;chr&gt;               &lt;int&gt;
- 1 stations_1                    0                   0 41495491-5…         86400
- 2 stations_2                    0                   0 1905837242…         86400
- 3 stations_3                    0                   0 a47f77a2-9…         86400
- 4 stations_4                    0                   0 66dc7ba2-0…         86400
- 5 stations_5                    0                   0 b9720921-8…         86400
- 6 stations_6                    0                   0 66db3687-0…         86400
- 7 stations_7                    0                   0 64f0f28c-b…    1767032075
- 8 stations_8                    0                   0 498d7e8e-5…    1759761514
- 9 stations_9                    7                  11 1d3a8670-0…    1767368334
-10 stations_10                  56                  14 66db3053-0…    1767368335
-# ℹ 2,312 more rows
-# ℹ 9 more variables: vehicle_types_available &lt;list&gt;,
-#   num_ebikes_available &lt;int&gt;, num_bikes_disabled &lt;int&gt;, is_returning &lt;int&gt;,
-#   num_docks_disabled &lt;int&gt;, is_renting &lt;int&gt;, is_installed &lt;int&gt;,
-#   num_scooters_unavailable &lt;int&gt;, num_scooters_available &lt;int&gt;</code></pre>
+<pre data-code-line-numbers=""><code>[1] 1767724749</code></pre>
 </div>
 </div>
-</section>
-<section id="example-3-citibike-nyc-6" class="slide level2">
-<h2>Example 3: Citibike NYC</h2>
-<p>Extra info on the stations:</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb143" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb143-1"><a aria-hidden="true" tabindex="-1"></a><span class="do">## Q: Why do we write it like this?</span></span>
-<span id="cb143-2"><a aria-hidden="true" tabindex="-1"></a>nyc_stations_info <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">stations =</span> jsonlite<span class="sc">::</span><span class="fu">read_json</span>(bikevec[<span class="st">"station_information"</span>])<span class="sc">$</span>data[[<span class="dv">1</span>]])</span>
-<span id="cb143-3"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb143-4"><a aria-hidden="true" tabindex="-1"></a>nyc_stations_info <span class="sc">|&gt;</span></span>
-<span id="cb143-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(stations)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb156" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb156-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">as_datetime</span>(feeds_df<span class="sc">$</span>last_updated)[<span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code># A tibble: 2,322 × 8
-   station_id       short_name   lat name  capacity rental_uris  region_id   lon
-   &lt;chr&gt;            &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;    &lt;int&gt; &lt;list&gt;       &lt;chr&gt;     &lt;dbl&gt;
- 1 41495491-5d89-4… 6325.01     40.7 43 S…       19 &lt;named list&gt; 71        -73.9
- 2 190583724274050… 6789.20     40.8 31 S…       35 &lt;named list&gt; 71        -73.9
- 3 a47f77a2-9008-4… 6569.08     40.8 W 35…       41 &lt;named list&gt; 71        -74.0
- 4 66dc7ba2-0aca-1… 5736.09     40.7 E 14…       43 &lt;named list&gt; 71        -74.0
- 5 b9720921-8170-4… 7323.09     40.8 5 Av…       39 &lt;named list&gt; 71        -74.0
- 6 66db3687-0aca-1… 4829.01     40.7 Colu…       37 &lt;named list&gt; 71        -74.0
- 7 64f0f28c-bedc-4… 6708.04     40.8 Broa…      103 &lt;named list&gt; 71        -74.0
- 8 498d7e8e-5164-4… 5043.06     40.7 Suyd…       17 &lt;named list&gt; 71        -73.9
- 9 66dc8db1-0aca-1… 4936.01     40.7 Fron…       57 &lt;named list&gt; 71        -74.0
-10 4568f854-1268-4… 4096.08     40.7 Dean…       21 &lt;named list&gt; 71        -73.9
-# ℹ 2,312 more rows</code></pre>
+<pre data-code-line-numbers=""><code>[1] "2026-01-06 18:39:09 UTC"</code></pre>
 </div>
 </div>
-<p>From here we could join these two tables.</p>
 
 
 </section></section>
