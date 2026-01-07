@@ -1239,55 +1239,6 @@
     "text": "7. R will be frustrating\n\nThe IDE tries its best to help you. Learn to attend to what it is trying to say."
   },
   {
-    "objectID": "slides/02-about-r.html#time-to-make-a-plot",
-    "href": "slides/02-about-r.html#time-to-make-a-plot",
-    "title": "Finding your way in R",
-    "section": "Time to make a plot",
-    "text": "Time to make a plot\nLike before:\n\ngapminder\n\n# A tibble: 1,704 × 6\n   country     continent  year lifeExp      pop gdpPercap\n   &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;\n 1 Afghanistan Asia       1952    28.8  8425333      779.\n 2 Afghanistan Asia       1957    30.3  9240934      821.\n 3 Afghanistan Asia       1962    32.0 10267083      853.\n 4 Afghanistan Asia       1967    34.0 11537966      836.\n 5 Afghanistan Asia       1972    36.1 13079460      740.\n 6 Afghanistan Asia       1977    38.4 14880372      786.\n 7 Afghanistan Asia       1982    39.9 12881816      978.\n 8 Afghanistan Asia       1987    40.8 13867957      852.\n 9 Afghanistan Asia       1992    41.7 16317921      649.\n10 Afghanistan Asia       1997    41.8 22227415      635.\n# ℹ 1,694 more rows"
-  },
-  {
-    "objectID": "slides/02-about-r.html#like-before",
-    "href": "slides/02-about-r.html#like-before",
-    "title": "Finding your way in R",
-    "section": "Like before",
-    "text": "Like before\n\n\nlibrary(tidyverse)\nlibrary(gapminder)\n\np &lt;- ggplot(data = gapminder, \n            mapping = aes(x = gdpPercap, \n                          y = lifeExp)) \n\np + geom_point()"
-  },
-  {
-    "objectID": "slides/02-about-r.html#what-we-did",
-    "href": "slides/02-about-r.html#what-we-did",
-    "title": "Finding your way in R",
-    "section": "What we did",
-    "text": "What we did\n\nlibrary(gapminder)\n\n\nLoad the packages we need: tidyverse and gapminder"
-  },
-  {
-    "objectID": "slides/02-about-r.html#what-we-did-1",
-    "href": "slides/02-about-r.html#what-we-did-1",
-    "title": "Finding your way in R",
-    "section": "What we did",
-    "text": "What we did\n\np &lt;- ggplot(data = gapminder, \n            mapping = aes(x = gdpPercap, \n                          y = lifeExp)) \n\n\nNew object named p gets the output of the ggplot() function, given these arguments\nNotice how one of the arguments, mapping, is itself taking the output of a function named aes()"
-  },
-  {
-    "objectID": "slides/02-about-r.html#what-we-did-2",
-    "href": "slides/02-about-r.html#what-we-did-2",
-    "title": "Finding your way in R",
-    "section": "What we did",
-    "text": "What we did\n\np + geom_point()\n\n\nShow me the output of the p object and the geom_point() function.\nThe + here acts just like the |&gt; pipe, but for ggplot functions only. (This is an accident of history.)"
-  },
-  {
-    "objectID": "slides/02-about-r.html#and-what-is-r-doing",
-    "href": "slides/02-about-r.html#and-what-is-r-doing",
-    "title": "Finding your way in R",
-    "section": "And what is R doing?",
-    "text": "And what is R doing?\nR objects are just lists of stuff to use or things to do"
-  },
-  {
-    "objectID": "slides/02-about-r.html#objects-are-like-bento-boxes",
-    "href": "slides/02-about-r.html#objects-are-like-bento-boxes",
-    "title": "Finding your way in R",
-    "section": "Objects are like Bento Boxes",
-    "text": "Objects are like Bento Boxes"
-  },
-  {
     "objectID": "slides/02-about-r.html#logic-watch-out",
     "href": "slides/02-about-r.html#logic-watch-out",
     "title": "Finding your way in R",
