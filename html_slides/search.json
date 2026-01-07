@@ -3434,7 +3434,7 @@
     "href": "slides/01-overview.html#housekeeping",
     "title": "Overview",
     "section": "Housekeeping",
-    "text": "Housekeeping\n10:30am till 12:30pm US EST each day\n1:30pm to 3:00pm US EST each day\nUse the Zoom chat to ask questions, or raise a hand with"
+    "text": "Housekeeping\n\n\n10:30am till 12:30pm US EST each day\n1:30pm to 3:30pm US EST each day\nUse the Zoom chat to ask questions, or raise a hand with"
   },
   {
     "objectID": "slides/01-overview.html#in-between-class-sessions",
@@ -3455,14 +3455,14 @@
     "href": "slides/01-overview.html#my-setup-and-yours",
     "title": "Overview",
     "section": "My Setup and Yours",
-    "text": "My Setup and Yours\nTalking, Slides, and Live-Coding in RStudio\nFollow along with RStudio yourself if you can\nThe course packet is also an RStudio project and the place for your notes"
+    "text": "My Setup and Yours\n\n\nTalking, Slides, and Live-Coding in RStudio.\nFollow along with RStudio yourself if you can.\nThe course packet is also an RStudio project and the place for your notes."
   },
   {
     "objectID": "slides/01-overview.html#goals-for-this-first-session",
     "href": "slides/01-overview.html#goals-for-this-first-session",
     "title": "Overview",
     "section": "Goals for this first session",
-    "text": "Goals for this first session\nSome big-picture motivation & perspective\nGetting familiar with RStudio and its relationship to R\nGetting oriented to R and how it thinks"
+    "text": "Goals for this first session\n\n\nSome big-picture motivation & perspective.\nGetting familiar with RStudio & its relationship to R.\nGetting oriented to R and how it thinks."
   },
   {
     "objectID": "slides/01-overview.html#wrangling-data-is-frustrating",
@@ -3577,11 +3577,11 @@
     "text": "Different strengths and weaknesses\n\n\nOffice model\n\nEveryone knows Word, Excel, or Google Docs.\n“Track changes” is powerful and easy.\nHm, why can’t I remember how I made this figure?\nWhere did this table of results come from? Where did my file go?\nPaper_Final_edits_FINAL_kh-1a.docx\n\n\nEngineering model\n\nPlain text is universally portable.\nPush button, recreate analysis.\nGaaah, Why can’t I make R do this simple thing?\nThis version control stuff is a pain.\nObject of type 'closure' is not subsettable"
   },
   {
-    "objectID": "slides/01-overview.html#each-approach-generates-solutions-to-its-own-problems",
-    "href": "slides/01-overview.html#each-approach-generates-solutions-to-its-own-problems",
+    "objectID": "slides/01-overview.html#each-generates-solutions-to-its-problems",
+    "href": "slides/01-overview.html#each-generates-solutions-to-its-problems",
     "title": "Overview",
-    "section": "Each approach generates solutions to its own problems",
-    "text": "Each approach generates solutions to its own problems\n\n\nOffice model\n\nMake a suite of applications.\nPut everything on a cloud server, not your computer.\nRely on search to find stuff.\nAllow users to treat documents like plain-text (e.g. Markdown).\nPut more advanced functions back in, somewhere.\n\n\nEngineering model\n\nTry to guess what the user wants; offer hints.\nContinuously analyze code for errors.\nReintroduce GUI elements for e.g. Version Control.\nAllow users treat their code more like a formatted document.\nHave an LLM propose, edit, or directly write code."
+    "section": "Each generates solutions to its problems",
+    "text": "Each generates solutions to its problems\n\n\nOffice model\n\nMake a suite of applications that know about each other.\nPut everything on a cloud server, not your computer.\nJust rely on search to find stuff in the pile.\nAllow users to treat documents like plain-text (e.g. Markdown).\nPut more advanced functions back in, somewhere.\n\n\nEngineering model\n\nTry to guess what the user wants; offer hints.\nContinuously analyze code for errors.\nReintroduce GUI elements for e.g. Version Control.\nAllow users treat their code more like a formatted document.\nHave an LLM propose, edit, or directly write code."
   },
   {
     "objectID": "slides/01-overview.html#rstudio-is-an-ide-for-r",
