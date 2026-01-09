@@ -294,7 +294,6 @@ Kieran Healy
 <div class="cell" data-layout-align="center">
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>/Users/kjhealy/Documents/courses/data_wrangling
-├── 00_dummy_files
 ├── LICENSE
 ├── Makefile
 ├── README.md
@@ -556,7 +555,10 @@ cols(
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">read_table</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"mortality.txt"</span>),</span>
 <span id="cb22-2"><a aria-hidden="true" tabindex="-1"></a>           <span class="at">skip =</span> <span class="dv">2</span>, <span class="at">na =</span> <span class="st">"."</span>) <span class="sc">|&gt;</span></span>
 <span id="cb22-3"><a aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
-<span id="cb22-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">age =</span> <span class="fu">as.integer</span>(<span class="fu">recode</span>(age, <span class="st">"110+"</span> <span class="ot">=</span> <span class="st">"110"</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb22-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">age  =</span> <span class="fu">case_match</span>(age,</span>
+<span id="cb22-5"><a aria-hidden="true" tabindex="-1"></a>                           <span class="st">"110+"</span> <span class="sc">~</span> <span class="st">"110"</span>,</span>
+<span id="cb22-6"><a aria-hidden="true" tabindex="-1"></a>                           <span class="at">.default =</span> age),</span>
+<span id="cb22-7"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">age =</span> <span class="fu">as.integer</span>(age))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:40%;">
 <div class="cell" data-layout-align="center">
@@ -740,16 +742,16 @@ See problems(...) for more details.</code></pre>
 <pre data-code-line-numbers=""><code># A tibble: 10 × 16
    `Data As Of` `Start Date` `End Date` Group    Year  Month State         Sex  
    &lt;chr&gt;        &lt;chr&gt;        &lt;chr&gt;      &lt;chr&gt;    &lt;lgl&gt; &lt;lgl&gt; &lt;chr&gt;         &lt;chr&gt;
- 1 04/07/2021   10/01/2020   10/31/2020 By Month NA    NA    Colorado      Fema…
- 2 04/07/2021   04/01/2020   04/30/2020 By Month NA    NA    Hawaii        Fema…
- 3 04/07/2021   01/01/2020   12/31/2020 By Year  NA    NA    Mississippi   Male 
- 4 04/07/2021   01/01/2020   12/31/2020 By Year  NA    NA    Colorado      Male 
- 5 04/07/2021   01/01/2021   04/03/2021 By Year  NA    NA    Pennsylvania  All …
- 6 04/07/2021   05/01/2020   05/31/2020 By Month NA    NA    Nevada        Male 
- 7 04/07/2021   07/01/2020   07/31/2020 By Month NA    NA    Washington    Male 
- 8 04/07/2021   01/01/2021   01/31/2021 By Month NA    TRUE  New Hampshire Fema…
- 9 04/07/2021   08/01/2020   08/31/2020 By Month NA    NA    Oregon        All …
-10 04/07/2021   09/01/2020   09/30/2020 By Month NA    NA    Maryland      Male 
+ 1 04/07/2021   04/01/2020   04/30/2020 By Month NA    NA    Virginia      Male 
+ 2 04/07/2021   01/01/2020   01/31/2020 By Month NA    TRUE  Oregon        Fema…
+ 3 04/07/2021   01/01/2020   01/31/2020 By Month NA    TRUE  South Caroli… Male 
+ 4 04/07/2021   09/01/2020   09/30/2020 By Month NA    NA    Pennsylvania  All …
+ 5 04/07/2021   01/01/2021   04/03/2021 By Year  NA    NA    Louisiana     Male 
+ 6 04/07/2021   01/01/2020   12/31/2020 By Year  NA    NA    North Caroli… All …
+ 7 04/07/2021   05/01/2020   05/31/2020 By Month NA    NA    Alabama       Male 
+ 8 04/07/2021   01/01/2021   04/03/2021 By Year  NA    NA    Massachusetts Fema…
+ 9 04/07/2021   04/01/2021   04/03/2021 By Month NA    NA    Connecticut   Fema…
+10 04/07/2021   02/01/2020   02/29/2020 By Month NA    NA    Oregon        All …
 # ℹ 8 more variables: `Age Group` &lt;chr&gt;, `COVID-19 Deaths` &lt;dbl&gt;,
 #   `Total Deaths` &lt;dbl&gt;, `Pneumonia Deaths` &lt;dbl&gt;,
 #   `Pneumonia and COVID-19 Deaths` &lt;dbl&gt;, `Influenza Deaths` &lt;dbl&gt;,
@@ -1679,7 +1681,7 @@ cols(
 <span id="cb105-8"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>value) <span class="sc">|&gt;</span></span>
 <span id="cb105-9"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> name,</span>
 <span id="cb105-10"><a aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> lo<span class="sc">:</span>hi) <span class="sc">|&gt;</span></span>
-<span id="cb105-11"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.integer), replace_na, <span class="dv">0</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb105-11"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.integer), \(x) <span class="fu">replace_na</span>(x, <span class="dv">0</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:60%;">
 <div class="cell" data-layout-align="center">
@@ -1717,7 +1719,7 @@ cols(
 <span id="cb107-8"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>value) <span class="sc">|&gt;</span></span>
 <span id="cb107-9"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> name,</span>
 <span id="cb107-10"><a aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> lo<span class="sc">:</span>hi) <span class="sc">|&gt;</span></span>
-<span id="cb107-11"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.integer), replace_na, <span class="dv">0</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb107-11"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.integer), \(x) <span class="fu">replace_na</span>(x, <span class="dv">0</span>))) <span class="sc">|&gt;</span></span>
 <span id="cb107-12"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(segment,</span>
 <span id="cb107-13"><a aria-hidden="true" tabindex="-1"></a>         lo_r, hi_r,</span>
 <span id="cb107-14"><a aria-hidden="true" tabindex="-1"></a>         lo_f, hi_f,</span>
@@ -2583,21 +2585,21 @@ cols(
 <pre data-code-line-numbers=""><code># A tibble: 15 × 7
    sex     year year_f   age young fefam             fefam_d 
    &lt;fct&gt;  &lt;int&gt; &lt;fct&gt;  &lt;int&gt; &lt;chr&gt; &lt;fct&gt;             &lt;fct&gt;   
- 1 Male    2008 2008      47 No    Strongly Disagree Disagree
- 2 Female  2012 2012      80 No    Disagree          Disagree
- 3 Male    2006 2006      39 No    Strongly Disagree Disagree
- 4 Female  2006 2006      26 No    Disagree          Disagree
- 5 Male    2008 2008      54 No    Strongly Agree    Agree   
- 6 Female  2006 2006      37 No    Agree             Agree   
- 7 Female  2010 2010      33 No    &lt;NA&gt;              &lt;NA&gt;    
- 8 Male    2008 2008      74 No    &lt;NA&gt;              &lt;NA&gt;    
- 9 Female  2010 2010      75 No    Disagree          Disagree
-10 Female  2010 2010      31 No    Agree             Agree   
-11 Male    2014 2014      27 No    Agree             Agree   
-12 Male    2006 2006      46 No    Disagree          Disagree
-13 Female  2010 2010      41 No    &lt;NA&gt;              &lt;NA&gt;    
-14 Male    2010 2010      56 No    &lt;NA&gt;              &lt;NA&gt;    
-15 Female  2012 2012      58 No    Agree             Agree   </code></pre>
+ 1 Male    2014 2014      49 No    Disagree          Disagree
+ 2 Male    2014 2014      44 No    &lt;NA&gt;              &lt;NA&gt;    
+ 3 Male    2010 2010      25 Yes   Disagree          Disagree
+ 4 Male    2010 2010      89 No    &lt;NA&gt;              &lt;NA&gt;    
+ 5 Male    2012 2012      56 No    Agree             Agree   
+ 6 Female  2006 2006      41 No    Strongly Disagree Disagree
+ 7 Male    2006 2006      66 No    Strongly Agree    Agree   
+ 8 Male    2012 2012      70 No    Agree             Agree   
+ 9 Female  2014 2014      54 No    &lt;NA&gt;              &lt;NA&gt;    
+10 Female  2008 2008      65 No    &lt;NA&gt;              &lt;NA&gt;    
+11 Female  2008 2008      35 No    Agree             Agree   
+12 Male    2006 2006      25 Yes   &lt;NA&gt;              &lt;NA&gt;    
+13 Female  2008 2008      39 No    &lt;NA&gt;              &lt;NA&gt;    
+14 Male    2008 2008      34 No    Agree             Agree   
+15 Female  2014 2014      39 No    &lt;NA&gt;              &lt;NA&gt;    </code></pre>
 </div>
 </div>
 </section>
