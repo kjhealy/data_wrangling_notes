@@ -2580,7 +2580,56 @@
     "href": "slides/07-iterating-on-data.html#grouped-analysis-and-list-columns-7",
     "title": "Iterating on Data",
     "section": "Grouped analysis and list columns",
-    "text": "Grouped analysis and list columns\n\nout_tidy |&gt;\n    ungroup() |&gt;\n    sample_n(5)\n\n# A tibble: 5 × 9\n  continent  year data     model  term      estimate std.error statistic p.value\n  &lt;fct&gt;     &lt;int&gt; &lt;list&gt;   &lt;list&gt; &lt;chr&gt;        &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;\n1 Europe     1992 &lt;tibble&gt; &lt;lm&gt;   log(gdpP…     3.48     0.545      6.39 6.44e-7\n2 Americas   1952 &lt;tibble&gt; &lt;lm&gt;   log(gdpP…    10.4      2.72       3.84 8.27e-4\n3 Africa     1952 &lt;tibble&gt; &lt;lm&gt;   log(gdpP…     2.34     0.971      2.41 1.99e-2\n4 Africa     1967 &lt;tibble&gt; &lt;lm&gt;   log(gdpP…     3.07     0.988      3.11 3.13e-3\n5 Asia       1957 &lt;tibble&gt; &lt;lm&gt;   log(gdpP…     4.17     1.28       3.26 2.71e-3"
+    "text": "Grouped analysis and list columns\n\nout_tidy |&gt;\n    ungroup() |&gt;\n    sample_n(5)\n\n# A tibble: 5 × 9\n  continent  year data     model  term     estimate std.error statistic  p.value\n  &lt;fct&gt;     &lt;int&gt; &lt;list&gt;   &lt;list&gt; &lt;chr&gt;       &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;\n1 Americas   2007 &lt;tibble&gt; &lt;lm&gt;   log(gdp…     4.49     0.752      5.98 4.26e- 6\n2 Africa     1957 &lt;tibble&gt; &lt;lm&gt;   log(gdp…     2.69     1.06       2.55 1.40e- 2\n3 Europe     1952 &lt;tibble&gt; &lt;lm&gt;   log(gdp…     9.00     0.987      9.12 7.04e-10\n4 Africa     1967 &lt;tibble&gt; &lt;lm&gt;   log(gdp…     3.07     0.988      3.11 3.13e- 3\n5 Asia       1967 &lt;tibble&gt; &lt;lm&gt;   log(gdp…     4.50     1.15       3.90 4.77e- 4"
+  },
+  {
+    "objectID": "slides/07-iterating-on-data.html#plot-what-we-have",
+    "href": "slides/07-iterating-on-data.html#plot-what-we-have",
+    "title": "Iterating on Data",
+    "section": "Plot what we have",
+    "text": "Plot what we have\n\np &lt;- ggplot(data = out_tidy,\n            mapping = aes(x = year, y = estimate,\n                          ymin = estimate - 2*std.error,\n                          ymax = estimate + 2*std.error,\n                          group = continent, \n                          color = continent))\n\np_out &lt;- p + \n  geom_pointrange(size = rel(1.25), \n                  position = position_dodge(width = rel(1.3))) +\n  scale_x_continuous(breaks = unique(gapminder$year)) + \n  labs(x = \"Year\", \n       y = \"Estimate\", \n       color = \"Continent\")"
+  },
+  {
+    "objectID": "slides/07-iterating-on-data.html#and-theres-more",
+    "href": "slides/07-iterating-on-data.html#and-theres-more",
+    "title": "Iterating on Data",
+    "section": "And there’s more …",
+    "text": "And there’s more …\nLet’s go back to this stage:\n\n# New model\nfit_ols2 &lt;- function(df) {\n    lm(lifeExp ~ log(gdpPercap) + log(pop), data = df)\n}\n\nout_tidy &lt;- gapminder |&gt;\n    group_by(continent, year) |&gt;\n    nest() |&gt; \n    mutate(model = map(data, fit_ols2),\n           tidied = map(model, tidy)) \n\nout_tidy\n\n# A tibble: 60 × 5\n# Groups:   continent, year [60]\n   continent  year data              model  tidied          \n   &lt;fct&gt;     &lt;int&gt; &lt;list&gt;            &lt;list&gt; &lt;list&gt;          \n 1 Asia       1952 &lt;tibble [33 × 4]&gt; &lt;lm&gt;   &lt;tibble [3 × 5]&gt;\n 2 Asia       1957 &lt;tibble [33 × 4]&gt; &lt;lm&gt;   &lt;tibble [3 × 5]&gt;\n 3 Asia       1962 &lt;tibble [33 × 4]&gt; &lt;lm&gt;   &lt;tibble [3 × 5]&gt;\n 4 Asia       1967 &lt;tibble [33 × 4]&gt; &lt;lm&gt;   &lt;tibble [3 × 5]&gt;\n 5 Asia       1972 &lt;tibble [33 × 4]&gt; &lt;lm&gt;   &lt;tibble [3 × 5]&gt;\n 6 Asia       1977 &lt;tibble [33 × 4]&gt; &lt;lm&gt;   &lt;tibble [3 × 5]&gt;\n 7 Asia       1982 &lt;tibble [33 × 4]&gt; &lt;lm&gt;   &lt;tibble [3 × 5]&gt;\n 8 Asia       1987 &lt;tibble [33 × 4]&gt; &lt;lm&gt;   &lt;tibble [3 × 5]&gt;\n 9 Asia       1992 &lt;tibble [33 × 4]&gt; &lt;lm&gt;   &lt;tibble [3 × 5]&gt;\n10 Asia       1997 &lt;tibble [33 × 4]&gt; &lt;lm&gt;   &lt;tibble [3 × 5]&gt;\n# ℹ 50 more rows"
+  },
+  {
+    "objectID": "slides/07-iterating-on-data.html#a-function-to-draw-a-coef-plot",
+    "href": "slides/07-iterating-on-data.html#a-function-to-draw-a-coef-plot",
+    "title": "Iterating on Data",
+    "section": "A function to draw a coef plot",
+    "text": "A function to draw a coef plot\n\n# Plot the output from our model\nmod_plot &lt;- function(data, \n                     title){\n  data |&gt; \n    filter(term %nin% \"(Intercept)\") |&gt; \n    ggplot(mapping = aes(x = estimate,\n                         xmin = estimate - std.error,\n                         xmax = estimate + std.error,\n                         y = reorder(term, estimate))) + \n    geom_pointrange() + \n    labs(title = title, \n         y = NULL)\n}"
+  },
+  {
+    "objectID": "slides/07-iterating-on-data.html#add-it-using-map2-or-pmap",
+    "href": "slides/07-iterating-on-data.html#add-it-using-map2-or-pmap",
+    "title": "Iterating on Data",
+    "section": "Add it using map2() or pmap()",
+    "text": "Add it using map2() or pmap()\n\nWhen we have two arguments to feed a function we can use map2(). The general case is pmap(), for passing any number of arguments in a list.\n\n\nout_tidy &lt;- gapminder |&gt; group_by(continent, year) |&gt; nest() |&gt; \n    mutate(title = paste(continent, year),\n           model = map(data, fit_ols2),\n           tidied = map(model, tidy), \n           ggout = pmap(list(tidied, title), \n                        mod_plot)) \n\nout_tidy\n\n# A tibble: 60 × 7\n# Groups:   continent, year [60]\n   continent  year data              title     model  tidied   ggout     \n   &lt;fct&gt;     &lt;int&gt; &lt;list&gt;            &lt;chr&gt;     &lt;list&gt; &lt;list&gt;   &lt;list&gt;    \n 1 Asia       1952 &lt;tibble [33 × 4]&gt; Asia 1952 &lt;lm&gt;   &lt;tibble&gt; &lt;ggplt2::&gt;\n 2 Asia       1957 &lt;tibble [33 × 4]&gt; Asia 1957 &lt;lm&gt;   &lt;tibble&gt; &lt;ggplt2::&gt;\n 3 Asia       1962 &lt;tibble [33 × 4]&gt; Asia 1962 &lt;lm&gt;   &lt;tibble&gt; &lt;ggplt2::&gt;\n 4 Asia       1967 &lt;tibble [33 × 4]&gt; Asia 1967 &lt;lm&gt;   &lt;tibble&gt; &lt;ggplt2::&gt;\n 5 Asia       1972 &lt;tibble [33 × 4]&gt; Asia 1972 &lt;lm&gt;   &lt;tibble&gt; &lt;ggplt2::&gt;\n 6 Asia       1977 &lt;tibble [33 × 4]&gt; Asia 1977 &lt;lm&gt;   &lt;tibble&gt; &lt;ggplt2::&gt;\n 7 Asia       1982 &lt;tibble [33 × 4]&gt; Asia 1982 &lt;lm&gt;   &lt;tibble&gt; &lt;ggplt2::&gt;\n 8 Asia       1987 &lt;tibble [33 × 4]&gt; Asia 1987 &lt;lm&gt;   &lt;tibble&gt; &lt;ggplt2::&gt;\n 9 Asia       1992 &lt;tibble [33 × 4]&gt; Asia 1992 &lt;lm&gt;   &lt;tibble&gt; &lt;ggplt2::&gt;\n10 Asia       1997 &lt;tibble [33 × 4]&gt; Asia 1997 &lt;lm&gt;   &lt;tibble&gt; &lt;ggplt2::&gt;\n# ℹ 50 more rows\n\n\nNow, every element of ggout is …"
+  },
+  {
+    "objectID": "slides/07-iterating-on-data.html#a-plot",
+    "href": "slides/07-iterating-on-data.html#a-plot",
+    "title": "Iterating on Data",
+    "section": "A plot!",
+    "text": "A plot!\n\n\n\nout_tidy$ggout[[8]]\n\n\n\n\n\n\n\n\n\n\nout_tidy$ggout[[18]]"
+  },
+  {
+    "objectID": "slides/07-iterating-on-data.html#we-dont-just-put-them-in-there-for-fun",
+    "href": "slides/07-iterating-on-data.html#we-dont-just-put-them-in-there-for-fun",
+    "title": "Iterating on Data",
+    "section": "We don’t just put them in there for fun",
+    "text": "We don’t just put them in there for fun\n\nWe can e.g. walk the plots out to disk\n\nwalk() is map() for when you just want a “side-effect” such as printed output. There is also walk2() and pwalk()\n\npwalk(\n  list(\n    filename = paste0(out_tidy$title, \".png\"),\n    plot = out_tidy$ggout,\n    path = here(\"figures\"),\n    height = 3, width = 4,\n    dpi = 300\n  ),\n  ggsave\n)"
+  },
+  {
+    "objectID": "slides/07-iterating-on-data.html#peek-in-the-figures-folder",
+    "href": "slides/07-iterating-on-data.html#peek-in-the-figures-folder",
+    "title": "Iterating on Data",
+    "section": "Peek in the figures/ folder",
+    "text": "Peek in the figures/ folder\n\nfs::dir_ls(here(\"figures\")) |&gt; \n  basename()\n\n [1] \"Africa 1952.png\"   \"Africa 1957.png\"   \"Africa 1962.png\"  \n [4] \"Africa 1967.png\"   \"Africa 1972.png\"   \"Africa 1977.png\"  \n [7] \"Africa 1982.png\"   \"Africa 1987.png\"   \"Africa 1992.png\"  \n[10] \"Africa 1997.png\"   \"Africa 2002.png\"   \"Africa 2007.png\"  \n[13] \"Americas 1952.png\" \"Americas 1957.png\" \"Americas 1962.png\"\n[16] \"Americas 1967.png\" \"Americas 1972.png\" \"Americas 1977.png\"\n[19] \"Americas 1982.png\" \"Americas 1987.png\" \"Americas 1992.png\"\n[22] \"Americas 1997.png\" \"Americas 2002.png\" \"Americas 2007.png\"\n[25] \"Asia 1952.png\"     \"Asia 1957.png\"     \"Asia 1962.png\"    \n[28] \"Asia 1967.png\"     \"Asia 1972.png\"     \"Asia 1977.png\"    \n[31] \"Asia 1982.png\"     \"Asia 1987.png\"     \"Asia 1992.png\"    \n[34] \"Asia 1997.png\"     \"Asia 2002.png\"     \"Asia 2007.png\"    \n[37] \"Europe 1952.png\"   \"Europe 1957.png\"   \"Europe 1962.png\"  \n[40] \"Europe 1967.png\"   \"Europe 1972.png\"   \"Europe 1977.png\"  \n[43] \"Europe 1982.png\"   \"Europe 1987.png\"   \"Europe 1992.png\"  \n[46] \"Europe 1997.png\"   \"Europe 2002.png\"   \"Europe 2007.png\"  \n[49] \"Oceania 1952.png\"  \"Oceania 1957.png\"  \"Oceania 1962.png\" \n[52] \"Oceania 1967.png\"  \"Oceania 1972.png\"  \"Oceania 1977.png\" \n[55] \"Oceania 1982.png\"  \"Oceania 1987.png\"  \"Oceania 1992.png\" \n[58] \"Oceania 1997.png\"  \"Oceania 2002.png\"  \"Oceania 2007.png\""
   },
   {
     "objectID": "slides/03b-dplyr-basics.html#load-our-libraries",

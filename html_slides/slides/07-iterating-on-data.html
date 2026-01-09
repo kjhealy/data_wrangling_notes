@@ -1752,13 +1752,199 @@ F-statistic: 35.24 on 1 and 28 DF,  p-value: 2.173e-06</code></pre>
 <span id="cb134-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">sample_n</span>(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 5 × 9
-  continent  year data     model  term      estimate std.error statistic p.value
-  &lt;fct&gt;     &lt;int&gt; &lt;list&gt;   &lt;list&gt; &lt;chr&gt;        &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
-1 Europe     1992 &lt;tibble&gt; &lt;lm&gt;   log(gdpP…     3.48     0.545      6.39 6.44e-7
-2 Americas   1952 &lt;tibble&gt; &lt;lm&gt;   log(gdpP…    10.4      2.72       3.84 8.27e-4
-3 Africa     1952 &lt;tibble&gt; &lt;lm&gt;   log(gdpP…     2.34     0.971      2.41 1.99e-2
-4 Africa     1967 &lt;tibble&gt; &lt;lm&gt;   log(gdpP…     3.07     0.988      3.11 3.13e-3
-5 Asia       1957 &lt;tibble&gt; &lt;lm&gt;   log(gdpP…     4.17     1.28       3.26 2.71e-3</code></pre>
+  continent  year data     model  term     estimate std.error statistic  p.value
+  &lt;fct&gt;     &lt;int&gt; &lt;list&gt;   &lt;list&gt; &lt;chr&gt;       &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 Americas   2007 &lt;tibble&gt; &lt;lm&gt;   log(gdp…     4.49     0.752      5.98 4.26e- 6
+2 Africa     1957 &lt;tibble&gt; &lt;lm&gt;   log(gdp…     2.69     1.06       2.55 1.40e- 2
+3 Europe     1952 &lt;tibble&gt; &lt;lm&gt;   log(gdp…     9.00     0.987      9.12 7.04e-10
+4 Africa     1967 &lt;tibble&gt; &lt;lm&gt;   log(gdp…     3.07     0.988      3.11 3.13e- 3
+5 Asia       1967 &lt;tibble&gt; &lt;lm&gt;   log(gdp…     4.50     1.15       3.90 4.77e- 4</code></pre>
+</div>
+</div>
+</section>
+<section id="plot-what-we-have" class="slide level2">
+<h2>Plot what we have</h2>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb136" data-source-line-numbers="nil" data-code-line-numbers="10,11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb136-1"><a aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> out_tidy,</span>
+<span id="cb136-2"><a aria-hidden="true" tabindex="-1"></a>            <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> estimate,</span>
+<span id="cb136-3"><a aria-hidden="true" tabindex="-1"></a>                          <span class="at">ymin =</span> estimate <span class="sc">-</span> <span class="dv">2</span><span class="sc">*</span>std.error,</span>
+<span id="cb136-4"><a aria-hidden="true" tabindex="-1"></a>                          <span class="at">ymax =</span> estimate <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>std.error,</span>
+<span id="cb136-5"><a aria-hidden="true" tabindex="-1"></a>                          <span class="at">group =</span> continent, </span>
+<span id="cb136-6"><a aria-hidden="true" tabindex="-1"></a>                          <span class="at">color =</span> continent))</span>
+<span id="cb136-7"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb136-8"><a aria-hidden="true" tabindex="-1"></a>p_out <span class="ot">&lt;-</span> p <span class="sc">+</span> </span>
+<span id="cb136-9"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_pointrange</span>(<span class="at">size =</span> <span class="fu">rel</span>(<span class="fl">1.25</span>), </span>
+<span id="cb136-10"><a aria-hidden="true" tabindex="-1"></a>                  <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fu">rel</span>(<span class="fl">1.3</span>))) <span class="sc">+</span></span>
+<span id="cb136-11"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">unique</span>(gapminder<span class="sc">$</span>year)) <span class="sc">+</span> </span>
+<span id="cb136-12"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Year"</span>, </span>
+<span id="cb136-13"><a aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Estimate"</span>, </span>
+<span id="cb136-14"><a aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Continent"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section class="slide level2">
+
+
+<img data-src="07-iterating-on-data_files/figure-revealjs/06-work-with-models-53-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1440"><p>Repeated Estimates of log GDP on Life Expectancy by Continent</p>
+</section>
+<section id="and-theres-more" class="slide level2">
+<h2>And there’s more …</h2>
+<p>Let’s go back to this stage:</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb137" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb137-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># New model</span></span>
+<span id="cb137-2"><a aria-hidden="true" tabindex="-1"></a>fit_ols2 <span class="ot">&lt;-</span> <span class="cf">function</span>(df) {</span>
+<span id="cb137-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">lm</span>(lifeExp <span class="sc">~</span> <span class="fu">log</span>(gdpPercap) <span class="sc">+</span> <span class="fu">log</span>(pop), <span class="at">data =</span> df)</span>
+<span id="cb137-4"><a aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb137-5"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb137-6"><a aria-hidden="true" tabindex="-1"></a>out_tidy <span class="ot">&lt;-</span> gapminder <span class="sc">|&gt;</span></span>
+<span id="cb137-7"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(continent, year) <span class="sc">|&gt;</span></span>
+<span id="cb137-8"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">nest</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb137-9"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">model =</span> <span class="fu">map</span>(data, fit_ols2),</span>
+<span id="cb137-10"><a aria-hidden="true" tabindex="-1"></a>           <span class="at">tidied =</span> <span class="fu">map</span>(model, tidy)) </span>
+<span id="cb137-11"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb137-12"><a aria-hidden="true" tabindex="-1"></a>out_tidy</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code># A tibble: 60 × 5
+# Groups:   continent, year [60]
+   continent  year data              model  tidied          
+   &lt;fct&gt;     &lt;int&gt; &lt;list&gt;            &lt;list&gt; &lt;list&gt;          
+ 1 Asia       1952 &lt;tibble [33 × 4]&gt; &lt;lm&gt;   &lt;tibble [3 × 5]&gt;
+ 2 Asia       1957 &lt;tibble [33 × 4]&gt; &lt;lm&gt;   &lt;tibble [3 × 5]&gt;
+ 3 Asia       1962 &lt;tibble [33 × 4]&gt; &lt;lm&gt;   &lt;tibble [3 × 5]&gt;
+ 4 Asia       1967 &lt;tibble [33 × 4]&gt; &lt;lm&gt;   &lt;tibble [3 × 5]&gt;
+ 5 Asia       1972 &lt;tibble [33 × 4]&gt; &lt;lm&gt;   &lt;tibble [3 × 5]&gt;
+ 6 Asia       1977 &lt;tibble [33 × 4]&gt; &lt;lm&gt;   &lt;tibble [3 × 5]&gt;
+ 7 Asia       1982 &lt;tibble [33 × 4]&gt; &lt;lm&gt;   &lt;tibble [3 × 5]&gt;
+ 8 Asia       1987 &lt;tibble [33 × 4]&gt; &lt;lm&gt;   &lt;tibble [3 × 5]&gt;
+ 9 Asia       1992 &lt;tibble [33 × 4]&gt; &lt;lm&gt;   &lt;tibble [3 × 5]&gt;
+10 Asia       1997 &lt;tibble [33 × 4]&gt; &lt;lm&gt;   &lt;tibble [3 × 5]&gt;
+# ℹ 50 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="a-function-to-draw-a-coef-plot" class="slide level2">
+<h2>A function to draw a coef plot</h2>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb139" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb139-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the output from our model</span></span>
+<span id="cb139-2"><a aria-hidden="true" tabindex="-1"></a>mod_plot <span class="ot">&lt;-</span> <span class="cf">function</span>(data, </span>
+<span id="cb139-3"><a aria-hidden="true" tabindex="-1"></a>                     title){</span>
+<span id="cb139-4"><a aria-hidden="true" tabindex="-1"></a>  data <span class="sc">|&gt;</span> </span>
+<span id="cb139-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(term <span class="sc">%nin%</span> <span class="st">"(Intercept)"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb139-6"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> estimate,</span>
+<span id="cb139-7"><a aria-hidden="true" tabindex="-1"></a>                         <span class="at">xmin =</span> estimate <span class="sc">-</span> std.error,</span>
+<span id="cb139-8"><a aria-hidden="true" tabindex="-1"></a>                         <span class="at">xmax =</span> estimate <span class="sc">+</span> std.error,</span>
+<span id="cb139-9"><a aria-hidden="true" tabindex="-1"></a>                         <span class="at">y =</span> <span class="fu">reorder</span>(term, estimate))) <span class="sc">+</span> </span>
+<span id="cb139-10"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_pointrange</span>() <span class="sc">+</span> </span>
+<span id="cb139-11"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> title, </span>
+<span id="cb139-12"><a aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="cn">NULL</span>)</span>
+<span id="cb139-13"><a aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="add-it-using-map2-or-pmap" class="slide level2">
+<h2>Add it using <span class="fg-green"><code>map2()</code></span> or <span class="fg-green"><code>pmap()</code></span></h2>
+<ul>
+<li>When we have two arguments to feed a function we can use <span class="fg-green"><code>map2()</code></span>. The general case is <span class="fg-green"><code>pmap()</code></span>, for passing any number of arguments in a list.</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb140" data-source-line-numbers="nil" data-code-line-numbers="3,5,6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb140-1"><a aria-hidden="true" tabindex="-1"></a>out_tidy <span class="ot">&lt;-</span> gapminder <span class="sc">|&gt;</span> <span class="fu">group_by</span>(continent, year) <span class="sc">|&gt;</span> <span class="fu">nest</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb140-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">title =</span> <span class="fu">paste</span>(continent, year),</span>
+<span id="cb140-3"><a aria-hidden="true" tabindex="-1"></a>           <span class="at">model =</span> <span class="fu">map</span>(data, fit_ols2),</span>
+<span id="cb140-4"><a aria-hidden="true" tabindex="-1"></a>           <span class="at">tidied =</span> <span class="fu">map</span>(model, tidy), </span>
+<span id="cb140-5"><a aria-hidden="true" tabindex="-1"></a>           <span class="at">ggout =</span> <span class="fu">pmap</span>(<span class="fu">list</span>(tidied, title), </span>
+<span id="cb140-6"><a aria-hidden="true" tabindex="-1"></a>                        mod_plot)) </span>
+<span id="cb140-7"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb140-8"><a aria-hidden="true" tabindex="-1"></a>out_tidy</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code># A tibble: 60 × 7
+# Groups:   continent, year [60]
+   continent  year data              title     model  tidied   ggout     
+   &lt;fct&gt;     &lt;int&gt; &lt;list&gt;            &lt;chr&gt;     &lt;list&gt; &lt;list&gt;   &lt;list&gt;    
+ 1 Asia       1952 &lt;tibble [33 × 4]&gt; Asia 1952 &lt;lm&gt;   &lt;tibble&gt; &lt;ggplt2::&gt;
+ 2 Asia       1957 &lt;tibble [33 × 4]&gt; Asia 1957 &lt;lm&gt;   &lt;tibble&gt; &lt;ggplt2::&gt;
+ 3 Asia       1962 &lt;tibble [33 × 4]&gt; Asia 1962 &lt;lm&gt;   &lt;tibble&gt; &lt;ggplt2::&gt;
+ 4 Asia       1967 &lt;tibble [33 × 4]&gt; Asia 1967 &lt;lm&gt;   &lt;tibble&gt; &lt;ggplt2::&gt;
+ 5 Asia       1972 &lt;tibble [33 × 4]&gt; Asia 1972 &lt;lm&gt;   &lt;tibble&gt; &lt;ggplt2::&gt;
+ 6 Asia       1977 &lt;tibble [33 × 4]&gt; Asia 1977 &lt;lm&gt;   &lt;tibble&gt; &lt;ggplt2::&gt;
+ 7 Asia       1982 &lt;tibble [33 × 4]&gt; Asia 1982 &lt;lm&gt;   &lt;tibble&gt; &lt;ggplt2::&gt;
+ 8 Asia       1987 &lt;tibble [33 × 4]&gt; Asia 1987 &lt;lm&gt;   &lt;tibble&gt; &lt;ggplt2::&gt;
+ 9 Asia       1992 &lt;tibble [33 × 4]&gt; Asia 1992 &lt;lm&gt;   &lt;tibble&gt; &lt;ggplt2::&gt;
+10 Asia       1997 &lt;tibble [33 × 4]&gt; Asia 1997 &lt;lm&gt;   &lt;tibble&gt; &lt;ggplt2::&gt;
+# ℹ 50 more rows</code></pre>
+</div>
+</div>
+<p>Now, every element of <span class="fg-orange"><code>ggout</code></span> is …</p>
+</section>
+<section id="a-plot" class="slide level2">
+<h2>A plot!</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb142" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb142-1"><a aria-hidden="true" tabindex="-1"></a>out_tidy<span class="sc">$</span>ggout[[<span class="dv">8</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="07-iterating-on-data_files/figure-revealjs/06-work-with-models-57-1.png" class="quarto-figure quarto-figure-center" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column right" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb143" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb143-1"><a aria-hidden="true" tabindex="-1"></a>out_tidy<span class="sc">$</span>ggout[[<span class="dv">18</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="07-iterating-on-data_files/figure-revealjs/06-work-with-models-58-1.png" class="quarto-figure quarto-figure-center" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+</section>
+<section id="we-dont-just-put-them-in-there-for-fun" class="slide level2">
+<h2>We don’t just put them in there for fun</h2>
+<ul>
+<li>We can e.g.&nbsp;<span class="fg-green"><code>walk</code></span> the plots out to disk</li>
+</ul>
+<p><span class="fg-green"><code>walk()</code></span> is <span class="fg-green"><code>map()</code></span> for when you just want a “side-effect” such as printed output. There is also <span class="fg-green"><code>walk2()</code></span> and <span class="fg-green"><code>pwalk()</code></span></p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb144" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb144-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">pwalk</span>(</span>
+<span id="cb144-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(</span>
+<span id="cb144-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">filename =</span> <span class="fu">paste0</span>(out_tidy<span class="sc">$</span>title, <span class="st">".png"</span>),</span>
+<span id="cb144-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">plot =</span> out_tidy<span class="sc">$</span>ggout,</span>
+<span id="cb144-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">path =</span> <span class="fu">here</span>(<span class="st">"figures"</span>),</span>
+<span id="cb144-6"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">height =</span> <span class="dv">3</span>, <span class="at">width =</span> <span class="dv">4</span>,</span>
+<span id="cb144-7"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">dpi =</span> <span class="dv">300</span></span>
+<span id="cb144-8"><a aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb144-9"><a aria-hidden="true" tabindex="-1"></a>  ggsave</span>
+<span id="cb144-10"><a aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="peek-in-the-figures-folder" class="slide level2">
+<h2>Peek in the <span class="fg-orange"><code>figures/</code></span> folder</h2>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb145" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb145-1"><a aria-hidden="true" tabindex="-1"></a>fs<span class="sc">::</span><span class="fu">dir_ls</span>(<span class="fu">here</span>(<span class="st">"figures"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb145-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">basename</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code> [1] "Africa 1952.png"   "Africa 1957.png"   "Africa 1962.png"  
+ [4] "Africa 1967.png"   "Africa 1972.png"   "Africa 1977.png"  
+ [7] "Africa 1982.png"   "Africa 1987.png"   "Africa 1992.png"  
+[10] "Africa 1997.png"   "Africa 2002.png"   "Africa 2007.png"  
+[13] "Americas 1952.png" "Americas 1957.png" "Americas 1962.png"
+[16] "Americas 1967.png" "Americas 1972.png" "Americas 1977.png"
+[19] "Americas 1982.png" "Americas 1987.png" "Americas 1992.png"
+[22] "Americas 1997.png" "Americas 2002.png" "Americas 2007.png"
+[25] "Asia 1952.png"     "Asia 1957.png"     "Asia 1962.png"    
+[28] "Asia 1967.png"     "Asia 1972.png"     "Asia 1977.png"    
+[31] "Asia 1982.png"     "Asia 1987.png"     "Asia 1992.png"    
+[34] "Asia 1997.png"     "Asia 2002.png"     "Asia 2007.png"    
+[37] "Europe 1952.png"   "Europe 1957.png"   "Europe 1962.png"  
+[40] "Europe 1967.png"   "Europe 1972.png"   "Europe 1977.png"  
+[43] "Europe 1982.png"   "Europe 1987.png"   "Europe 1992.png"  
+[46] "Europe 1997.png"   "Europe 2002.png"   "Europe 2007.png"  
+[49] "Oceania 1952.png"  "Oceania 1957.png"  "Oceania 1962.png" 
+[52] "Oceania 1967.png"  "Oceania 1972.png"  "Oceania 1977.png" 
+[55] "Oceania 1982.png"  "Oceania 1987.png"  "Oceania 1992.png" 
+[58] "Oceania 1997.png"  "Oceania 2002.png"  "Oceania 2007.png" </code></pre>
 </div>
 </div>
 
